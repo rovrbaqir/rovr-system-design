@@ -1,6 +1,6 @@
 import * as React from "react";
 import { animate, motion, useInView, useMotionValue, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { duration, ease } from "@/lib/motion";
+import { duration, ease } from "@/lib/motion-tokens";
 import { cn } from "@/lib/utils";
 
 export interface RevealProps extends React.ComponentProps<typeof motion.div> {

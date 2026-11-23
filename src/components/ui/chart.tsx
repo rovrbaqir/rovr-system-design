@@ -1,6 +1,6 @@
 import * as React from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { ease } from "@/lib/motion";
+import { ease } from "@/lib/motion-tokens";
 import { cn } from "@/lib/utils";
 
 /** Series colours in fixed order. Colour follows the series, never its rank. */

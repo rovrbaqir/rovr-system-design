@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import { Check } from "lucide-react";
-import { springSnappy } from "@/lib/motion";
+import { springSnappy } from "@/lib/motion-tokens";
 import { cn } from "@/lib/utils";
 
 const colors = ["var(--pulse-from)", "var(--pulse-to)", "var(--success)"];

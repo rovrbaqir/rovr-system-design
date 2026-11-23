@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { ease } from "@/lib/motion";
+import { ease } from "@/lib/motion-tokens";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
 

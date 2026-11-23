@@ -14,7 +14,7 @@ const describe = (file) => {
     if (spec.startsWith("@/components/ui/") || spec.startsWith("@/components/patterns/")) registryDeps.add("@rovr/" + spec.split("/").pop());
     else if (spec.startsWith("./")) registryDeps.add("@rovr/" + spec.slice(2));
     else if (spec === "@/lib/utils") registryDeps.add("@rovr/utils");
-    else if (spec === "@/lib/motion") registryDeps.add("@rovr/motion-tokens");
+    else if (spec === "@/lib/motion-tokens") registryDeps.add("@rovr/motion-tokens");
     else if (!spec.startsWith("@/") && spec !== "react") {
       const name = spec.startsWith("@") ? spec.split("/").slice(0, 2).join("/") : spec.split("/")[0];
       if (versions[name]) deps.add(name);
@@ -60,7 +60,7 @@ items.unshift(
     type: "registry:lib",
     title: "Motion tokens",
     dependencies: ["motion"],
-    files: [{ path: "src/lib/motion.ts", type: "registry:lib" }],
+    files: [{ path: "src/lib/motion-tokens.ts", type: "registry:lib" }],
   },
 );
 

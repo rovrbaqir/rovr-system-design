@@ -1,6 +1,6 @@
 import * as React from "react";
 import { motion } from "motion/react";
-import { springSnappy } from "@/lib/motion";
+import { springSnappy } from "@/lib/motion-tokens";
 import { cn } from "@/lib/utils";
 
 export interface SegmentedControlProps<T extends string> {

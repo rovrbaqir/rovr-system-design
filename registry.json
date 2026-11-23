@@ -45,7 +45,7 @@
       ],
       "files": [
         {
-          "path": "src/lib/motion.ts",
+          "path": "src/lib/motion-tokens.ts",
           "type": "registry:lib"
         }
       ]

@@ -34,7 +34,7 @@ Each example is a `<Demo>` with an `id` that starts with the slug and `files={["
 | `src/styles/rovr.css` | Every token: colour, type, radius, density, depth, motion, plus shared motion recipes |
 | `src/components/ui/` | 59 primitives built on Base UI |
 | `src/components/patterns/` | 11 composites: app shell, page and patient headers, stat, vital, lab, appointment and medication cards, time slots, day schedule, chat |
-| `src/lib/motion.ts` | Motion tokens for `motion/react`, matching the CSS tokens |
+| `src/lib/motion-tokens.ts` | Motion tokens for `motion/react`, matching the CSS tokens |
 | `src/showcase/` | The documentation site |
 | `registry.json`, `public/r/` | The shadcn registry (generated) |
 | `DESIGN.md` | The rules: when to use what |

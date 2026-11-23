@@ -7,7 +7,7 @@ import { SearchInput } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Toaster } from "@/components/ui/toast";
 import { Tooltip, TooltipProvider } from "@/components/ui/tooltip";
-import { springSnappy } from "@/lib/motion";
+import { springSnappy } from "@/lib/motion-tokens";
 import { cn } from "@/lib/utils";
 import { findPage, groups, isInstallable, pages, pagesIn } from "./pages";
 import type { DocPage } from "./types";
