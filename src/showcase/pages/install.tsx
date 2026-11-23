@@ -38,6 +38,14 @@ function Body() {
         </p>
         <Command>pnpm dlx shadcn@latest add @rovr/button @rovr/dialog @rovr/select</Command>
       </li>
+      <li className="flex flex-col gap-2">
+        <p className="text-title-sm">Or add every component at once</p>
+        <p className="text-muted-foreground">
+          <Token>@rovr/all</Token> installs all the base components in one go, with the theme and helpers. Add <Token>--overwrite</Token> to update
+          the ones a project already has.
+        </p>
+        <Command>pnpm dlx shadcn@latest add @rovr/all</Command>
+      </li>
     </ol>
   );
 }

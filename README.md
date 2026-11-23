@@ -54,6 +54,12 @@ pnpm dlx shadcn@latest add @rovr/theme
 pnpm dlx shadcn@latest add @rovr/button @rovr/dialog
 ```
 
+To add every base component in one command:
+
+```bash
+pnpm dlx shadcn@latest add @rovr/all
+```
+
 Import `rovr.css` once, load the fonts (`@fontsource-variable/dm-sans`, `@fontsource/dm-mono`), and mount `<TooltipProvider>` and `<Toaster />` at the root.
 
 ## Publish the registry

@@ -40,6 +40,16 @@ for (const [dir, type] of [["src/components/ui", "registry:ui"]]) {
   }
 }
 
+// One item that pulls in every base component: `shadcn add @rovr/all`.
+items.push({
+  name: "all",
+  type: "registry:ui",
+  title: "All components",
+  description: "Every RoVR base component, with the theme and helpers they need.",
+  registryDependencies: ["@rovr/theme", ...items.map((i) => "@rovr/" + i.name)],
+  files: [],
+});
+
 items.unshift(
   {
     name: "theme",
