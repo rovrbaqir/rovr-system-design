@@ -7,16 +7,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { type DemoSource, highlight, loadDemoSource } from "./source";
 
-export function Section({ id, title, lead, children }: { id: string; title: string; lead?: React.ReactNode; children: React.ReactNode }) {
-  return (
-    <section id={id} data-section className="scroll-mt-24 border-t border-border pt-14 pb-6">
-      <h2 className="text-display-lg">{title}</h2>
-      {lead && <p className="mt-3 max-w-[62ch] text-body-lg text-muted-foreground">{lead}</p>}
-      <div className="mt-10 flex flex-col gap-12">{children}</div>
-    </section>
-  );
-}
-
 const tokenColor = {
   comment: "text-subtle-foreground italic",
   string: "text-(--chart-2)",

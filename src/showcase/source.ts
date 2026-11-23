@@ -2,7 +2,7 @@
  * Source code for the showcase's Code view. Every component file is loaded as
  * text on demand, so what a visitor copies is exactly what the page is running.
  */
-const loaders = import.meta.glob<string>(["/src/components/**/*.tsx", "/src/lib/*.ts", "/src/styles/rovr.css", "/src/showcase/*.tsx"], {
+const loaders = import.meta.glob<string>(["/src/components/**/*.tsx", "/src/lib/*.ts", "/src/styles/rovr.css", "/src/showcase/**/*.tsx"], {
   query: "?raw",
   import: "default",
 });

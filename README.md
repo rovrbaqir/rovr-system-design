@@ -21,7 +21,11 @@ Every example in the showcase has a **Preview / Code** switch. Code shows one ta
 
 "Copy" copies the whole file. Under a component file is the `pnpm add` line for the npm packages it needs. The code is read from the real source files when the page is built, so it cannot drift from what the showcase runs.
 
-To tag a new example, give its `<Demo>` an `id` and `files={["ui/<name>"]}`.
+## Adding a page
+
+The showcase has one page per component, listed in the sidebar and reached at `#/<slug>`. To document a new component, add `src/showcase/pages/<slug>.tsx` that exports a `page` (see `pages/button.tsx`). It is picked up automatically: there is no list to edit.
+
+Each example is a `<Demo>` with an `id` that starts with the slug and `files={["ui/<name>"]}`; that is what gives it a Code view.
 
 ## What is here
 
@@ -40,7 +44,7 @@ To tag a new example, give its `<Demo>` an `id` and `files={["ui/<name>"]}`.
 The app needs Tailwind CSS v4. Add the registry to its `components.json`:
 
 ```json
-"registries": { "@rovr": "https://<your-registry-host>/r/{name}.json" }
+"registries": { "@rovr": "https://rovr-system-design.vercel.app/r/{name}.json" }
 ```
 
 Then:
@@ -58,7 +62,7 @@ Import `rovr.css` once, load the fonts (`@fontsource-variable/dm-sans`, `@fontso
 pnpm registry:build   # regenerates registry.json and public/r/*.json
 ```
 
-Host `public/r/` anywhere static, or use a private GitHub registry.
+The site and the registry are deployed together on Vercel at https://rovr-system-design.vercel.app. `vercel.json` sets the build to `pnpm registry:build && pnpm build`, so every push to `main` republishes both and the registry cannot go stale.
 
 ## Themes
 
