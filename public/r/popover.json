@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover",
+  "title": "Popover",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/popover.tsx",
+      "content": "import * as React from \"react\";\nimport { Popover as BasePopover } from \"@base-ui/react/popover\";\nimport { cn } from \"@/lib/utils\";\n\nexport const Popover = BasePopover.Root;\nexport const PopoverTrigger = BasePopover.Trigger;\nexport const PopoverClose = BasePopover.Close;\n\nexport function PopoverContent({\n  className,\n  side = \"bottom\",\n  align = \"center\",\n  sideOffset = 8,\n  ...props\n}: React.ComponentProps<typeof BasePopover.Popup> &\n  Pick<React.ComponentProps<typeof BasePopover.Positioner>, \"side\" | \"align\" | \"sideOffset\">) {\n  return (\n    <BasePopover.Portal>\n      <BasePopover.Positioner side={side} align={align} sideOffset={sideOffset} className=\"z-50\">\n        <BasePopover.Popup\n          className={cn(\n            \"rovr-pop w-72 max-w-(--available-width) rounded-xl rovr-glass p-4 text-sm text-popover-foreground outline-none\",\n            className,\n          )}\n          {...props}\n        />\n      </BasePopover.Positioner>\n    </BasePopover.Portal>\n  );\n}\n\nexport function PopoverTitle({ className, ...props }: React.ComponentProps<typeof BasePopover.Title>) {\n  return <BasePopover.Title className={cn(\"text-title-sm\", className)} {...props} />;\n}\nexport function PopoverDescription({ className, ...props }: React.ComponentProps<typeof BasePopover.Description>) {\n  return <BasePopover.Description className={cn(\"text-body-sm text-muted-foreground\", className)} {...props} />;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar",
+  "title": "Avatar",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/avatar.tsx",
+      "content": "import * as React from \"react\";\nimport { Avatar as BaseAvatar } from \"@base-ui/react/avatar\";\nimport { cn } from \"@/lib/utils\";\n\nconst sizes = {\n  xs: \"size-6 text-[0.625rem]\",\n  sm: \"size-8 text-caption\",\n  md: \"size-10 text-sm\",\n  lg: \"size-14 text-lg\",\n} as const;\n\nexport interface AvatarProps extends React.ComponentProps<typeof BaseAvatar.Root> {\n  src?: string;\n  /** Full name. Used for the alt text and the initials fallback. */\n  name: string;\n  size?: keyof typeof sizes;\n}\n\n/** \"Dr. Ngozi Okafor, MD\" gives \"NO\": titles and credentials are not part of the initials. */\nconst initials = (name: string) =>\n  name\n    .split(\",\")[0]\n    .replace(/^(dr|mr|mrs|ms|mx|prof)\\.?\\s+/i, \"\")\n    .split(/\\s+/)\n    .filter(Boolean)\n    .slice(0, 2)\n    .map((part) => part[0]?.toUpperCase())\n    .join(\"\");\n\nexport function Avatar({ src, name, size = \"md\", className, ...props }: AvatarProps) {\n  return (\n    <BaseAvatar.Root\n      className={cn(\n        \"inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-surface-sunken font-medium text-foreground ring-1 ring-border ring-inset select-none\",\n        sizes[size],\n        className,\n      )}\n      {...props}\n    >\n      {src && (\n        <BaseAvatar.Image\n          src={src}\n          alt={name}\n          className=\"size-full object-cover transition-opacity duration-(--dur-slow) ease-out data-[starting-style]:opacity-0\"\n        />\n      )}\n      <BaseAvatar.Fallback>{initials(name)}</BaseAvatar.Fallback>\n    </BaseAvatar.Root>\n  );\n}\n\n/** Overlapping avatars for a care team or attendee list. */\nexport function AvatarGroup({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return <div className={cn(\"flex -space-x-2 [&>*]:ring-2 [&>*]:ring-surface\", className)} {...props} />;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

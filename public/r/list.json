@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "list",
+  "title": "List",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/glide",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/list.tsx",
+      "content": "import * as React from \"react\";\nimport { ChevronRight } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\nimport { Glide } from \"./glide\";\n\n/** A vertical list of rows. One highlight glides between rows under the pointer. */\nexport function List({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return (\n    <Glide role=\"list\" highlightClassName=\"rounded-lg\" className={cn(\"flex flex-col\", className)} {...props}>\n      {children}\n    </Glide>\n  );\n}\n\nexport interface ListItemProps extends Omit<React.HTMLAttributes<HTMLElement>, \"title\"> {\n  leading?: React.ReactNode;\n  title: React.ReactNode;\n  description?: React.ReactNode;\n  /** Value, time or badge at the end of the row. */\n  trailing?: React.ReactNode;\n  /** Renders the row as a link and shows a chevron. */\n  href?: string;\n}\n\nexport function ListItem({ leading, title, description, trailing, href, className, onClick, ...props }: ListItemProps) {\n  const interactive = !!href || !!onClick;\n  const Tag = (href ? \"a\" : interactive ? \"button\" : \"div\") as \"a\";\n  return (\n    <div role=\"listitem\">\n      <Tag\n        {...(interactive ? { \"data-glide\": \"\" } : {})}\n        href={href}\n        onClick={onClick as React.MouseEventHandler<HTMLAnchorElement>}\n        className={cn(\"flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left\", interactive && \"rovr-focus cursor-pointer active:scale-[0.99]\", className)}\n        {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}\n      >\n        {leading && <span className=\"shrink-0 [&_svg]:size-4.5 [&_svg]:text-muted-foreground\">{leading}</span>}\n        <span className=\"flex min-w-0 flex-1 flex-col\">\n          <span className=\"truncate text-sm font-medium\">{title}</span>\n          {description && <span className=\"truncate text-body-sm text-muted-foreground\">{description}</span>}\n        </span>\n        {trailing && <span className=\"shrink-0 text-body-sm text-muted-foreground\">{trailing}</span>}\n        {href && <ChevronRight className=\"size-4 shrink-0 text-subtle-foreground\" aria-hidden />}\n      </Tag>\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

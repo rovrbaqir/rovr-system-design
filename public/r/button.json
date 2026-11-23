@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button",
+  "title": "Button",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/blur-swap",
+    "@rovr/spinner",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/button.tsx",
+      "content": "import * as React from \"react\";\nimport { Button as BaseButton } from \"@base-ui/react/button\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"@/lib/utils\";\nimport { BlurSwap } from \"./blur-swap\";\nimport { Spinner } from \"./spinner\";\n\nexport const buttonVariants = cva(\n  [\n    \"relative inline-flex shrink-0 items-center justify-center gap-2 rounded-full font-semibold whitespace-nowrap select-none\",\n    \"rovr-focus rovr-press cursor-pointer\",\n    \"disabled:cursor-not-allowed data-[disabled]:cursor-not-allowed disabled:opacity-45 data-[disabled]:opacity-45\",\n    \"[&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0\",\n  ],\n  {\n    variants: {\n      variant: {\n        /** The lit brand fill. One per view. */\n        primary: \"rovr-lit bg-primary text-primary-foreground hover:bg-primary-hover hover:brightness-105 data-[disabled]:shadow-none data-[disabled]:[background-image:none]\",\n        /** White pill with a brand outline, as on the app's secondary actions. */\n        outline: \"bg-surface text-accent-foreground shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--brand)_45%,transparent)] hover:bg-accent dark:bg-accent\",\n        /** Quiet neutral fill for actions that sit next to a primary. */\n        secondary: \"bg-secondary text-secondary-foreground hover:bg-secondary-hover\",\n        ghost: \"bg-transparent text-foreground hover:bg-secondary\",\n        /** Tinted, outlined red: says \"careful\" without shouting. */\n        destructive: \"bg-destructive/10 text-destructive-fg shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--destructive)_55%,transparent)] hover:bg-destructive/16\",\n        /** Solid red, for the confirming button inside a destructive dialog only. */\n        \"destructive-solid\": \"bg-destructive-solid text-on-solid hover:brightness-110\",\n        link: \"h-auto! rounded-xs px-0! font-medium text-accent-foreground underline decoration-transparent underline-offset-4 hover:decoration-current\",\n      },\n      size: {\n        sm: \"h-control-sm px-3.5 text-[0.8125rem]\",\n        md: \"h-control-md px-5 text-sm\",\n        lg: \"h-control-lg px-7 text-[0.9375rem]\",\n        \"icon-sm\": \"size-control-sm\",\n        \"icon-md\": \"size-control-md\",\n        \"icon-lg\": \"size-control-lg\",\n      },\n    },\n    defaultVariants: { variant: \"primary\", size: \"md\" },\n  },\n);\n\nexport interface ButtonProps extends React.ComponentProps<typeof BaseButton>, VariantProps<typeof buttonVariants> {\n  /** Swaps the label for a spinner and blocks further presses. Width does not change. */\n  loading?: boolean;\n}\n\nexport const Button = React.forwardRef<HTMLElement, ButtonProps>(function Button(\n  { className, variant, size, loading = false, disabled, children, onPointerMove, ...props },\n  ref,\n) {\n  const lit = (variant ?? \"primary\") === \"primary\";\n  return (\n    <BaseButton\n      ref={ref}\n      data-loading={loading || undefined}\n      aria-busy={loading || undefined}\n      disabled={disabled || loading}\n      focusableWhenDisabled={loading}\n      // The light under a primary button follows the pointer.\n      onPointerMove={\n        lit\n          ? (event) => {\n              const el = event.currentTarget as HTMLElement;\n              const rect = el.getBoundingClientRect();\n              el.style.setProperty(\"--lx\", `${((event.clientX - rect.left) / rect.width) * 100}%`);\n              onPointerMove?.(event);\n            }\n          : onPointerMove\n      }\n      className={cn(buttonVariants({ variant, size }), loading && \"opacity-100! data-[disabled]:opacity-100!\", className)}\n      {...props}\n    >\n      {/* The label keeps its space while loading so the button never changes width. */}\n      <span className={cn(\"inline-flex items-center gap-2 transition-opacity duration-(--dur-fast)\", loading && \"opacity-0\")}>{children}</span>\n      <span className=\"pointer-events-none absolute inset-0 grid place-items-center\">\n        <BlurSwap swapKey={loading ? \"loading\" : \"idle\"}>{loading ? <Spinner label=\"Loading\" /> : null}</BlurSwap>\n      </span>\n    </BaseButton>\n  );\n});\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

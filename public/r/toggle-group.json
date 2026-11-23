@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle-group",
+  "title": "Toggle Group",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/toggle-group.tsx",
+      "content": "import * as React from \"react\";\nimport { Toggle as BaseToggle } from \"@base-ui/react/toggle\";\nimport { ToggleGroup as BaseToggleGroup } from \"@base-ui/react/toggle-group\";\nimport { cn } from \"@/lib/utils\";\n\n/** A set of on/off buttons: filters, text formatting, days of the week. Pass `multiple` to allow several. */\nexport function ToggleGroup({ className, ...props }: React.ComponentProps<typeof BaseToggleGroup>) {\n  return <BaseToggleGroup className={cn(\"flex flex-wrap gap-1.5\", className)} {...props} />;\n}\n\nexport function Toggle({ className, ...props }: React.ComponentProps<typeof BaseToggle>) {\n  return (\n    <BaseToggle\n      className={cn(\n        \"inline-flex h-control-sm cursor-pointer items-center gap-1.5 rounded-full border border-border-strong px-3 text-[0.8125rem] font-medium whitespace-nowrap select-none\",\n        \"rovr-focus rovr-press text-muted-foreground hover:text-foreground\",\n        \"data-[pressed]:border-primary data-[pressed]:bg-accent data-[pressed]:text-accent-foreground\",\n        \"data-[disabled]:cursor-not-allowed data-[disabled]:opacity-45 [&_svg]:size-4\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

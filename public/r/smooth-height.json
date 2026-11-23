@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "smooth-height",
+  "title": "Smooth Height",
+  "dependencies": [],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/smooth-height.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * Animates its own height to follow its content, so a list that gains or\n * loses rows resizes in one smooth move instead of snapping. The content is\n * never animated here: it changes at once and the frame catches up.\n */\nexport function SmoothHeight({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  const outer = React.useRef<HTMLDivElement>(null);\n  const inner = React.useRef<HTMLDivElement>(null);\n  const ready = React.useRef(false);\n\n  React.useLayoutEffect(() => {\n    const frame = outer.current;\n    const content = inner.current;\n    if (!frame || !content) return;\n    const apply = () => {\n      frame.style.height = `${content.offsetHeight}px`;\n    };\n    apply();\n    // Turn the transition on only after the first size is set, so the\n    // component does not grow from zero when it mounts.\n    const raf = requestAnimationFrame(() => {\n      ready.current = true;\n      frame.style.transition = \"height var(--dur-smooth-height, 320ms) cubic-bezier(0.32, 0.72, 0, 1)\";\n    });\n    const observer = new ResizeObserver(apply);\n    observer.observe(content);\n    return () => {\n      cancelAnimationFrame(raf);\n      observer.disconnect();\n    };\n  }, []);\n\n  return (\n    <div ref={outer} className={cn(\"[overflow:clip] [overflow-clip-margin:8px] motion-reduce:[--dur-smooth-height:1ms]\", className)} {...props}>\n      <div ref={inner}>{children}</div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

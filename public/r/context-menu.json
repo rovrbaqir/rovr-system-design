@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "context-menu",
+  "title": "Context Menu",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/glide",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/context-menu.tsx",
+      "content": "import * as React from \"react\";\nimport { ContextMenu as BaseContextMenu } from \"@base-ui/react/context-menu\";\nimport { cn } from \"@/lib/utils\";\nimport { Glide } from \"./glide\";\n\n/** A right-click (or long-press) menu. Everything in it must also be reachable another way. */\nexport const ContextMenu = BaseContextMenu.Root;\nexport const ContextMenuTrigger = BaseContextMenu.Trigger;\n\nexport function ContextMenuContent({ className, children, ...props }: React.ComponentProps<typeof BaseContextMenu.Popup>) {\n  return (\n    <BaseContextMenu.Portal>\n      <BaseContextMenu.Positioner className=\"z-50 outline-none\">\n        <BaseContextMenu.Popup className={cn(\"min-w-44 rounded-md rovr-glass p-1 text-popover-foreground outline-none\", className)} {...props}>\n          <Glide follow=\"data-highlighted\">{children}</Glide>\n        </BaseContextMenu.Popup>\n      </BaseContextMenu.Positioner>\n    </BaseContextMenu.Portal>\n  );\n}\n\nexport function ContextMenuItem({ className, destructive, ...props }: React.ComponentProps<typeof BaseContextMenu.Item> & { destructive?: boolean }) {\n  return (\n    <BaseContextMenu.Item\n      className={cn(\n        \"flex min-h-9 cursor-default items-center gap-2.5 rounded-sm px-2.5 py-1.5 text-sm outline-none select-none\",\n        \"data-[disabled]:pointer-events-none data-[disabled]:opacity-45 [&_svg]:size-4 [&_svg]:text-muted-foreground\",\n        destructive && \"text-destructive-fg [&_svg]:text-destructive-fg\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

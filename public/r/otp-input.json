@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "otp-input",
+  "title": "Otp Input",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/otp-input.tsx",
+      "content": "import * as React from \"react\";\nimport { OTPField } from \"@base-ui/react/otp-field\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface OtpInputProps extends Omit<React.ComponentProps<typeof OTPField.Root>, \"children\" | \"length\"> {\n  length?: number;\n  invalid?: boolean;\n}\n\n/** One-time code entry for sign-in and kiosk check-in. Paste fills every box. */\nexport function OtpInput({ length = 6, invalid, className, ...props }: OtpInputProps) {\n  return (\n    <OTPField.Root length={length} className={cn(\"flex gap-2\", className)} {...props}>\n      {Array.from({ length }, (_, i) => (\n        <OTPField.Input\n          key={i}\n          aria-invalid={invalid}\n          aria-label={`Digit ${i + 1} of ${length}`}\n          className={cn(\n            \"h-12 w-10 rounded-md border border-input bg-surface text-center text-lg font-medium text-data outline-none\",\n            \"transition-[border-color,box-shadow] duration-(--dur-fast) ease-out\",\n            \"focus:border-primary focus:shadow-[0_0_0_3px_color-mix(in_oklab,var(--brand)_22%,transparent)]\",\n            \"aria-invalid:border-destructive disabled:bg-surface-sunken\",\n            i === length / 2 && \"ml-2\",\n          )}\n        />\n      ))}\n    </OTPField.Root>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

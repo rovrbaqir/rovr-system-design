@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table",
+  "title": "Table",
+  "dependencies": [],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/table.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport function Table({ className, ...props }: React.TableHTMLAttributes<HTMLTableElement>) {\n  return (\n    <div className=\"w-full overflow-x-auto\">\n      <table className={cn(\"w-full caption-bottom border-collapse text-sm\", className)} {...props} />\n    </div>\n  );\n}\nexport function TableHeader(props: React.HTMLAttributes<HTMLTableSectionElement>) {\n  return <thead {...props} />;\n}\nexport function TableBody(props: React.HTMLAttributes<HTMLTableSectionElement>) {\n  return <tbody {...props} />;\n}\nexport function TableRow({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) {\n  return (\n    <tr\n      className={cn(\n        \"border-b border-border transition-colors duration-(--dur-instant) last:border-0\",\n        \"[tbody>&]:hover:bg-secondary data-[selected]:bg-accent\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\nexport function TableHead({ className, numeric, ...props }: React.ThHTMLAttributes<HTMLTableCellElement> & { numeric?: boolean }) {\n  return (\n    <th\n      scope=\"col\"\n      className={cn(\"h-9 px-3 text-left text-overline whitespace-nowrap text-muted-foreground first:pl-0 last:pr-0\", numeric && \"text-right\", className)}\n      {...props}\n    />\n  );\n}\nexport function TableCell({ className, numeric, ...props }: React.TdHTMLAttributes<HTMLTableCellElement> & { numeric?: boolean }) {\n  return <td className={cn(\"h-row px-3 first:pl-0 last:pr-0\", numeric && \"text-right text-data\", className)} {...props} />;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

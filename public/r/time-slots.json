@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "time-slots",
+  "title": "Time Slots",
+  "dependencies": [],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/patterns/time-slots.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\n\nexport interface TimeSlot {\n  /** Machine value, e.g. an ISO time or slot id. */\n  value: string;\n  /** What the person sees: \"9:30 AM\". */\n  label: string;\n  available?: boolean;\n}\n\nexport interface TimeSlotsProps {\n  slots: TimeSlot[];\n  value: string | null;\n  onValueChange: (value: string) => void;\n  \"aria-label\": string;\n  className?: string;\n}\n\n/** Available appointment times as a grid of choices. Pair with Calendar in a booking flow. */\nexport function TimeSlots({ slots, value, onValueChange, className, ...props }: TimeSlotsProps) {\n  return (\n    <div role=\"radiogroup\" className={cn(\"grid grid-cols-[repeat(auto-fill,minmax(5.5rem,1fr))] gap-2\", className)} {...props}>\n      {slots.map((slot) => {\n        const selected = slot.value === value;\n        const off = slot.available === false;\n        return (\n          <button\n            key={slot.value}\n            type=\"button\"\n            role=\"radio\"\n            aria-checked={selected}\n            disabled={off}\n            onClick={() => onValueChange(slot.value)}\n            className={cn(\n              \"h-control-md cursor-pointer rounded-md border border-border-strong text-sm font-medium text-data rovr-focus rovr-press\",\n              \"hover:border-primary disabled:cursor-not-allowed disabled:border-border disabled:text-subtle-foreground disabled:line-through disabled:hover:border-border\",\n              selected && \"border-primary bg-primary text-primary-foreground\",\n            )}\n          >\n            {slot.label}\n          </button>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:block"
+}

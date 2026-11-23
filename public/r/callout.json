@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "callout",
+  "title": "Callout",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/callout.tsx",
+      "content": "import * as React from \"react\";\nimport { CircleAlert, CircleCheck, Info, TriangleAlert } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nconst tones = {\n  info: { icon: \"text-primary\", Icon: Info },\n  success: { icon: \"text-success-fg\", Icon: CircleCheck },\n  warning: { icon: \"text-warning-fg\", Icon: TriangleAlert },\n  danger: { icon: \"text-destructive-fg\", Icon: CircleAlert },\n} as const;\n\nexport interface CalloutProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"title\"> {\n  tone?: keyof typeof tones;\n  title?: React.ReactNode;\n  /** Buttons or links that resolve the message. Sits at the end of the row. */\n  action?: React.ReactNode;\n}\n\n/** An inline message that stays on the page. Use role=\"alert\" when it appears in response to an action. */\nexport function Callout({ tone = \"info\", title, action, className, children, ...props }: CalloutProps) {\n  const { icon, Icon } = tones[tone];\n  return (\n    <div className={cn(\"flex flex-wrap items-start gap-x-3 gap-y-2 rounded-lg rovr-risen px-4 py-3.5\", className)} {...props}>\n      <Icon className={cn(\"mt-0.5 size-4.5 shrink-0\", icon)} aria-hidden />\n      <div className=\"flex min-w-48 flex-1 flex-col gap-0.5\">\n        {title && <p className=\"text-title-sm\">{title}</p>}\n        {children && <div className=\"text-body-sm text-muted-foreground\">{children}</div>}\n      </div>\n      {action && <div className=\"flex shrink-0 items-center gap-2\">{action}</div>}\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

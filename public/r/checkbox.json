@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox",
+  "title": "Checkbox",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/checkbox.tsx",
+      "content": "import * as React from \"react\";\nimport { Checkbox as BaseCheckbox } from \"@base-ui/react/checkbox\";\nimport { cn } from \"@/lib/utils\";\n\nexport const Checkbox = React.forwardRef<HTMLElement, React.ComponentProps<typeof BaseCheckbox.Root>>(function Checkbox(\n  { className, ...props },\n  ref,\n) {\n  return (\n    <BaseCheckbox.Root\n      ref={ref}\n      className={cn(\n        \"peer grid size-5 shrink-0 place-items-center rounded-[5px] border border-input bg-surface text-primary-foreground\",\n        \"rovr-focus cursor-pointer hover:border-border-strong active:scale-90 data-[checked]:shadow-[0_2px_6px_-2px_color-mix(in_oklab,var(--primary)_60%,transparent)]\",\n        \"data-[checked]:border-primary data-[checked]:bg-primary data-[indeterminate]:border-primary data-[indeterminate]:bg-primary\",\n        \"data-[invalid]:border-destructive data-[disabled]:cursor-not-allowed data-[disabled]:opacity-45\",\n        className,\n      )}\n      {...props}\n    >\n      <BaseCheckbox.Indicator\n        keepMounted\n        className=\"group/ind grid place-items-center\"\n        render={(indicatorProps, state) => (\n          <span {...indicatorProps}>\n            <svg viewBox=\"0 0 16 16\" fill=\"none\" className=\"size-3.5\" aria-hidden>\n              {state.indeterminate ? (\n                <path d=\"M4 8h8\" stroke=\"currentColor\" strokeWidth=\"2\" strokeLinecap=\"round\" />\n              ) : (\n                <path\n                  d=\"M3.5 8.4l2.9 2.9 6.1-6.6\"\n                  pathLength={1}\n                  stroke=\"currentColor\"\n                  strokeWidth=\"2\"\n                  strokeLinecap=\"round\"\n                  strokeLinejoin=\"round\"\n                  strokeDasharray={1}\n                  style={{\n                    strokeDashoffset: state.checked ? 0 : 1,\n                    transition: `stroke-dashoffset var(--dur-base) var(--ease-out) ${state.checked ? \"60ms\" : \"0ms\"}`,\n                  }}\n                />\n              )}\n            </svg>\n          </span>\n        )}\n      />\n    </BaseCheckbox.Root>\n  );\n});\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "meter",
+  "title": "Meter",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/meter.tsx",
+      "content": "import * as React from \"react\";\nimport { Meter as BaseMeter } from \"@base-ui/react/meter\";\nimport { cn } from \"@/lib/utils\";\n\nconst tones = { primary: \"bg-primary\", success: \"bg-success\", warning: \"bg-warning\", danger: \"bg-destructive\" } as const;\n\nexport interface MeterProps extends React.ComponentProps<typeof BaseMeter.Root> {\n  label: string;\n  /** The value as people read it: \"6.2 of 8 hours\". */\n  valueText: string;\n  tone?: keyof typeof tones;\n}\n\n/** A measured amount against a known range: capacity, adherence, a goal. Use Progress for work that is under way. */\nexport function Meter({ label, valueText, tone = \"primary\", className, ...props }: MeterProps) {\n  return (\n    <BaseMeter.Root className={cn(\"flex w-full flex-col gap-2\", className)} aria-valuetext={valueText} {...props}>\n      <div className=\"flex items-baseline justify-between gap-3\">\n        <BaseMeter.Label className=\"text-label\">{label}</BaseMeter.Label>\n        <span className=\"text-body-sm text-muted-foreground text-data\">{valueText}</span>\n      </div>\n      <BaseMeter.Track className=\"h-2 overflow-hidden rounded-full bg-secondary-hover\">\n        <BaseMeter.Indicator className={cn(\"rounded-full transition-[width] duration-(--dur-gentle) ease-gentle\", tones[tone])} />\n      </BaseMeter.Track>\n    </BaseMeter.Root>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

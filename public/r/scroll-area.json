@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-area",
+  "title": "Scroll Area",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/scroll-area.tsx",
+      "content": "import * as React from \"react\";\nimport { ScrollArea as BaseScrollArea } from \"@base-ui/react/scroll-area\";\nimport { cn } from \"@/lib/utils\";\n\nexport function ScrollArea({ className, children, ...props }: React.ComponentProps<typeof BaseScrollArea.Root>) {\n  return (\n    <BaseScrollArea.Root className={cn(\"relative overflow-hidden\", className)} {...props}>\n      <BaseScrollArea.Viewport className=\"size-full overscroll-contain rounded-[inherit] outline-none\">{children}</BaseScrollArea.Viewport>\n      <BaseScrollArea.Scrollbar className=\"flex w-2.5 justify-center p-0.5 opacity-0 transition-opacity duration-(--dur-base) data-[hovering]:opacity-100 data-[scrolling]:opacity-100\">\n        <BaseScrollArea.Thumb className=\"w-full rounded-full bg-border-strong\" />\n      </BaseScrollArea.Scrollbar>\n    </BaseScrollArea.Root>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

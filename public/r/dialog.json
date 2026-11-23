@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog",
+  "title": "Dialog",
+  "dependencies": [
+    "@base-ui/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/button",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/dialog.tsx",
+      "content": "import * as React from \"react\";\nimport { Dialog as BaseDialog } from \"@base-ui/react/dialog\";\nimport { X } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\nimport { buttonVariants } from \"./button\";\n\nexport const Dialog = BaseDialog.Root;\nexport const DialogTrigger = BaseDialog.Trigger;\nexport const DialogClose = BaseDialog.Close;\n\nexport function DialogContent({\n  className,\n  children,\n  size = \"md\",\n  hideClose,\n  ...props\n}: React.ComponentProps<typeof BaseDialog.Popup> & { size?: \"sm\" | \"md\" | \"lg\"; hideClose?: boolean }) {\n  return (\n    <BaseDialog.Portal>\n      <BaseDialog.Backdrop className=\"rovr-backdrop fixed inset-0 z-50\" />\n      <BaseDialog.Popup\n        className={cn(\n          \"rovr-dialog fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2\",\n          \"flex max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] flex-col gap-5 overflow-y-auto\",\n          \"rounded-2xl rovr-chrome p-6 text-popover-foreground outline-none\",\n          { sm: \"max-w-sm\", md: \"max-w-lg\", lg: \"max-w-2xl\" }[size],\n          className,\n        )}\n        {...props}\n      >\n        {children}\n        {!hideClose && (\n          <BaseDialog.Close\n            aria-label=\"Close\"\n            className={cn(buttonVariants({ variant: \"ghost\", size: \"icon-sm\" }), \"absolute top-4 right-4 text-muted-foreground\")}\n          >\n            <X />\n          </BaseDialog.Close>\n        )}\n      </BaseDialog.Popup>\n    </BaseDialog.Portal>\n  );\n}\n\nexport function DialogHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return <div className={cn(\"flex flex-col gap-1.5 pr-8\", className)} {...props} />;\n}\n\nexport function DialogTitle({ className, ...props }: React.ComponentProps<typeof BaseDialog.Title>) {\n  return <BaseDialog.Title className={cn(\"text-display-sm\", className)} {...props} />;\n}\n\nexport function DialogDescription({ className, ...props }: React.ComponentProps<typeof BaseDialog.Description>) {\n  return <BaseDialog.Description className={cn(\"text-body text-muted-foreground\", className)} {...props} />;\n}\n\nexport function DialogFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return <div className={cn(\"flex flex-col-reverse gap-2 sm:flex-row sm:justify-end\", className)} {...props} />;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

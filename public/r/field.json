@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "field",
+  "title": "Field",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/field.tsx",
+      "content": "import * as React from \"react\";\nimport { Field as BaseField } from \"@base-ui/react/field\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * Field groups a label, a control, help text and an error message, and wires\n * up the ids and aria attributes between them.\n */\nexport function Field({ className, ...props }: React.ComponentProps<typeof BaseField.Root>) {\n  return <BaseField.Root className={cn(\"flex w-full flex-col gap-1.5\", className)} {...props} />;\n}\n\nexport function FieldLabel({\n  className,\n  optional,\n  children,\n  ...props\n}: React.ComponentProps<typeof BaseField.Label> & { optional?: boolean }) {\n  return (\n    <BaseField.Label className={cn(\"text-label text-foreground data-[disabled]:text-muted-foreground\", className)} {...props}>\n      {children}\n      {optional && <span className=\"ml-1.5 font-normal text-muted-foreground\">Optional</span>}\n    </BaseField.Label>\n  );\n}\n\nexport function FieldDescription({ className, ...props }: React.ComponentProps<typeof BaseField.Description>) {\n  return <BaseField.Description className={cn(\"text-body-sm text-muted-foreground\", className)} {...props} />;\n}\n\n/** Says what is wrong and how to fix it. Slides in under the control. */\nexport function FieldError({ className, ...props }: React.ComponentProps<typeof BaseField.Error>) {\n  return (\n    <BaseField.Error\n      className={cn(\n        \"text-body-sm text-destructive-fg transition-[opacity,translate] duration-(--dur-base) ease-out\",\n        \"data-[starting-style]:-translate-y-(--motion-shift) data-[starting-style]:opacity-0\",\n        \"data-[ending-style]:opacity-0\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\n/** Plain label for controls used outside a Field. */\nexport const Label = React.forwardRef<HTMLLabelElement, React.LabelHTMLAttributes<HTMLLabelElement>>(function Label(\n  { className, ...props },\n  ref,\n) {\n  return <label ref={ref} className={cn(\"text-label text-foreground\", className)} {...props} />;\n});\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

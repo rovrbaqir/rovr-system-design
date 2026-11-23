@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page-header",
+  "title": "Page Header",
+  "dependencies": [],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/patterns/page-header.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface PageHeaderProps extends Omit<React.HTMLAttributes<HTMLElement>, \"title\"> {\n  title: React.ReactNode;\n  description?: React.ReactNode;\n  /** Breadcrumbs or a back link, shown above the title. */\n  navigation?: React.ReactNode;\n  /** Page-level actions. One primary button at most. */\n  actions?: React.ReactNode;\n}\n\n/** The single header every screen uses, replacing the per-module headers. */\nexport function PageHeader({ title, description, navigation, actions, className, ...props }: PageHeaderProps) {\n  return (\n    <header className={cn(\"flex flex-col gap-3\", className)} {...props}>\n      {navigation}\n      <div className=\"flex flex-wrap items-end justify-between gap-x-6 gap-y-3\">\n        <div className=\"flex min-w-0 flex-col gap-1.5\">\n          <h1 className=\"text-display-md compact:text-display-sm\">{title}</h1>\n          {description && <p className=\"max-w-[60ch] text-body text-muted-foreground\">{description}</p>}\n        </div>\n        {actions && <div className=\"flex shrink-0 items-center gap-2\">{actions}</div>}\n      </div>\n    </header>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:block"
+}

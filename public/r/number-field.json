@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "number-field",
+  "title": "Number Field",
+  "dependencies": [
+    "@base-ui/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/number-field.tsx",
+      "content": "import * as React from \"react\";\nimport { NumberField as BaseNumberField } from \"@base-ui/react/number-field\";\nimport { Minus, Plus } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nconst step = \"grid w-9 cursor-pointer place-items-center text-muted-foreground transition-colors duration-(--dur-instant) hover:bg-secondary hover:text-foreground data-[disabled]:cursor-not-allowed data-[disabled]:opacity-40 [&_svg]:size-3.5\";\n\n/** A number with stepper buttons: quantity, dose count, days supply. */\nexport function NumberField({ className, ...props }: React.ComponentProps<typeof BaseNumberField.Root>) {\n  return (\n    <BaseNumberField.Root className={cn(\"w-32\", className)} {...props}>\n      <BaseNumberField.Group className=\"flex h-control-md overflow-hidden rounded-md border border-input bg-surface transition-[border-color,box-shadow] duration-(--dur-fast) ease-out focus-within:border-primary focus-within:shadow-[0_0_0_3px_color-mix(in_oklab,var(--brand)_22%,transparent)]\">\n        <BaseNumberField.Decrement aria-label=\"Decrease\" className={cn(step, \"border-r border-border\")}>\n          <Minus />\n        </BaseNumberField.Decrement>\n        <BaseNumberField.Input className=\"w-full min-w-0 bg-transparent text-center text-sm text-data outline-none\" />\n        <BaseNumberField.Increment aria-label=\"Increase\" className={cn(step, \"border-l border-border\")}>\n          <Plus />\n        </BaseNumberField.Increment>\n      </BaseNumberField.Group>\n    </BaseNumberField.Root>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

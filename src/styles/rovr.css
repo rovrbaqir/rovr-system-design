@@ -1,0 +1,693 @@
+/*
+ * RoVR design tokens
+ * ------------------
+ * One file holds every design decision: colour, type, radius, spacing for
+ * controls, depth and motion. Components never hard-code a hex value or a
+ * duration; they read these variables. Dark mode, compact density and tenant
+ * themes are all variable swaps on a parent element.
+ *
+ *   <html class="dark">                 dark theme
+ *   <div data-density="compact">        provider-app density
+ *   <div style="--brand: …">            tenant accent override
+ */
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant compact (&:where([data-density="compact"], [data-density="compact"] *));
+
+/* ------------------------------------------------------------------ */
+/* 1. Primitive + semantic tokens                                      */
+/* ------------------------------------------------------------------ */
+
+/* The palette, elevation and springs are the mobile app's
+   (health-patient-app/src/theme), so web and mobile are one product. */
+:root {
+  color-scheme: light;
+
+  /* Brand anchors */
+  --brand: #546eff;
+  --navy: #152163;
+  --ink: #152163;
+  --pulse-from: #546eff;
+  --pulse-to: #c13bff;
+
+  /* Surfaces, from the mobile app: warm paper canvas, white forms that float on
+     a soft warm shadow, and a lavender step for rows inside a form. */
+  --background: #fcfbfa;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f2f3fe;
+  --surface-inverse: #152163;
+
+  /* Text: navy, never black, as in the mobile app. */
+  --foreground: #152163;
+  --muted-foreground: color-mix(in oklab, #152163 66%, white);
+  --subtle-foreground: color-mix(in oklab, #152163 48%, white);
+  --inverse-foreground: #ffffff;
+
+  /* Lines: navy at low alpha. */
+  --border: color-mix(in oklab, #152163 12%, transparent);
+  --border-strong: color-mix(in oklab, #152163 24%, transparent);
+  --input: color-mix(in oklab, #152163 20%, transparent);
+
+  /* Primary action. One step deeper than #546EFF so white text passes AA;
+     the lit highlight on top brings it back to the brand blue by eye. */
+  --primary: oklch(0.55 0.215 270.5);
+  --primary-hover: oklch(0.51 0.215 270.5);
+  --primary-foreground: #ffffff;
+
+  /* Quiet neutral fills for hover and selection: never brand-tinted. */
+  --secondary: color-mix(in oklab, #152163 5%, transparent);
+  --secondary-hover: color-mix(in oklab, #152163 9%, transparent);
+  --secondary-foreground: #152163;
+  --accent: color-mix(in oklab, var(--brand) 10%, white);
+  --accent-foreground: oklch(0.5 0.215 270.5);
+  --muted: var(--surface-sunken);
+
+  --ring: var(--brand);
+
+  /* Status, from the app's semantic set. `-fg` is the text-safe step. */
+  --success: #009b17;
+  --success-fg: #00720f;
+  --warning: #c46c15;
+  --warning-fg: #9a520b;
+  --destructive: #ff4c6d;
+  --destructive-fg: #c81e42;
+  --destructive-solid: #d92a4d;
+  --info: var(--brand);
+  --info-fg: var(--accent-foreground);
+  --on-solid: #ffffff;
+
+  /* Chart series, in fixed order. Validated for colour-blind separation
+     and 3:1 against the card surface in each theme. */
+  --chart-1: #546eff;
+  --chart-2: #0e9f8e;
+  --chart-3: #c8780f;
+  --chart-4: #c13bff;
+  --chart-5: #e0457b;
+
+  /* Glass: milky frost for small floating UI, near-opaque chrome for panels. */
+  --glass: rgb(255 255 255 / 0.88);
+  --glass-blur: saturate(1.6) blur(28px);
+  --chrome: #ffffff;
+  /* Frost: a clear pane for panels that sit on the aurora surface. */
+  --frost: rgb(255 255 255 / 0.14);
+  --frost-strong: rgb(255 255 255 / 0.22);
+  --frost-edge: rgb(255 255 255 / 0.3);
+  --frost-blur: saturate(1.4) blur(40px);
+  /* Aurora: the one rich surface. The brand gradient, navy opening to blue. */
+  --aurora: radial-gradient(60% 90% at 100% 0%, rgb(160 174 255 / 0.55) 0%, transparent 60%), radial-gradient(120% 150% at 0% 50%, #152163 0%, #2a3aae 50%, #4a63f2 100%);
+  --scrim: rgb(0 0 0 / 0.25);
+
+  /* shadcn-compatible aliases */
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: var(--glass);
+  --popover-foreground: var(--foreground);
+
+  /* Radius. Forms are generously curved; controls are full pills. */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+
+  /* Control heights. Comfortable is the patient-app default. */
+  --control-sm: 2rem;
+  --control-md: 2.5rem;
+  --control-lg: 3rem;
+  --control-px: 1rem;
+  --row-h: 3.25rem;
+  --card-pad: 1.5rem;
+
+  /* Elevation. `risen` is the mobile app's one card shadow: wide, soft, warm ink. */
+  --shadow-risen: 0 0 0 1px color-mix(in oklab, #152163 7%, transparent), 0 1px 2px rgb(58 51 44 / 0.04), 0 8px 22px -4px rgb(58 51 44 / 0.08);
+  --shadow-risen-hover: 0 0 0 1px color-mix(in oklab, #152163 10%, transparent), 0 2px 4px rgb(58 51 44 / 0.05), 0 16px 34px -6px rgb(58 51 44 / 0.14);
+  --shadow-overlay: 0 0 0 1px color-mix(in oklab, #152163 8%, transparent), 0 4px 10px rgb(58 51 44 / 0.06), 0 22px 48px -12px rgb(58 51 44 / 0.26);
+  --shadow-raised: 0 0 0 1px color-mix(in oklab, #152163 8%, transparent), 0 1px 3px rgb(58 51 44 / 0.08);
+
+  /* Motion. The two springs are the mobile app's Reanimated springs,
+     sampled into CSS: gentle (damping 22, mass 0.9, stiffness 180) lands
+     softly; snappy (damping 18, mass 0.6, stiffness 320) has a hint of bounce. */
+  --spring-gentle: linear(0, 0.045, 0.147, 0.274, 0.405, 0.53, 0.637, 0.727, 0.8, 0.858, 0.902, 0.935, 0.959, 0.976, 0.987, 0.995, 1, 1.002, 1.004, 1.004, 1.004, 1.004, 1.003, 1.003, 1.002, 1.002, 1.001, 1.001, 1);
+  --spring-snappy: linear(0, 0.074, 0.234, 0.431, 0.615, 0.776, 0.899, 0.982, 1.034, 1.06, 1.067, 1.063, 1.052, 1.039, 1.026, 1.015, 1.007, 1.001, 0.998, 0.996, 0.995, 0.996, 0.996, 0.997, 0.998, 0.999, 1, 1, 1);
+  --dur-gentle: 645ms;
+  --dur-snappy: 500ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1); /* the app's swap easing: quick start, long settle */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  /* Overlays. Panels that slide use the iOS sheet curve; things that appear
+     in place use a short deceleration. Neither bounces: an overlay should
+     arrive, not perform. */
+  --ease-panel: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-appear: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-panel: 420ms;
+  --dur-appear: 180ms;
+  --ease-spring: var(--spring-snappy);
+  --dur-instant: 90ms;
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
+  --dur-slower: 600ms;
+
+  /* Movement amounts. Zeroed under reduced motion, so opacity and colour
+     feedback stay while travel, scale and blur go away. */
+  --motion-shift: 8px;
+  --motion-shift-lg: 18px;
+  --motion-scale: 0.94;
+  --motion-blur: 8px;
+  --press-scale: 0.97;
+  --lift: -2px;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --ink: #ffffff;
+  --background: #000000;
+  --surface: #171717;
+  --surface-raised: #222222;
+  --surface-sunken: #0e0e0e;
+  --surface-inverse: #ffffff;
+
+  --foreground: #ffffff;
+  --muted-foreground: #c8c8c8;
+  --subtle-foreground: #8a8a8a;
+  --inverse-foreground: #152163;
+
+  --border: rgb(255 255 255 / 0.1);
+  --border-strong: rgb(255 255 255 / 0.2);
+  --input: rgb(255 255 255 / 0.18);
+
+  --primary: #546eff;
+  --primary-hover: #677eff;
+  --primary-foreground: #ffffff;
+
+  --secondary: rgb(255 255 255 / 0.08);
+  --secondary-hover: rgb(255 255 255 / 0.13);
+  --secondary-foreground: #ffffff;
+  --accent: color-mix(in oklab, var(--brand) 20%, #171717);
+  --accent-foreground: #aab6ff;
+
+  --ring: #7c8fff;
+
+  --success: #2fd14a;
+  --success-fg: #4fe067;
+  --warning: #f0a04b;
+  --warning-fg: #f5b36c;
+  --destructive: #ff4c6d;
+  --destructive-fg: #ff7f97;
+  --destructive-solid: #e23556;
+  --on-solid: #ffffff;
+
+  --chart-1: #5f76ff;
+  --chart-2: #17a090;
+  --chart-3: #c98220;
+  --chart-4: #b955ee;
+  --chart-5: #dc5585;
+
+  --glass: rgb(28 28 30 / 0.86);
+  --chrome: #1c1c1e;
+  --frost: rgb(255 255 255 / 0.08);
+  --frost-strong: rgb(255 255 255 / 0.14);
+  --frost-edge: rgb(255 255 255 / 0.16);
+  --aurora: radial-gradient(60% 90% at 100% 0%, rgb(84 110 255 / 0.5) 0%, transparent 60%), radial-gradient(120% 150% at 0% 50%, #0b1136 0%, #17227a 55%, #2f43c8 100%);
+  --scrim: rgb(0 0 0 / 0.6);
+
+  --shadow-risen: 0 0 0 1px rgb(255 255 255 / 0.07), 0 10px 24px -6px rgb(0 0 0 / 0.45);
+  --shadow-risen-hover: 0 0 0 1px rgb(255 255 255 / 0.12), 0 18px 36px -8px rgb(0 0 0 / 0.6);
+  --shadow-overlay: 0 0 0 1px rgb(255 255 255 / 0.1), 0 24px 56px -12px rgb(0 0 0 / 0.8);
+  --shadow-raised: 0 0 0 1px rgb(255 255 255 / 0.1), 0 1px 3px rgb(0 0 0 / 0.5);
+}
+
+/* Provider-app density: same components, tighter controls and rows. */
+[data-density="compact"] {
+  --control-sm: 1.75rem;
+  --control-md: 2rem;
+  --control-lg: 2.5rem;
+  --control-px: 0.75rem;
+  --row-h: 2.5rem;
+  --card-pad: 1rem;
+  --radius-xl: 22px;
+  --radius-2xl: 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-shift: 0px;
+    --motion-shift-lg: 0px;
+    --motion-scale: 1;
+    --motion-blur: 0px;
+    --press-scale: 1;
+    --lift: 0px;
+    --spring-gentle: var(--ease-out);
+    --spring-snappy: var(--ease-out);
+    --dur-gentle: 200ms;
+    --dur-snappy: 150ms;
+    --dur-slow: 200ms;
+    --dur-slower: 200ms;
+    --dur-panel: 1ms;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* 2. Tailwind theme mapping                                           */
+/* ------------------------------------------------------------------ */
+
+@theme inline {
+  --font-sans: "DM Sans Variable", "DM Sans", Helvetica, Arial, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", monospace;
+
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-inverse-foreground: var(--inverse-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-brand: var(--brand);
+  --color-navy: var(--navy);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-success-fg: var(--success-fg);
+  --color-warning: var(--warning);
+  --color-warning-fg: var(--warning-fg);
+  --color-destructive: var(--destructive);
+  --color-destructive-fg: var(--destructive-fg);
+  --color-destructive-solid: var(--destructive-solid);
+  --color-info: var(--info);
+  --color-info-fg: var(--info-fg);
+  --color-ink: var(--ink);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-glass: var(--glass);
+  --color-chrome: var(--chrome);
+  --color-scrim: var(--scrim);
+  --color-on-solid: var(--on-solid);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+
+  --spacing-control-sm: var(--control-sm);
+  --spacing-control-md: var(--control-md);
+  --spacing-control-lg: var(--control-lg);
+  --spacing-control-px: var(--control-px);
+  --spacing-row: var(--row-h);
+  --spacing-card: var(--card-pad);
+
+  --shadow-overlay: var(--shadow-overlay);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-risen: var(--shadow-risen);
+  --shadow-risen-hover: var(--shadow-risen-hover);
+
+  --ease-out: var(--ease-out);
+  --ease-in-out: var(--ease-in-out);
+  --ease-spring: var(--ease-spring);
+  --ease-gentle: var(--spring-gentle);
+  --ease-snappy: var(--spring-snappy);
+  --ease-panel: var(--ease-panel);
+  --ease-appear: var(--ease-appear);
+
+  --animate-spin-smooth: rovr-spin 0.8s linear infinite;
+  --animate-shimmer: rovr-shimmer 1.6s var(--ease-in-out) infinite;
+  --animate-indeterminate: rovr-indeterminate 1.4s var(--ease-in-out) infinite;
+}
+
+@keyframes rovr-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+@keyframes rovr-shimmer {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}
+@keyframes rovr-indeterminate {
+  0% {
+    translate: -100% 0;
+  }
+  100% {
+    translate: 250% 0;
+  }
+}
+@keyframes rovr-enter {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes rovr-check {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* 3. Base                                                             */
+/* ------------------------------------------------------------------ */
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--border-strong) transparent;
+    scrollbar-width: thin;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    caret-color: var(--primary);
+  }
+  /* Lucide at the landing page's stroke weight. */
+  .lucide {
+    stroke-width: 1.5;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--brand) 24%, transparent);
+  }
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* 4. Type roles                                                       */
+/* ------------------------------------------------------------------ */
+
+/* Display: DM Sans medium, set tight, as on the landing page.
+   For page and section headlines. */
+@utility text-display-xl {
+  font-size: 3.25rem;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  font-weight: 500;
+}
+@utility text-display-lg {
+  font-size: 2.375rem;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+}
+@utility text-display-md {
+  font-size: 1.75rem;
+  line-height: 1.12;
+  letter-spacing: -0.032em;
+  font-weight: 500;
+}
+@utility text-display-sm {
+  font-size: 1.375rem;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+/* Titles and text */
+@utility text-title-lg {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.012em;
+  font-weight: 600;
+}
+@utility text-title-md {
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  letter-spacing: -0.008em;
+  font-weight: 600;
+}
+@utility text-title-sm {
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  letter-spacing: -0.004em;
+  font-weight: 600;
+}
+@utility text-body-lg {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+@utility text-body {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+@utility text-body-sm {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+@utility text-label {
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  font-weight: 500;
+}
+@utility text-caption {
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+/* The landing page's small tracked capitals. For table column headers and
+   group labels only; never stacked above a headline. */
+@utility text-overline {
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+/* Data: tabular lining figures for vitals, labs, doses, money, times. */
+@utility text-data {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum", "zero" 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* 5. Motion + interaction recipes                                     */
+/* ------------------------------------------------------------------ */
+
+/* Interactive base. Colour changes are quick; anything that moves rides
+   the snappy spring, so a release overshoots a hair and settles. */
+@utility rovr-focus {
+  outline: 2px solid transparent;
+  outline-offset: 0px;
+  transition:
+    outline-color var(--dur-fast) var(--ease-out),
+    outline-offset var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    filter var(--dur-base) var(--ease-out),
+    scale var(--dur-snappy) var(--spring-snappy),
+    translate var(--dur-snappy) var(--spring-snappy);
+  &:focus-visible {
+    outline-color: var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+/* Press: the app's one press feel. Goes down fast, springs back. */
+@utility rovr-press {
+  &:active:not(:disabled, [data-disabled]) {
+    scale: var(--press-scale);
+    transition-duration: var(--dur-fast), var(--dur-fast), var(--dur-fast), var(--dur-fast), var(--dur-fast), var(--dur-fast), var(--dur-base), var(--dur-base), 110ms, 110ms;
+    transition-timing-function: var(--ease-out);
+  }
+}
+
+/* Risen surface: floats on the paper, rises further when it is a target. */
+@utility rovr-risen {
+  background: var(--surface);
+  box-shadow: var(--shadow-risen);
+}
+@utility rovr-lift {
+  transition:
+    box-shadow var(--dur-slow) var(--ease-out),
+    translate var(--dur-gentle) var(--spring-gentle),
+    scale var(--dur-snappy) var(--spring-snappy),
+    outline-color var(--dur-fast) var(--ease-out),
+    outline-offset var(--dur-fast) var(--ease-out);
+  @media (hover: hover) {
+    &:hover {
+      translate: 0 var(--lift);
+      box-shadow: var(--shadow-risen-hover);
+    }
+  }
+  &:active {
+    scale: 0.99;
+    translate: 0 0;
+    box-shadow: var(--shadow-risen);
+    transition-duration: 110ms;
+  }
+}
+
+/* Glass: milky frost for menus, popovers, tooltips and toasts. Falls back
+   to a near-opaque fill where backdrop-filter is unavailable. */
+@utility rovr-glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-overlay), inset 0 1px 0 rgb(255 255 255 / 0.5);
+  @supports not (backdrop-filter: blur(1px)) {
+    background: var(--chrome);
+  }
+  .dark & {
+    box-shadow: var(--shadow-overlay), inset 0 1px 0 rgb(255 255 255 / 0.08);
+  }
+}
+/* Aurora: the rich brand surface a page gets one of. Text on it is white. */
+@utility rovr-aurora {
+  background: var(--aurora);
+  color: #ffffff;
+}
+/* Frost: a clear glass pane. Only meaningful on top of the aurora surface
+   or imagery; on a plain surface use a tone step instead. */
+@utility rovr-frost {
+  background: var(--frost);
+  -webkit-backdrop-filter: var(--frost-blur);
+  backdrop-filter: var(--frost-blur);
+  box-shadow:
+    inset 0 0 0 1px var(--frost-edge),
+    inset 0 1px 0 rgb(255 255 255 / 0.25);
+  @supports not (backdrop-filter: blur(1px)) {
+    background: rgb(255 255 255 / 0.24);
+  }
+}
+/* Chrome: near-opaque panel for dialogs and sheets, where labels must
+   never compete with what is underneath. */
+@utility rovr-chrome {
+  background: var(--chrome);
+  box-shadow: var(--shadow-overlay);
+}
+
+/* Popups (menu, select, popover, tooltip) appear from their trigger: a
+   small scale and fade, fast, no bounce and no blur. Exit is quicker still. */
+@utility rovr-pop {
+  transform-origin: var(--transform-origin, center);
+  transition:
+    opacity var(--dur-appear) var(--ease-appear),
+    scale var(--dur-appear) var(--ease-appear);
+  &[data-starting-style],
+  &[data-ending-style] {
+    opacity: 0;
+    scale: 0.96;
+  }
+  &[data-ending-style] {
+    transition-duration: 110ms;
+    scale: 0.98;
+  }
+  &[data-instant] {
+    transition-duration: 0ms;
+  }
+}
+
+/* Scrims are neutral black so they never tint the page. */
+@utility rovr-backdrop {
+  background: var(--scrim);
+  transition: opacity 260ms ease-out;
+  &[data-starting-style],
+  &[data-ending-style] {
+    opacity: 0;
+  }
+  &[data-ending-style] {
+    transition-duration: 180ms;
+  }
+}
+
+/* Dialogs appear in place: a slight scale and fade. No travel, no blur,
+   no spring. The scrim does the announcing. */
+@utility rovr-dialog {
+  transition:
+    opacity 200ms var(--ease-appear),
+    scale 260ms var(--ease-appear);
+  &[data-starting-style] {
+    opacity: 0;
+    scale: 0.965;
+  }
+  &[data-ending-style] {
+    opacity: 0;
+    scale: 0.985;
+    transition-duration: 140ms;
+  }
+}
+
+/* Sheets slide the full distance on the iOS sheet curve and stay opaque
+   the whole way, so they read as one solid panel. */
+@utility rovr-sheet {
+  transition: translate var(--dur-panel) var(--ease-panel);
+  &[data-ending-style] {
+    transition-duration: 280ms;
+  }
+}
+
+/* The lit primary fill from the app's button: a soft light rising from the
+   bottom edge. `--lx` follows the pointer so the light moves with the hand. */
+@utility rovr-lit {
+  background-image:
+    radial-gradient(60% 90% at var(--lx, 50%) 110%, rgb(234 237 255 / 0.42), transparent 70%),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.1), transparent 45%);
+  box-shadow:
+    inset 0 0 0 0.5px rgb(255 255 255 / 0.28),
+    0 1px 2px rgb(21 33 99 / 0.2);
+}
+
+/* Content that has just been added fades in once. Content that stays is
+   never touched, which is what keeps a filtered list from flickering. */
+@utility rovr-enter {
+  animation: rovr-enter 240ms var(--ease-appear) both;
+}
+
+/* Skeleton shimmer */
+@utility rovr-shimmer {
+  background-image: linear-gradient(100deg, transparent 30%, color-mix(in oklab, var(--surface) 75%, transparent) 50%, transparent 70%);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: var(--animate-shimmer);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}

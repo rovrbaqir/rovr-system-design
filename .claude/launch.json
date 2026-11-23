@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "rovr-ui", "runtimeExecutable": "node", "runtimeArgs": ["./node_modules/vite/bin/vite.js"], "port": 5199 },
+    {
+      "name": "patient-web",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--dir", "/Volumes/Local Storage/rovrstack/New-Patient-Web-App", "dev"],
+      "port": 5210
+    }
+  ]
+}

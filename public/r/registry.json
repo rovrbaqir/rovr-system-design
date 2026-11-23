@@ -1,0 +1,1415 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "rovr",
+  "homepage": "https://rovrstack.ai",
+  "items": [
+    {
+      "name": "theme",
+      "type": "registry:style",
+      "title": "RoVR theme",
+      "description": "Design tokens: colour, type, radius, density and motion. Install once per app.",
+      "dependencies": [
+        "@fontsource-variable/dm-sans",
+        "@fontsource/dm-mono",
+        "tailwindcss"
+      ],
+      "files": [
+        {
+          "path": "src/styles/rovr.css",
+          "type": "registry:file",
+          "target": "src/styles/rovr.css"
+        }
+      ]
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "Utils",
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "files": [
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "motion-tokens",
+      "type": "registry:lib",
+      "title": "Motion tokens",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/lib/motion.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/button",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/alert-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "banner",
+      "type": "registry:ui",
+      "title": "Banner",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/banner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "blur-swap",
+      "type": "registry:ui",
+      "title": "Blur Swap",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/blur-swap.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumbs",
+      "type": "registry:ui",
+      "title": "Breadcrumbs",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/breadcrumbs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/blur-swap",
+        "@rovr/spinner",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/button",
+        "@rovr/motion-tokens",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/calendar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "callout",
+      "type": "registry:ui",
+      "title": "Callout",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/callout.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "Chart",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/motion-tokens",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chip",
+      "type": "registry:ui",
+      "title": "Chip",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/chip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/glide",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/glide",
+        "@rovr/kbd",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/command.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/glide",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "copy-button",
+      "type": "registry:ui",
+      "title": "Copy Button",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/button",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/copy-button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/button",
+        "@rovr/checkbox",
+        "@rovr/menu",
+        "@rovr/pagination",
+        "@rovr/smooth-height",
+        "@rovr/table",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/data-table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "Date Picker",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/calendar",
+        "@rovr/input",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/date-picker.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "description-list",
+      "type": "registry:ui",
+      "title": "Description List",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/description-list.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/button",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/empty-state.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "File Upload",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/progress",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/file-upload.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "frost",
+      "type": "registry:ui",
+      "title": "Frost",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/frost.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "glide",
+      "type": "registry:ui",
+      "title": "Glide",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/glide.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover Card",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/hover-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/spinner",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/kbd.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "list",
+      "type": "registry:ui",
+      "title": "List",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/glide",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/list.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "menu",
+      "type": "registry:ui",
+      "title": "Menu",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/glide",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "meter",
+      "type": "registry:ui",
+      "title": "Meter",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/meter.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "motion",
+      "type": "registry:ui",
+      "title": "Motion",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/motion-tokens",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/motion.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "notch-card",
+      "type": "registry:ui",
+      "title": "Notch Card",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/notch-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "number-field",
+      "type": "registry:ui",
+      "title": "Number Field",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/number-field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "otp-input",
+      "type": "registry:ui",
+      "title": "Otp Input",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/otp-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/button",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/pagination.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/popover.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/radio-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "segmented-control",
+      "type": "registry:ui",
+      "title": "Segmented Control",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/motion-tokens",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/segmented-control.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "segments",
+      "type": "registry:ui",
+      "title": "Segments",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/segments.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/glide",
+        "@rovr/input",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/button",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/sheet.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/slider.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "smooth-height",
+      "type": "registry:ui",
+      "title": "Smooth Height",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/smooth-height.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/stepper.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "success-burst",
+      "type": "registry:ui",
+      "title": "Success Burst",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/motion-tokens",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/success-burst.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tag-input",
+      "type": "registry:ui",
+      "title": "Tag Input",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/tag-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "time-picker",
+      "type": "registry:ui",
+      "title": "Time Picker",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/glide",
+        "@rovr/input",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/time-picker.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "timeline",
+      "type": "registry:ui",
+      "title": "Timeline",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/timeline.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/toast.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle Group",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/toggle-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "app-shell",
+      "type": "registry:block",
+      "title": "App Shell",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/button",
+        "@rovr/glide",
+        "@rovr/tooltip",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/patterns/app-shell.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "appointment-card",
+      "type": "registry:block",
+      "title": "Appointment Card",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/avatar",
+        "@rovr/badge",
+        "@rovr/card",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/patterns/appointment-card.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "chat",
+      "type": "registry:block",
+      "title": "Chat",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/button",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/patterns/chat.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "lab-tile",
+      "type": "registry:block",
+      "title": "Lab Tile",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/badge",
+        "@rovr/card",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/patterns/lab-tile.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "medication-card",
+      "type": "registry:block",
+      "title": "Medication Card",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/badge",
+        "@rovr/card",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/patterns/medication-card.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "page-header",
+      "type": "registry:block",
+      "title": "Page Header",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/patterns/page-header.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "patient-header",
+      "type": "registry:block",
+      "title": "Patient Header",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/avatar",
+        "@rovr/copy-button",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/patterns/patient-header.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "schedule-day",
+      "type": "registry:block",
+      "title": "Schedule Day",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/patterns/schedule-day.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "stat-card",
+      "type": "registry:block",
+      "title": "Stat Card",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/card",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/patterns/stat-card.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "time-slots",
+      "type": "registry:block",
+      "title": "Time Slots",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/patterns/time-slots.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "vital-tile",
+      "type": "registry:block",
+      "title": "Vital Tile",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/card",
+        "@rovr/chart",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/patterns/vital-tile.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}

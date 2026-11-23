@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch",
+  "title": "Switch",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/switch.tsx",
+      "content": "import * as React from \"react\";\nimport { Switch as BaseSwitch } from \"@base-ui/react/switch\";\nimport { cn } from \"@/lib/utils\";\n\nexport const Switch = React.forwardRef<HTMLElement, React.ComponentProps<typeof BaseSwitch.Root>>(function Switch(\n  { className, ...props },\n  ref,\n) {\n  return (\n    <BaseSwitch.Root\n      ref={ref}\n      className={cn(\n        \"group relative inline-flex h-6 w-10.5 shrink-0 items-center rounded-full bg-border-strong p-0.5\",\n        \"rovr-focus cursor-pointer data-[checked]:bg-primary\",\n        \"data-[disabled]:cursor-not-allowed data-[disabled]:opacity-45\",\n        className,\n      )}\n      {...props}\n    >\n      {/* The thumb stretches while pressed, then springs to the other side. */}\n      <BaseSwitch.Thumb\n        className={cn(\n          \"block h-5 w-5 rounded-full bg-white shadow-raised\",\n          \"transition-[translate,width,margin] duration-(--dur-snappy) ease-snappy\",\n          \"group-active:w-6 group-data-[disabled]:group-active:w-5\",\n          \"data-[checked]:translate-x-4.5 data-[checked]:group-active:-ml-1 group-data-[disabled]:group-active:ml-0\",\n        )}\n      />\n    </BaseSwitch.Root>\n  );\n});\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

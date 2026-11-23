@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress",
+  "title": "Progress",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/progress.tsx",
+      "content": "import * as React from \"react\";\nimport { Progress as BaseProgress } from \"@base-ui/react/progress\";\nimport { cn } from \"@/lib/utils\";\n\nconst tones = { primary: \"bg-primary\", success: \"bg-success\", warning: \"bg-warning\", danger: \"bg-destructive\" } as const;\n\nexport interface ProgressProps extends React.ComponentProps<typeof BaseProgress.Root> {\n  tone?: keyof typeof tones;\n  size?: \"sm\" | \"md\";\n}\n\n/** Pass `value={null}` while the amount of work is unknown. */\nexport function Progress({ className, tone = \"primary\", size = \"md\", ...props }: ProgressProps) {\n  return (\n    <BaseProgress.Root className={cn(\"w-full\", className)} {...props}>\n      <BaseProgress.Track className={cn(\"w-full overflow-hidden rounded-full bg-secondary-hover\", size === \"sm\" ? \"h-1\" : \"h-2\")}>\n        <BaseProgress.Indicator\n          className={cn(\n            \"h-full rounded-full transition-[width] duration-(--dur-slower) ease-out\",\n            \"data-[indeterminate]:w-2/5! data-[indeterminate]:animate-indeterminate\",\n            tones[tone],\n          )}\n        />\n      </BaseProgress.Track>\n    </BaseProgress.Root>\n  );\n}\n\nexport interface ProgressRingProps extends React.SVGAttributes<SVGSVGElement> {\n  /** 0 to 100 */\n  value: number;\n  size?: number;\n  strokeWidth?: number;\n  tone?: keyof typeof ringTones;\n  label: string;\n}\n\nconst ringTones = { primary: \"text-primary\", success: \"text-success-fg\", warning: \"text-warning-fg\", danger: \"text-destructive-fg\" } as const;\n\nexport function ProgressRing({ value, size = 56, strokeWidth = 5, tone = \"primary\", label, className, children, ...props }: ProgressRingProps) {\n  const radius = (size - strokeWidth) / 2;\n  const clamped = Math.min(100, Math.max(0, value));\n  return (\n    <span className={cn(\"relative inline-grid place-items-center\", className)} style={{ width: size, height: size }}>\n      <svg\n        width={size}\n        height={size}\n        viewBox={`0 0 ${size} ${size}`}\n        role=\"progressbar\"\n        aria-label={label}\n        aria-valuemin={0}\n        aria-valuemax={100}\n        aria-valuenow={clamped}\n        className={cn(\"-rotate-90\", ringTones[tone])}\n        {...props}\n      >\n        <circle cx={size / 2} cy={size / 2} r={radius} fill=\"none\" strokeWidth={strokeWidth} className=\"stroke-secondary-hover\" />\n        <circle\n          cx={size / 2}\n          cy={size / 2}\n          r={radius}\n          fill=\"none\"\n          stroke=\"currentColor\"\n          strokeWidth={strokeWidth}\n          strokeLinecap=\"round\"\n          pathLength={100}\n          strokeDasharray={100}\n          strokeDashoffset={100 - clamped}\n          style={{ transition: \"stroke-dashoffset var(--dur-slower) var(--ease-out)\" }}\n        />\n      </svg>\n      <span className=\"absolute text-caption font-medium text-data\">{children}</span>\n    </span>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

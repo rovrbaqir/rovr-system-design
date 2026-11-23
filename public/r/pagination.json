@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pagination",
+  "title": "Pagination",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/button",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/pagination.tsx",
+      "content": "import * as React from \"react\";\nimport { ChevronLeft, ChevronRight } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\nimport { Button } from \"./button\";\n\nexport interface PaginationProps extends Omit<React.HTMLAttributes<HTMLElement>, \"onChange\"> {\n  page: number;\n  pageCount: number;\n  onPageChange: (page: number) => void;\n}\n\nfunction pages(page: number, count: number): (number | \"gap\")[] {\n  if (count <= 7) return Array.from({ length: count }, (_, i) => i + 1);\n  const middle = [page - 1, page, page + 1].filter((p) => p > 1 && p < count);\n  return [1, ...(middle[0] > 2 ? ([\"gap\"] as const) : []), ...middle, ...(middle[middle.length - 1] < count - 1 ? ([\"gap\"] as const) : []), count];\n}\n\nexport function Pagination({ page, pageCount, onPageChange, className, ...props }: PaginationProps) {\n  return (\n    <nav aria-label=\"Pagination\" className={cn(\"flex items-center gap-1\", className)} {...props}>\n      <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Previous page\" disabled={page <= 1} onClick={() => onPageChange(page - 1)}>\n        <ChevronLeft />\n      </Button>\n      {pages(page, pageCount).map((p, i) =>\n        p === \"gap\" ? (\n          <span key={`gap-${i}`} className=\"w-8 text-center text-muted-foreground\" aria-hidden>\n            …\n          </span>\n        ) : (\n          <Button\n            key={p}\n            variant={p === page ? \"secondary\" : \"ghost\"}\n            size=\"icon-sm\"\n            aria-label={`Page ${p}`}\n            aria-current={p === page ? \"page\" : undefined}\n            onClick={() => onPageChange(p)}\n            className=\"text-data\"\n          >\n            {p}\n          </Button>\n        ),\n      )}\n      <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Next page\" disabled={page >= pageCount} onClick={() => onPageChange(page + 1)}>\n        <ChevronRight />\n      </Button>\n    </nav>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

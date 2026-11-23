@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "segments",
+  "title": "Segments",
+  "dependencies": [],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/segments.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\n\nexport interface SegmentsProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** How many of the segments are filled. */\n  value: number;\n  total: number;\n  /** Names what is being counted, e.g. \"Setup steps\". */\n  label: string;\n  tone?: \"primary\" | \"on-aurora\";\n}\n\n/**\n * Progress as a row of equal segments, one per step. Reads as \"3 of 9\" at\n * a glance where a continuous bar would only say \"about a third\".\n */\nexport function Segments({ value, total, label, tone = \"primary\", className, ...props }: SegmentsProps) {\n  const filled = Math.max(0, Math.min(total, value));\n  return (\n    <div\n      role=\"progressbar\"\n      aria-label={label}\n      aria-valuemin={0}\n      aria-valuemax={total}\n      aria-valuenow={filled}\n      aria-valuetext={`${filled} of ${total}`}\n      className={cn(\"flex h-1.5 w-full gap-1\", className)}\n      {...props}\n    >\n      {Array.from({ length: total }, (_, i) => (\n        <span\n          // biome-ignore lint/suspicious/noArrayIndexKey: segments are positional and never reorder\n          key={i}\n          className={cn(\n            \"h-full flex-1 rounded-full transition-colors duration-(--dur-slow)\",\n            tone === \"primary\" ? (i < filled ? \"bg-primary\" : \"bg-border-strong\") : i < filled ? \"bg-white\" : \"bg-white/25\",\n          )}\n        />\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

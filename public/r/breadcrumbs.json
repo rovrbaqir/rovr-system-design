@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "breadcrumbs",
+  "title": "Breadcrumbs",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/breadcrumbs.tsx",
+      "content": "import * as React from \"react\";\nimport { ChevronRight } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface BreadcrumbsProps extends React.HTMLAttributes<HTMLElement> {\n  items: { label: string; href?: string }[];\n}\n\nexport function Breadcrumbs({ items, className, ...props }: BreadcrumbsProps) {\n  return (\n    <nav aria-label=\"Breadcrumb\" className={className} {...props}>\n      <ol className=\"flex flex-wrap items-center gap-1.5 text-body-sm text-muted-foreground\">\n        {items.map((item, i) => {\n          const last = i === items.length - 1;\n          return (\n            <li key={item.label} className=\"flex items-center gap-1.5\">\n              {item.href && !last ? (\n                <a href={item.href} className={cn(\"rounded-xs rovr-focus hover:text-foreground\")}>\n                  {item.label}\n                </a>\n              ) : (\n                <span aria-current={last ? \"page\" : undefined} className={cn(last && \"font-medium text-foreground\")}>\n                  {item.label}\n                </span>\n              )}\n              {!last && <ChevronRight className=\"size-3.5 text-subtle-foreground\" aria-hidden />}\n            </li>\n          );\n        })}\n      </ol>\n    </nav>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

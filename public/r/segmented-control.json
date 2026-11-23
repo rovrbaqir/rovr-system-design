@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "segmented-control",
+  "title": "Segmented Control",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/motion-tokens",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/segmented-control.tsx",
+      "content": "import * as React from \"react\";\nimport { motion } from \"motion/react\";\nimport { springSnappy } from \"@/lib/motion\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SegmentedControlProps<T extends string> {\n  value: T;\n  onValueChange: (value: T) => void;\n  options: { value: T; label: React.ReactNode }[];\n  size?: \"sm\" | \"md\";\n  \"aria-label\": string;\n  className?: string;\n}\n\n/** A compact single choice between two to five views, such as Day / Week / Month. */\nexport function SegmentedControl<T extends string>({\n  value,\n  onValueChange,\n  options,\n  size = \"md\",\n  className,\n  ...props\n}: SegmentedControlProps<T>) {\n  const id = React.useId();\n  return (\n    <div role=\"radiogroup\" className={cn(\"inline-flex w-fit gap-0.5 rounded-full bg-secondary p-0.5\", className)} {...props}>\n      {options.map((option) => {\n        const selected = option.value === value;\n        return (\n          <button\n            key={option.value}\n            type=\"button\"\n            role=\"radio\"\n            aria-checked={selected}\n            tabIndex={selected ? 0 : -1}\n            onClick={() => onValueChange(option.value)}\n            onKeyDown={(event) => {\n              const i = options.findIndex((o) => o.value === value);\n              const next = event.key === \"ArrowRight\" ? i + 1 : event.key === \"ArrowLeft\" ? i - 1 : null;\n              if (next === null) return;\n              event.preventDefault();\n              const target = options[(next + options.length) % options.length];\n              onValueChange(target.value);\n              const buttons = event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>(\"[role=radio]\");\n              buttons?.[(next + options.length) % options.length]?.focus();\n            }}\n            className={cn(\n              \"relative cursor-pointer rounded-full font-medium whitespace-nowrap select-none rovr-focus\",\n              size === \"sm\" ? \"h-7 px-3 text-[0.8125rem]\" : \"h-control-sm px-3.5 text-sm\",\n              selected ? \"text-foreground\" : \"text-muted-foreground hover:text-foreground\",\n            )}\n          >\n            {selected && (\n              <motion.span\n                layoutId={`${id}-pill`}\n                transition={springSnappy}\n                className=\"absolute inset-0 rounded-full bg-surface shadow-raised\"\n              />\n            )}\n            <span className=\"relative\">{option.label}</span>\n          </button>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

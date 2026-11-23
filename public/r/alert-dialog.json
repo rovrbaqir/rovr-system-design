@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert-dialog",
+  "title": "Alert Dialog",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/button",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/alert-dialog.tsx",
+      "content": "import * as React from \"react\";\nimport { AlertDialog as BaseAlertDialog } from \"@base-ui/react/alert-dialog\";\nimport { cn } from \"@/lib/utils\";\nimport { Button, type ButtonProps } from \"./button\";\n\nexport interface ConfirmDialogProps {\n  open: boolean;\n  onOpenChange: (open: boolean) => void;\n  /** A question naming the action: \"Delete this note?\" */\n  title: string;\n  /** What will be lost and whether it can be undone. */\n  description: React.ReactNode;\n  /** The verb from the title: \"Delete note\". Never \"OK\" or \"Yes\". */\n  confirmLabel: string;\n  cancelLabel?: string;\n  variant?: ButtonProps[\"variant\"];\n  onConfirm: () => void | Promise<void>;\n}\n\n/** A blocking confirmation for an action that cannot be undone. It does not close on outside click. */\nexport function ConfirmDialog({ open, onOpenChange, title, description, confirmLabel, cancelLabel = \"Cancel\", variant = \"destructive-solid\", onConfirm }: ConfirmDialogProps) {\n  const [pending, setPending] = React.useState(false);\n  return (\n    <BaseAlertDialog.Root open={open} onOpenChange={onOpenChange}>\n      <BaseAlertDialog.Portal>\n        <BaseAlertDialog.Backdrop className=\"rovr-backdrop fixed inset-0 z-50\" />\n        <BaseAlertDialog.Popup\n          className={cn(\n            \"rovr-dialog fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2\",\n            \"flex w-[calc(100vw-2rem)] max-w-sm flex-col gap-5 rounded-2xl rovr-chrome p-6 text-popover-foreground outline-none\",\n          )}\n        >\n          <div className=\"flex flex-col gap-1.5\">\n            <BaseAlertDialog.Title className=\"text-display-sm\">{title}</BaseAlertDialog.Title>\n            <BaseAlertDialog.Description className=\"text-body text-muted-foreground\">{description}</BaseAlertDialog.Description>\n          </div>\n          <div className=\"flex flex-col-reverse gap-2 sm:flex-row sm:justify-end\">\n            <BaseAlertDialog.Close render={<Button variant=\"secondary\">{cancelLabel}</Button>} />\n            <Button\n              variant={variant}\n              loading={pending}\n              onClick={async () => {\n                setPending(true);\n                try {\n                  await onConfirm();\n                  onOpenChange(false);\n                } finally {\n                  setPending(false);\n                }\n              }}\n            >\n              {confirmLabel}\n            </Button>\n          </div>\n        </BaseAlertDialog.Popup>\n      </BaseAlertDialog.Portal>\n    </BaseAlertDialog.Root>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

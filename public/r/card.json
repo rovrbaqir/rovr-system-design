@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card",
+  "title": "Card",
+  "dependencies": [],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/card.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface CardProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** `risen` floats on the page. `sunken` groups content inside another card. `outline` is the quietest. */\n  variant?: \"risen\" | \"sunken\" | \"outline\";\n  /** For a card that is one click target. It lifts under the pointer and presses in. */\n  interactive?: boolean;\n}\n\nexport const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card({ className, variant = \"risen\", interactive, ...props }, ref) {\n  return (\n    <div\n      ref={ref}\n      className={cn(\n        \"flex flex-col gap-4 rounded-xl p-card text-card-foreground\",\n        variant === \"risen\" && \"rovr-risen\",\n        variant === \"sunken\" && \"rounded-lg bg-surface-sunken\",\n        variant === \"outline\" && \"border border-border\",\n        interactive && \"rovr-lift cursor-pointer outline-2 outline-offset-0 outline-transparent focus-visible:outline-ring focus-visible:outline-offset-2\",\n        className,\n      )}\n      {...props}\n    />\n  );\n});\n\nexport function CardHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return <div className={cn(\"flex items-start justify-between gap-4\", className)} {...props} />;\n}\nexport function CardTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {\n  return <h3 className={cn(\"text-title-md\", className)} {...props} />;\n}\nexport function CardDescription({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) {\n  return <p className={cn(\"text-body-sm text-muted-foreground\", className)} {...props} />;\n}\nexport function CardContent({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return <div className={cn(\"flex flex-col gap-3\", className)} {...props} />;\n}\nexport function CardFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return <div className={cn(\"mt-auto flex items-center gap-2 pt-1\", className)} {...props} />;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "date-picker",
+  "title": "Date Picker",
+  "dependencies": [
+    "@base-ui/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/calendar",
+    "@rovr/input",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/date-picker.tsx",
+      "content": "import * as React from \"react\";\nimport { Popover as BasePopover } from \"@base-ui/react/popover\";\nimport { CalendarDays } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\nimport { Calendar, type CalendarProps, type DateRange } from \"./calendar\";\nimport { fieldChrome } from \"./input\";\n\nconst heights = { sm: \"h-control-sm\", md: \"h-control-md\", lg: \"h-control-lg\" } as const;\ntype Passthrough = Pick<CalendarProps, \"isDisabled\" | \"min\" | \"max\" | \"weekStartsOn\" | \"locale\">;\n\ninterface TriggerProps {\n  size?: keyof typeof heights;\n  placeholder?: string;\n  disabled?: boolean;\n  invalid?: boolean;\n  className?: string;\n  \"aria-label\"?: string;\n}\n\nfunction Shell({\n  open,\n  onOpenChange,\n  label,\n  size = \"md\",\n  placeholder,\n  disabled,\n  invalid,\n  className,\n  children,\n  ...props\n}: TriggerProps & { open: boolean; onOpenChange: (open: boolean) => void; label: string | null; children: React.ReactNode }) {\n  return (\n    <BasePopover.Root open={open} onOpenChange={onOpenChange}>\n      <BasePopover.Trigger\n        disabled={disabled}\n        aria-invalid={invalid}\n        aria-label={props[\"aria-label\"]}\n        className={cn(\n          fieldChrome,\n          heights[size],\n          \"flex cursor-pointer items-center justify-between gap-2 px-3 text-left text-data select-none data-[popup-open]:border-primary\",\n          !label && \"text-muted-foreground\",\n          className,\n        )}\n      >\n        <span className=\"truncate\">{label ?? placeholder}</span>\n        <CalendarDays className=\"size-4 shrink-0 text-muted-foreground\" />\n      </BasePopover.Trigger>\n      <BasePopover.Portal>\n        <BasePopover.Positioner align=\"start\" sideOffset={6} className=\"z-50\">\n          <BasePopover.Popup className=\"rovr-pop rounded-xl rovr-glass p-3 text-popover-foreground outline-none\">{children}</BasePopover.Popup>\n        </BasePopover.Positioner>\n      </BasePopover.Portal>\n    </BasePopover.Root>\n  );\n}\n\nexport interface DatePickerProps extends TriggerProps, Passthrough {\n  value: Date | null;\n  onValueChange: (value: Date) => void;\n  format?: Intl.DateTimeFormatOptions;\n}\n\nexport function DatePicker({ value, onValueChange, format = { dateStyle: \"medium\" }, placeholder = \"Choose a date\", isDisabled, min, max, weekStartsOn, locale = \"en-US\", ...trigger }: DatePickerProps) {\n  const [open, setOpen] = React.useState(false);\n  return (\n    <Shell open={open} onOpenChange={setOpen} placeholder={placeholder} label={value ? new Intl.DateTimeFormat(locale, format).format(value) : null} {...trigger}>\n      <Calendar\n        value={value}\n        onValueChange={(d) => {\n          onValueChange(d);\n          setOpen(false);\n        }}\n        {...{ isDisabled, min, max, weekStartsOn, locale }}\n      />\n    </Shell>\n  );\n}\n\nexport interface DateRangePickerProps extends TriggerProps, Passthrough {\n  value: DateRange;\n  onValueChange: (value: DateRange) => void;\n  format?: Intl.DateTimeFormatOptions;\n}\n\nexport function DateRangePicker({ value, onValueChange, format = { month: \"short\", day: \"numeric\", year: \"numeric\" }, placeholder = \"Choose dates\", isDisabled, min, max, weekStartsOn, locale = \"en-US\", ...trigger }: DateRangePickerProps) {\n  const [open, setOpen] = React.useState(false);\n  const f = new Intl.DateTimeFormat(locale, format);\n  const label = value.from ? (value.to ? f.formatRange(value.from, value.to) : `${f.format(value.from)} – end date`) : null;\n  return (\n    <Shell open={open} onOpenChange={setOpen} placeholder={placeholder} label={label} {...trigger}>\n      <Calendar\n        mode=\"range\"\n        value={value}\n        onValueChange={(range) => {\n          onValueChange(range);\n          if (range.from && range.to) setOpen(false);\n        }}\n        {...{ isDisabled, min, max, weekStartsOn, locale }}\n      />\n    </Shell>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

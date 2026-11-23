@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "utils",
+  "title": "Utils",
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "content": "import { clsx, type ClassValue } from \"clsx\";\nimport { extendTailwindMerge } from \"tailwind-merge\";\n\n/**\n * tailwind-merge has to know which RoVR utilities are font sizes. Without\n * this it reads `text-label` as a colour and drops it next to `text-foreground`.\n */\nconst twMerge = extendTailwindMerge<\"rovr-data\">({\n  extend: {\n    classGroups: {\n      \"font-size\": [\n        {\n          text: [\n            \"display-xl\",\n            \"display-lg\",\n            \"display-md\",\n            \"display-sm\",\n            \"title-lg\",\n            \"title-md\",\n            \"title-sm\",\n            \"body-lg\",\n            \"body\",\n            \"body-sm\",\n            \"label\",\n            \"caption\",\n            \"overline\",\n          ],\n        },\n      ],\n      \"rovr-data\": [\"text-data\"],\n    },\n  },\n});\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}

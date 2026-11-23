@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "time-picker",
+  "title": "Time Picker",
+  "dependencies": [
+    "@base-ui/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/glide",
+    "@rovr/input",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/time-picker.tsx",
+      "content": "import * as React from \"react\";\nimport { Select as BaseSelect } from \"@base-ui/react/select\";\nimport { Check, Clock } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\nimport { Glide } from \"./glide\";\nimport { fieldChrome } from \"./input\";\n\nexport interface TimePickerProps {\n  /** \"HH:mm\" in 24-hour time. */\n  value: string | null;\n  onValueChange: (value: string) => void;\n  /** Minutes between options. */\n  step?: number;\n  /** First and last selectable time, \"HH:mm\". */\n  min?: string;\n  max?: string;\n  placeholder?: string;\n  locale?: string;\n  disabled?: boolean;\n  className?: string;\n  \"aria-label\"?: string;\n}\n\nconst toMinutes = (t: string) => Number(t.slice(0, 2)) * 60 + Number(t.slice(3, 5));\n\n/** A time of day from a list at a fixed step. For free-form appointment slots use TimeSlots. */\nexport function TimePicker({ value, onValueChange, step = 30, min = \"00:00\", max = \"23:59\", placeholder = \"Choose a time\", locale = \"en-US\", disabled, className, ...props }: TimePickerProps) {\n  const items = React.useMemo(() => {\n    const f = new Intl.DateTimeFormat(locale, { hour: \"numeric\", minute: \"2-digit\" });\n    const out: { value: string; label: string }[] = [];\n    for (let m = toMinutes(min); m <= toMinutes(max); m += step) {\n      const v = `${String(Math.floor(m / 60)).padStart(2, \"0\")}:${String(m % 60).padStart(2, \"0\")}`;\n      out.push({ value: v, label: f.format(new Date(2000, 0, 1, Math.floor(m / 60), m % 60)) });\n    }\n    return out;\n  }, [locale, min, max, step]);\n  return (\n    <BaseSelect.Root items={items} value={value} onValueChange={(v) => v && onValueChange(v as string)} disabled={disabled}>\n      <BaseSelect.Trigger\n        aria-label={props[\"aria-label\"]}\n        className={cn(fieldChrome, \"flex h-control-md cursor-pointer items-center justify-between gap-2 px-3 text-left text-data select-none data-[popup-open]:border-primary\", className)}\n      >\n        <BaseSelect.Value placeholder={placeholder} className=\"truncate data-[placeholder]:text-muted-foreground\" />\n        <Clock className=\"size-4 shrink-0 text-muted-foreground\" />\n      </BaseSelect.Trigger>\n      <BaseSelect.Portal>\n        <BaseSelect.Positioner sideOffset={6} alignItemWithTrigger={false} className=\"z-50 outline-none\">\n          <BaseSelect.Popup className=\"rovr-pop max-h-64 min-w-(--anchor-width) overflow-y-auto rounded-md rovr-glass p-1 outline-none\">\n            <Glide follow=\"data-highlighted\">\n              {items.map((item) => (\n                <BaseSelect.Item key={item.value} value={item.value} className=\"flex h-9 cursor-default items-center justify-between gap-3 rounded-sm px-2.5 text-sm text-data outline-none select-none data-[selected]:font-semibold\">\n                  <BaseSelect.ItemText>{item.label}</BaseSelect.ItemText>\n                  <BaseSelect.ItemIndicator className=\"text-primary\">\n                    <Check className=\"size-4\" />\n                  </BaseSelect.ItemIndicator>\n                </BaseSelect.Item>\n              ))}\n            </Glide>\n          </BaseSelect.Popup>\n        </BaseSelect.Positioner>\n      </BaseSelect.Portal>\n    </BaseSelect.Root>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hover-card",
+  "title": "Hover Card",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/hover-card.tsx",
+      "content": "import * as React from \"react\";\nimport { PreviewCard as BasePreviewCard } from \"@base-ui/react/preview-card\";\nimport { cn } from \"@/lib/utils\";\n\n/** A preview shown on hover or focus of a link: a clinician, a patient, a code. Never the only way to reach the information. */\nexport const HoverCard = BasePreviewCard.Root;\nexport const HoverCardTrigger = BasePreviewCard.Trigger;\n\nexport function HoverCardContent({ className, side = \"bottom\", align = \"start\", ...props }: React.ComponentProps<typeof BasePreviewCard.Popup> & Pick<React.ComponentProps<typeof BasePreviewCard.Positioner>, \"side\" | \"align\">) {\n  return (\n    <BasePreviewCard.Portal>\n      <BasePreviewCard.Positioner side={side} align={align} sideOffset={8} className=\"z-50\">\n        <BasePreviewCard.Popup className={cn(\"rovr-pop w-72 rounded-xl rovr-glass p-4 text-sm outline-none\", className)} {...props} />\n      </BasePreviewCard.Positioner>\n    </BasePreviewCard.Portal>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "title": "Tooltip",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/tooltip.tsx",
+      "content": "import * as React from \"react\";\nimport { Tooltip as BaseTooltip } from \"@base-ui/react/tooltip\";\nimport { cn } from \"@/lib/utils\";\n\n/** Wrap the app once. Neighbouring tooltips then open without the hover delay. */\nexport const TooltipProvider = BaseTooltip.Provider;\n\nexport interface TooltipProps extends Omit<React.ComponentProps<typeof BaseTooltip.Root>, \"children\"> {\n  /** Short, non-essential hint. Never the only place a piece of information lives. */\n  content: React.ReactNode;\n  side?: \"top\" | \"bottom\" | \"left\" | \"right\";\n  children: React.ReactElement<Record<string, unknown>>;\n  className?: string;\n}\n\nexport function Tooltip({ content, side = \"top\", children, className, ...props }: TooltipProps) {\n  return (\n    <BaseTooltip.Root {...props}>\n      <BaseTooltip.Trigger render={children} />\n      <BaseTooltip.Portal>\n        <BaseTooltip.Positioner side={side} sideOffset={8} className=\"z-50\">\n          <BaseTooltip.Popup\n            className={cn(\n              \"rovr-pop max-w-64 rounded-md bg-surface-inverse/92 px-2.5 py-1.5 text-caption font-medium text-inverse-foreground shadow-overlay backdrop-blur-md\",\n              className,\n            )}\n          >\n            {content}\n          </BaseTooltip.Popup>\n        </BaseTooltip.Positioner>\n      </BaseTooltip.Portal>\n    </BaseTooltip.Root>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

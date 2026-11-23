@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select",
+  "title": "Select",
+  "dependencies": [
+    "@base-ui/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/glide",
+    "@rovr/input",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/select.tsx",
+      "content": "import * as React from \"react\";\nimport { Select as BaseSelect } from \"@base-ui/react/select\";\nimport { Check, ChevronDown } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\nimport { Glide } from \"./glide\";\nimport { fieldChrome } from \"./input\";\n\n/**\n * Pass `items` ({ value, label }[]) so the trigger shows the label of the\n * selected value rather than the raw value.\n */\nexport const Select = BaseSelect.Root;\nexport const SelectGroup = BaseSelect.Group;\n\nconst heights = { sm: \"h-control-sm\", md: \"h-control-md\", lg: \"h-control-lg\" } as const;\n\nexport function SelectTrigger({\n  className,\n  size = \"md\",\n  placeholder,\n  children,\n  ...props\n}: React.ComponentProps<typeof BaseSelect.Trigger> & { size?: keyof typeof heights; placeholder?: string }) {\n  return (\n    <BaseSelect.Trigger\n      className={cn(\n        fieldChrome,\n        heights[size],\n        \"group flex cursor-pointer items-center justify-between gap-2 px-3 text-left select-none\",\n        \"data-[popup-open]:border-primary data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-sunken\",\n        className,\n      )}\n      {...props}\n    >\n      {children ?? <BaseSelect.Value placeholder={placeholder} className=\"truncate data-[placeholder]:text-muted-foreground\" />}\n      <BaseSelect.Icon className=\"text-muted-foreground transition-[rotate] duration-(--dur-base) ease-out group-data-[popup-open]:rotate-180\">\n        <ChevronDown className=\"size-4\" />\n      </BaseSelect.Icon>\n    </BaseSelect.Trigger>\n  );\n}\n\nexport function SelectContent({\n  className,\n  children,\n  sideOffset = 6,\n  ...props\n}: React.ComponentProps<typeof BaseSelect.Popup> & { sideOffset?: number }) {\n  return (\n    <BaseSelect.Portal>\n      <BaseSelect.Positioner sideOffset={sideOffset} alignItemWithTrigger={false} className=\"z-50 outline-none\">\n        <BaseSelect.Popup\n          className={cn(\n            \"rovr-pop max-h-(--available-height) min-w-(--anchor-width) overflow-y-auto rounded-md rovr-glass p-1 text-popover-foreground outline-none\",\n            className,\n          )}\n          {...props}\n        >\n          <Glide follow=\"data-highlighted\">{children}</Glide>\n        </BaseSelect.Popup>\n      </BaseSelect.Positioner>\n    </BaseSelect.Portal>\n  );\n}\n\nexport function SelectItem({ className, children, ...props }: React.ComponentProps<typeof BaseSelect.Item>) {\n  return (\n    <BaseSelect.Item\n      className={cn(\n        \"flex min-h-9 cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-2.5 text-sm outline-none select-none\",\n        \"data-[selected]:font-medium\",\n        \"data-[disabled]:pointer-events-none data-[disabled]:opacity-45\",\n        className,\n      )}\n      {...props}\n    >\n      <BaseSelect.ItemText className=\"flex-1 truncate\">{children}</BaseSelect.ItemText>\n      <BaseSelect.ItemIndicator className=\"text-primary\">\n        <Check className=\"size-4\" />\n      </BaseSelect.ItemIndicator>\n    </BaseSelect.Item>\n  );\n}\n\n/** Must sit inside a SelectGroup. */\nexport function SelectLabel({ className, ...props }: React.ComponentProps<typeof BaseSelect.GroupLabel>) {\n  return <BaseSelect.GroupLabel className={cn(\"px-2.5 pt-2 pb-1.5 text-overline text-subtle-foreground\", className)} {...props} />;\n}\n\nexport function SelectSeparator({ className, ...props }: React.ComponentProps<typeof BaseSelect.Separator>) {\n  return <BaseSelect.Separator className={cn(\"-mx-1 my-1 h-px bg-border\", className)} {...props} />;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

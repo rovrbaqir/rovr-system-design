@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "menu",
+  "title": "Menu",
+  "dependencies": [
+    "@base-ui/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/glide",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/menu.tsx",
+      "content": "import * as React from \"react\";\nimport { Menu as BaseMenu } from \"@base-ui/react/menu\";\nimport { Check } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\nimport { Glide } from \"./glide\";\n\nexport const Menu = BaseMenu.Root;\nexport const MenuTrigger = BaseMenu.Trigger;\nexport const MenuGroup = BaseMenu.Group;\n\nexport function MenuContent({\n  className,\n  side = \"bottom\",\n  align = \"start\",\n  sideOffset = 6,\n  children,\n  ...props\n}: React.ComponentProps<typeof BaseMenu.Popup> & Pick<React.ComponentProps<typeof BaseMenu.Positioner>, \"side\" | \"align\" | \"sideOffset\">) {\n  return (\n    <BaseMenu.Portal>\n      <BaseMenu.Positioner side={side} align={align} sideOffset={sideOffset} className=\"z-50 outline-none\">\n        <BaseMenu.Popup\n          className={cn(\n            \"rovr-pop min-w-44 rounded-md rovr-glass p-1 text-popover-foreground outline-none\",\n            className,\n          )}\n          {...props}\n        >\n          <Glide follow=\"data-highlighted\">{children}</Glide>\n        </BaseMenu.Popup>\n      </BaseMenu.Positioner>\n    </BaseMenu.Portal>\n  );\n}\n\nconst itemClass = [\n  \"flex min-h-9 cursor-default items-center gap-2.5 rounded-sm px-2.5 py-1.5 text-sm outline-none select-none\",\n  \"relative\",\n  \"data-[disabled]:pointer-events-none data-[disabled]:opacity-45\",\n  \"[&_svg]:size-4 [&_svg]:text-muted-foreground\",\n].join(\" \");\n\nexport function MenuItem({\n  className,\n  destructive,\n  shortcut,\n  children,\n  ...props\n}: React.ComponentProps<typeof BaseMenu.Item> & { destructive?: boolean; shortcut?: string }) {\n  return (\n    <BaseMenu.Item\n      className={cn(itemClass, destructive && \"text-destructive-fg [&_svg]:text-destructive-fg\", className)}\n      {...props}\n    >\n      {children}\n      {shortcut && <kbd className=\"ml-auto pl-4 font-sans text-caption text-muted-foreground\">{shortcut}</kbd>}\n    </BaseMenu.Item>\n  );\n}\n\nexport function MenuCheckboxItem({ className, children, ...props }: React.ComponentProps<typeof BaseMenu.CheckboxItem>) {\n  return (\n    <BaseMenu.CheckboxItem className={cn(itemClass, className)} {...props}>\n      <span className=\"grid size-4 place-items-center\">\n        <BaseMenu.CheckboxItemIndicator>\n          <Check className=\"text-primary!\" />\n        </BaseMenu.CheckboxItemIndicator>\n      </span>\n      {children}\n    </BaseMenu.CheckboxItem>\n  );\n}\n\n/** A heading for a run of items. For a labelled, announced group, wrap the items in MenuGroup with aria-label. */\nexport function MenuLabel({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return <div role=\"presentation\" className={cn(\"px-2.5 pt-2 pb-1.5 text-overline text-subtle-foreground\", className)} {...props} />;\n}\n\nexport function MenuSeparator({ className, ...props }: React.ComponentProps<typeof BaseMenu.Separator>) {\n  return <BaseMenu.Separator className={cn(\"-mx-1 my-1 h-px bg-border\", className)} {...props} />;\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

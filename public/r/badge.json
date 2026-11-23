@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "title": "Badge",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/badge.tsx",
+      "content": "import * as React from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"@/lib/utils\";\n\nconst tones = {\n  neutral: \"[--tone:var(--subtle-foreground)] [--tone-fg:var(--foreground)]\",\n  info: \"[--tone:var(--brand)] [--tone-fg:var(--info-fg)]\",\n  success: \"[--tone:var(--success)] [--tone-fg:var(--success-fg)]\",\n  warning: \"[--tone:var(--warning)] [--tone-fg:var(--warning-fg)]\",\n  danger: \"[--tone:var(--destructive)] [--tone-fg:var(--destructive-fg)]\",\n} as const;\n\nexport const badgeVariants = cva(\"inline-flex w-fit shrink-0 items-center whitespace-nowrap [&_svg]:size-3\", {\n  variants: {\n    tone: tones,\n    variant: {\n      /**\n       * A small pill: a soft tone wash with a half-pixel hairline, as the app tints\n       * its status surfaces. Round, like every other control. The default.\n       */\n      tag: \"h-6 gap-1 rounded-full bg-[color-mix(in_oklab,var(--tone)_9%,transparent)] px-2.5 text-[0.75rem] leading-none font-medium tracking-[-0.005em] text-(--tone-fg) shadow-[inset_0_0_0_0.5px_color-mix(in_oklab,var(--tone)_32%,transparent)]\",\n      /** A dot and plain text, no container. For table cells and dense lists. */\n      status: \"gap-2 text-[0.8125rem] font-medium text-foreground\",\n      /** A count, e.g. unread messages. */\n      count: \"h-[1.125rem] min-w-[1.125rem] justify-center rounded-full bg-(--tone) px-1 text-[0.6875rem] leading-none font-bold text-white tabular-nums\",\n    },\n  },\n  compoundVariants: [\n    { tone: \"neutral\", variant: \"tag\", className: \"bg-secondary shadow-[inset_0_0_0_0.5px_var(--border-strong)]\" },\n    { tone: \"neutral\", variant: \"count\", className: \"bg-foreground text-background\" },\n  ],\n  defaultVariants: { tone: \"neutral\", variant: \"tag\" },\n});\n\nexport interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof badgeVariants> {\n  /** Pulses the status dot for something happening now, such as \"In call\". */\n  live?: boolean;\n}\n\nexport function Badge({ className, tone, variant, live, children, ...props }: BadgeProps) {\n  return (\n    <span className={cn(badgeVariants({ tone, variant }), className)} {...props}>\n      {variant === \"status\" && (\n        <span className=\"relative grid size-2 shrink-0 place-items-center\">\n          {live && <span className=\"absolute size-2 animate-ping rounded-full bg-(--tone) opacity-50 motion-reduce:hidden\" />}\n          <span className=\"size-[7px] rounded-full bg-(--tone)\" />\n        </span>\n      )}\n      {children}\n    </span>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

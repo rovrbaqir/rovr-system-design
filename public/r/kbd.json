@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kbd",
+  "title": "Kbd",
+  "dependencies": [],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/kbd.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/** A keyboard key, for shortcut hints. */\nexport function Kbd({ className, ...props }: React.HTMLAttributes<HTMLElement>) {\n  return (\n    <kbd\n      className={cn(\"inline-grid h-5 min-w-5 place-items-center rounded-xs border border-border-strong bg-surface px-1 font-sans text-[0.6875rem] font-medium text-muted-foreground\", className)}\n      {...props}\n    />\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

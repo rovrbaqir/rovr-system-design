@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton",
+  "title": "Skeleton",
+  "dependencies": [],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/skeleton.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/** Placeholder with the shape of the content it stands in for. Size it with className. */\nexport function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return (\n    <div aria-hidden className={cn(\"relative overflow-hidden rounded-sm bg-secondary-hover\", className)} {...props}>\n      <div className=\"rovr-shimmer absolute inset-0\" />\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

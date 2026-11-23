@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider",
+  "title": "Slider",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/slider.tsx",
+      "content": "import * as React from \"react\";\nimport { Slider as BaseSlider } from \"@base-ui/react/slider\";\nimport { cn } from \"@/lib/utils\";\n\nexport function Slider({ className, ...props }: React.ComponentProps<typeof BaseSlider.Root>) {\n  const count = Array.isArray(props.value ?? props.defaultValue) ? ((props.value ?? props.defaultValue) as number[]).length : 1;\n  return (\n    <BaseSlider.Root className={cn(\"w-full data-[disabled]:opacity-45\", className)} {...props}>\n      <BaseSlider.Control className=\"flex h-6 w-full cursor-pointer touch-none items-center select-none data-[disabled]:cursor-not-allowed\">\n        <BaseSlider.Track className=\"h-1.5 w-full rounded-full bg-secondary-hover\">\n          <BaseSlider.Indicator className=\"rounded-full bg-primary\" />\n          {Array.from({ length: count }, (_, i) => (\n            <BaseSlider.Thumb\n              key={i}\n              index={i}\n              className={cn(\n                \"size-5 rounded-full border-2 border-primary bg-surface shadow-raised\",\n                \"transition-[scale,box-shadow] duration-(--dur-fast) ease-out\",\n                \"hover:scale-110 data-[dragging]:scale-110\",\n                \"has-[:focus-visible]:shadow-[0_0_0_4px_color-mix(in_oklab,var(--brand)_28%,transparent)]\",\n                \"data-[dragging]:shadow-[0_0_0_6px_color-mix(in_oklab,var(--brand)_18%,transparent)]\",\n              )}\n            />\n          ))}\n        </BaseSlider.Track>\n      </BaseSlider.Control>\n    </BaseSlider.Root>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
