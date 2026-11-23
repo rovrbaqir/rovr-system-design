@@ -21,8 +21,8 @@ function Body() {
         </p>
         <Command>{`"registries": {\n  "@rovr": "https://rovr-system-design.vercel.app/r/{name}.json"\n}`}</Command>
         <p className="text-body-sm text-muted-foreground">
-          Copy it exactly, with <Token>{"{name}"}</Token> left as written. The shadcn command fills it in: <Token>@rovr/vital-tile</Token> is fetched
-          from <Token>/r/vital-tile.json</Token>.
+          Copy it exactly, with <Token>{"{name}"}</Token> left as written. The shadcn command fills it in: <Token>@rovr/button</Token> is fetched
+          from <Token>/r/button.json</Token>.
         </p>
       </li>
       <li className="flex flex-col gap-2">
