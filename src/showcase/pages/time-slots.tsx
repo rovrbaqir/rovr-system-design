@@ -85,7 +85,7 @@ function Body() {
 export const page: DocPage = {
   slug: "time-slots",
   title: "Time slots",
-  group: "Patterns",
+  group: "Examples",
   summary: "Available appointment times as a grid of choices. Pair it with Calendar in a booking flow, where the person picks a day and then a time.",
   keywords: "booking appointment availability times schedule picker slots",
   Body,

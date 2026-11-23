@@ -35,8 +35,8 @@ export function CopyButton({ value, label, className, variant = "ghost", size = 
       {...props}
     >
       <span className="relative grid size-4 place-items-center">
-        <Copy className={cn("absolute transition-[opacity,scale] duration-(--dur-base) ease-out", copied && "scale-50 opacity-0")} />
-        <Check className={cn("absolute text-success-fg transition-[opacity,scale] duration-(--dur-base) ease-out", !copied && "scale-50 opacity-0")} />
+        <Copy className={cn("absolute transition-[opacity,scale] duration-(--dur-base) ease-out", copied && "scale-75 opacity-0")} />
+        <Check className={cn("absolute text-success-fg transition-[opacity,scale] duration-(--dur-base) ease-out", !copied && "scale-75 opacity-0")} />
       </span>
     </Button>
   );

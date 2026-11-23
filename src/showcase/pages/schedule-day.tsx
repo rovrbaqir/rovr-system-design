@@ -73,7 +73,7 @@ function Body() {
 export const page: DocPage = {
   slug: "schedule-day",
   title: "Schedule day",
-  group: "Patterns",
+  group: "Examples",
   summary: "One day of a clinician's schedule on an hour grid, with a line for the current time. Use one for a day view, or several side by side for a week or a multi-provider view.",
   keywords: "calendar agenda day view timeline appointments hours week providers",
   Body,

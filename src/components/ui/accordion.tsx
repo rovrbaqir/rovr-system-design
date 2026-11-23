@@ -34,7 +34,7 @@ export function AccordionContent({ className, children, ...props }: React.Compon
     <BaseAccordion.Panel
       className={cn(
         "h-(--accordion-panel-height) overflow-hidden text-body text-muted-foreground",
-        "transition-[height,opacity] duration-(--dur-slow) ease-out",
+        "transition-[height,opacity] duration-(--dur-expand) ease-panel",
         "data-[starting-style]:h-0 data-[starting-style]:opacity-0 data-[ending-style]:h-0 data-[ending-style]:opacity-0",
       )}
       {...props}

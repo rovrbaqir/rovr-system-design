@@ -20,7 +20,7 @@ export function Stepper({ steps, current, className, ...props }: StepperProps) {
               <span
                 className={cn(
                   "grid size-7 shrink-0 place-items-center rounded-full border text-caption font-medium text-data",
-                  "transition-[background-color,border-color,color] duration-(--dur-slow) ease-out",
+                  "transition-[background-color,border-color,color] duration-(--dur-base) ease-out",
                   state === "done" && "border-primary bg-primary text-primary-foreground",
                   state === "current" && "border-primary bg-accent text-accent-foreground",
                   state === "upcoming" && "border-border-strong text-muted-foreground",
@@ -32,7 +32,7 @@ export function Stepper({ steps, current, className, ...props }: StepperProps) {
                 <span className="mx-2 h-px flex-1 overflow-hidden bg-border-strong">
                   <span
                     className={cn(
-                      "block h-full origin-left bg-primary transition-[scale] duration-(--dur-slower) ease-out",
+                      "block h-full origin-left bg-primary transition-[scale] duration-(--dur-slow) ease-out",
                       state === "done" ? "scale-x-100" : "scale-x-0",
                     )}
                   />

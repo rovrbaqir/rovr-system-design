@@ -38,7 +38,7 @@ export function ChatTyping({ label = "Pulse is writing" }: { label?: string }) {
   return (
     <div role="status" aria-label={label} className="flex w-fit gap-1 rounded-[1.125rem] rounded-bl-xs rovr-risen px-3.5 py-3.5">
       {[0, 1, 2].map((i) => (
-        <span key={i} className="size-1.5 animate-bounce rounded-full bg-subtle-foreground motion-reduce:animate-none" style={{ animationDelay: `${i * 140}ms` }} />
+        <span key={i} className="size-1.5 animate-typing rounded-full bg-subtle-foreground opacity-35 motion-reduce:animate-none motion-reduce:opacity-70" style={{ animationDelay: `${i * 160}ms` }} />
       ))}
     </div>
   );

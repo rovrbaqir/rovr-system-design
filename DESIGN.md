@@ -60,6 +60,8 @@ Two registers, kept apart on purpose.
 - `--spring-snappy`: presses, toggles, the segmented pill, the switch thumb.
 - `--spring-gentle`: a card lifting, a meter filling, layout settling.
 - Every pressable uses `rovr-press`: down fast, back on the spring.
+- Springs settle without overshoot. Nothing bounces past its resting place.
+- Timing: most motion is under 300ms. Leaving is faster than arriving. Nothing scales in from below 0.88. Content that expands (accordion, collapsible, tab indicator) uses `--dur-expand` (280ms) on `--ease-panel`.
 - One highlight glides between items in menus, selects, lists, the sidebar and the command palette (`Glide`). It is quick and does not overshoot. Do not give items their own hover background.
 - The light under a primary button follows the pointer.
 
@@ -89,7 +91,7 @@ Reduced motion removes travel and scale and keeps opacity and colour.
 - No icon inside a tinted rounded square. An icon stands on its own or not at all.
 - Radii are concentric: a container's radius is its item's radius plus the padding between them.
 - Toasts confirm. Errors someone must fix go inline, next to the cause.
-- Icons: lucide at 1.5 stroke, 16px in controls.
+- Icons: Lucide only (`lucide-react`), at 1.5 stroke, 16px in controls. No second icon set, no emoji, one meaning per icon. The Icons page in the showcase lists the names to use.
 
 ## Not built yet
 

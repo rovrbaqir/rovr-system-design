@@ -69,7 +69,7 @@ function Body() {
 export const page: DocPage = {
   slug: "chat",
   title: "Chat",
-  group: "Patterns",
+  group: "Examples",
   summary: "Message bubbles, a typing indicator and a composer. Use them for secure messaging between patients and the care team and for conversations with Pulse.",
   keywords: "messages messaging thread conversation composer bubble typing pulse assistant",
   Body,

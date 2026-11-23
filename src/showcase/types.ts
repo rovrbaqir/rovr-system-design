@@ -1,6 +1,6 @@
 import type * as React from "react";
 
-export type PageGroup = "Get started" | "Foundations" | "Components" | "Patterns";
+export type PageGroup = "Get started" | "Foundations" | "Components" | "Examples";
 
 /** One page of the documentation site. Every file in `pages/` exports one as `page` (or several as `pages`). */
 export interface DocPage {

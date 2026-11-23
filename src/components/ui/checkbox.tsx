@@ -11,7 +11,7 @@ export const Checkbox = React.forwardRef<HTMLElement, React.ComponentProps<typeo
       ref={ref}
       className={cn(
         "peer grid size-5 shrink-0 place-items-center rounded-xs border border-input bg-surface text-primary-foreground",
-        "rovr-focus cursor-pointer hover:border-border-strong active:scale-90",
+        "rovr-focus cursor-pointer hover:border-border-strong active:scale-95",
         "data-[checked]:border-primary data-[checked]:bg-primary data-[indeterminate]:border-primary data-[indeterminate]:bg-primary",
         "data-[invalid]:border-destructive data-[disabled]:cursor-not-allowed data-[disabled]:opacity-45",
         className,

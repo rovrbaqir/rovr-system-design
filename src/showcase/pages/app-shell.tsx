@@ -148,7 +148,7 @@ function Body() {
 export const page: DocPage = {
   slug: "app-shell",
   title: "App shell",
-  group: "Patterns",
+  group: "Examples",
   summary: "The frame shared by the patient and provider apps: a collapsible sidebar and the content area beside it. Use it once, at the root of an app.",
   keywords: "sidebar layout navigation nav rail frame menu collapse",
   Body,

@@ -21,7 +21,7 @@ export function CollapsibleContent({ className, children, ...props }: React.Comp
   return (
     <BaseCollapsible.Panel
       className={cn(
-        "h-(--collapsible-panel-height) overflow-hidden transition-[height,opacity] duration-(--dur-slow) ease-out",
+        "h-(--collapsible-panel-height) overflow-hidden transition-[height,opacity] duration-(--dur-expand) ease-panel",
         "data-[starting-style]:h-0 data-[starting-style]:opacity-0 data-[ending-style]:h-0 data-[ending-style]:opacity-0",
       )}
       {...props}

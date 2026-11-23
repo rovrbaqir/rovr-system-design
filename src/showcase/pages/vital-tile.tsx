@@ -33,7 +33,7 @@ function Body() {
 export const page: DocPage = {
   slug: "vital-tile",
   title: "Vital tile",
-  group: "Patterns",
+  group: "Examples",
   summary: "One vital sign with its unit, when it was measured and its recent trend. Use it on the patient's home screen and in the chart summary.",
   keywords: "vitals heart rate blood pressure weight temperature reading sparkline health metric",
   Body,

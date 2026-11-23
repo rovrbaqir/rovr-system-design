@@ -40,10 +40,11 @@ function Swatch({ token, role }: { token: string; role: string }) {
 }
 
 const durations = [
-  ["--spring-snappy", "--dur-snappy", "500ms", "Presses, toggles, menus, highlights"],
+  ["--spring-snappy", "--dur-snappy", "380ms", "Presses, toggles, highlights. Settles without overshoot"],
   ["--spring-gentle", "--dur-gentle", "645ms", "Cards lifting, meters, layout"],
   ["--ease-panel", "--dur-panel", "420ms", "Sheets and the sidebar"],
   ["--ease-appear", "--dur-appear", "180ms", "Menus, popovers, dialogs"],
+  ["--ease-panel", "--dur-expand", "280ms", "Accordions, collapsibles, tab indicators"],
   ["--ease-out", "--dur-base", "250ms", "Fades, blur, colour"],
   ["--ease-out", "--dur-fast", "150ms", "Hover, focus"],
 ];
@@ -226,7 +227,7 @@ function ShapeBody() {
       title="Density"
       note={
         <>
-          Set <Token>data-density="compact"</Token> on any container. Try the toggle in the top bar.
+          Set <Token>data-density="compact"</Token> on any container. The provider app sets it once at its root.
         </>
       }
       className="items-start gap-8"

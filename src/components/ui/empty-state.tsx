@@ -38,7 +38,7 @@ function Ghost({ icon }: { icon?: React.ReactNode }) {
           style={{ width: row.w, top: i * 28, left: row.x / 2 }}
           initial={reduced ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: row.o, y: 0 }}
-          transition={{ duration: 0.5, ease: appear, delay: 0.05 + i * 0.07 }}
+          transition={{ duration: 0.4, ease: appear, delay: 0.04 + i * 0.05 }}
         >
           <span className="size-3 shrink-0 rounded-full bg-secondary-hover" />
           <span className="h-1.5 flex-1 rounded-full bg-secondary-hover" />
@@ -48,9 +48,9 @@ function Ghost({ icon }: { icon?: React.ReactNode }) {
       {icon && (
         <motion.div
           className="absolute -top-2 -right-1 grid size-10 place-items-center rounded-full bg-surface text-accent-foreground shadow-risen [&_svg]:size-4.5"
-          initial={reduced ? false : { opacity: 0, scale: 0.6 }}
+          initial={reduced ? false : { opacity: 0, scale: 0.88 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "spring", damping: 28, mass: 0.6, stiffness: 320, delay: 0.22 }}
+          transition={{ type: "spring", damping: 28, mass: 0.6, stiffness: 320, delay: 0.16 }}
         >
           <motion.span
             className="grid place-items-center"
@@ -78,7 +78,7 @@ export function EmptyState({ icon, title, description, action, size = "default",
         className="flex flex-col items-center gap-3"
         initial={reduced ? false : { opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: appear, delay: size === "default" ? 0.18 : 0 }}
+        transition={{ duration: 0.3, ease: appear, delay: size === "default" ? 0.14 : 0 }}
       >
         <div className="flex max-w-sm flex-col gap-1">
           <p className="text-title-md">{title}</p>

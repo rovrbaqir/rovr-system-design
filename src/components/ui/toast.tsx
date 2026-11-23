@@ -46,7 +46,7 @@ function ToastList() {
       className={cn(
         "absolute right-0 bottom-0 w-full select-none",
         "rounded-xl rovr-glass p-4 pr-10 text-popover-foreground",
-        "[transition:translate_var(--dur-slower)_var(--ease-out),opacity_var(--dur-slow)_var(--ease-out),scale_var(--dur-slower)_var(--ease-out)]",
+        "[transition:translate_var(--dur-slow)_var(--ease-out),opacity_var(--dur-base)_var(--ease-out),scale_var(--dur-slow)_var(--ease-out)]",
         // Stack upward: each toast sits above the combined height of the ones in front of it.
         "translate-x-(--toast-swipe-movement-x) translate-y-[calc(var(--toast-swipe-movement-y)-var(--toast-offset-y)-var(--toast-index)*0.625rem)]",
         "data-[starting-style]:translate-y-[calc(100%+1rem)] data-[starting-style]:scale-95 data-[starting-style]:opacity-0",

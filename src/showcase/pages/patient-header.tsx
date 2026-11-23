@@ -88,7 +88,7 @@ function Body() {
 export const page: DocPage = {
   slug: "patient-header",
   title: "Patient header",
-  group: "Patterns",
+  group: "Examples",
   summary: "The identity strip at the top of a patient chart: name, MRN, key facts and safety flags. Use it on every chart view in the provider app so the clinician always knows whose record is open.",
   keywords: "patient banner chart identity mrn demographics allergies alerts",
   Body,

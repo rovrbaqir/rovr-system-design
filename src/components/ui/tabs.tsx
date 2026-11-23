@@ -36,7 +36,7 @@ export function TabsList({
         <BaseTabs.Indicator
           className={cn(
             "absolute left-0 w-(--active-tab-width) translate-x-(--active-tab-left)",
-            "transition-[translate,width] duration-(--dur-slow) ease-out",
+            "transition-[translate,width] duration-(--dur-expand) ease-out",
             variant === "underline" && "-bottom-px h-0.5 bg-primary",
             variant === "boxed" && "-top-px h-0.5 bg-primary",
             variant === "segmented" && "top-1/2 -z-10 h-(--active-tab-height) -translate-y-1/2 rounded-full bg-surface shadow-raised ease-spring",
@@ -69,7 +69,7 @@ export function TabsContent({ className, ...props }: React.ComponentProps<typeof
   return (
     <BaseTabs.Panel
       className={cn(
-        "outline-none transition-[opacity,translate] duration-(--dur-slow) ease-out",
+        "outline-none transition-[opacity,translate] duration-(--dur-base) ease-out",
         "data-[starting-style]:translate-y-(--motion-shift) data-[starting-style]:opacity-0",
         className,
       )}

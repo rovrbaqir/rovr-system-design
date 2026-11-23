@@ -33,7 +33,7 @@ function Body() {
 export const page: DocPage = {
   slug: "lab-tile",
   title: "Lab tile",
-  group: "Patterns",
+  group: "Examples",
   summary: "One lab result shown against its reference range, with the status in words. Use it wherever a patient or clinician reads results.",
   keywords: "laboratory result reference range test blood panel biomarker",
   Body,

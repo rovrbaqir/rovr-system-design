@@ -23,7 +23,8 @@ const describe = (file) => {
   return { deps: [...deps].sort(), registryDeps: [...registryDeps].sort() };
 };
 
-for (const [dir, type] of [["src/components/ui", "registry:ui"], ["src/components/patterns", "registry:block"]]) {
+// Only base components are shared. The files in src/components/patterns are examples for the showcase.
+for (const [dir, type] of [["src/components/ui", "registry:ui"]]) {
   for (const f of fs.readdirSync(dir).filter((f) => f.endsWith(".tsx")).sort()) {
     const file = path.join(dir, f);
     const name = f.replace(".tsx", "");

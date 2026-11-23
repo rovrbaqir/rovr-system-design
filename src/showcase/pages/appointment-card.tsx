@@ -74,7 +74,7 @@ function Body() {
 export const page: DocPage = {
   slug: "appointment-card",
   title: "Appointment card",
-  group: "Patterns",
+  group: "Examples",
   summary: "One appointment: date, time, who it is with, how it happens and its status. Use it in upcoming and past visit lists in both apps.",
   keywords: "visit booking calendar event schedule telehealth video",
   Body,

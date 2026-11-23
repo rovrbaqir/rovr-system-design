@@ -42,9 +42,9 @@ export function ChipGroup({ items, trailing, className, ...props }: ChipGroupPro
           <motion.span
             key={item.key}
             layout={reduced ? false : "position"}
-            initial={{ opacity: 0, scale: reduced ? 1 : 0.85 }}
+            initial={{ opacity: 0, scale: reduced ? 1 : 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: reduced ? 1 : 0.85 }}
+            exit={{ opacity: 0, scale: reduced ? 1 : 0.92 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1], layout: { type: "spring", damping: 30, stiffness: 320, mass: 0.7 } }}
             className="inline-flex"
           >

@@ -43,7 +43,7 @@ function Body() {
 export const page: DocPage = {
   slug: "medication-card",
   title: "Medication card",
-  group: "Patterns",
+  group: "Examples",
   summary: "One medication: name, strength, directions in plain words, refills and status. Use it in medication lists in both apps.",
   keywords: "prescription drug medicine rx refill pharmacy dose",
   Body,

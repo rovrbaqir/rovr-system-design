@@ -1,6 +1,6 @@
 import * as React from "react";
 import { motion } from "motion/react";
-import { ArrowLeft, ArrowRight, Menu as MenuIcon, Moon, Rows3, Rows4, Sun } from "lucide-react";
+import { ArrowLeft, ArrowRight, Menu as MenuIcon, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { SearchInput } from "@/components/ui/input";
@@ -76,7 +76,7 @@ function PageNav({ active, id, onNavigate }: { active: string; id: string; onNav
             <div key={group} className="flex flex-col gap-0.5">
               <p className="mb-1.5 flex items-baseline justify-between px-3 text-overline text-subtle-foreground">
                 {group}
-                {(group === "Components" || group === "Patterns") && <span className="text-data">{items.length}</span>}
+                {(group === "Components" || group === "Examples") && <span className="text-data">{items.length}</span>}
               </p>
               {group === "Get started" && !query && <NavLink id={id} slug="" label="Introduction" active={active === ""} onNavigate={onNavigate} />}
               {items.map((p) => (
@@ -142,6 +142,12 @@ function PageView({ page }: { page: DocPage }) {
         <h1 className="text-display-lg">{page.title}</h1>
         <p className="max-w-[62ch] text-body-lg text-muted-foreground">{page.summary}</p>
         {isInstallable(page) && <InstallLine slug={page.slug} />}
+        {page.group === "Examples" && (
+          <p className="max-w-[62ch] rounded-lg bg-surface-sunken px-4 py-3 text-body-sm text-muted-foreground">
+            This is an example of how the base components combine, not a shared component. It cannot be installed. Build your own version in your
+            project; the Code view of each example shows how this one is written.
+          </p>
+        )}
       </header>
       <div className="mt-10 flex flex-col gap-12">
         <page.Body />
@@ -184,7 +190,7 @@ function Introduction() {
       <div className="flex flex-col gap-7 py-20 sm:py-24">
         <h1 className="max-w-[16ch] text-display-xl sm:text-[4.25rem]">The parts every RoVR screen is built from.</h1>
         <p className="max-w-[54ch] text-body-lg text-muted-foreground">
-          One look and one feel across the mobile app, the patient app and the provider app. Every component has its own page with live examples, so
+          One look and one feel across the mobile app, the patient app and the provider app. Every base component has its own page with live examples, so
           press them, hover them and tab through them, then copy the code.
         </p>
         <div className="flex flex-wrap gap-x-8 gap-y-3 text-body-lg">
@@ -200,7 +206,7 @@ function Introduction() {
       </div>
       <IndexGroup title="Foundations" lead="Colour, type, shape and motion tokens." items={pagesIn("Foundations")} />
       <IndexGroup title="Components" lead="Single-purpose parts." items={components} />
-      <IndexGroup title="Patterns" lead="Parts assembled for RoVR's own screens." items={pagesIn("Patterns")} />
+      <IndexGroup title="Example usages of our components" lead="Not shared or installable. Each project builds its own." items={pagesIn("Examples")} />
     </div>
   );
 }
@@ -237,14 +243,13 @@ function NotFound({ slug }: { slug: string }) {
 
 export function App() {
   const [dark, setDark] = useTheme();
-  const [compact, setCompact] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
   const slug = useRoute();
   const page = findPage(slug);
 
   return (
     <TooltipProvider delay={300}>
-      <div data-density={compact ? "compact" : "comfortable"} className="min-h-dvh">
+      <div className="min-h-dvh">
         <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md">
           <div className="mx-auto flex h-14 max-w-[88rem] items-center justify-between gap-4 px-4 sm:px-8">
             <div className="flex items-center gap-2">
@@ -264,11 +269,6 @@ export function App() {
               <Logo />
             </div>
             <div className="flex items-center gap-1">
-              <Tooltip content={compact ? "Switch to comfortable density" : "Switch to compact density"}>
-                <Button variant="ghost" size="icon-sm" aria-label="Toggle density" aria-pressed={compact} onClick={() => setCompact((c) => !c)}>
-                  {compact ? <Rows4 /> : <Rows3 />}
-                </Button>
-              </Tooltip>
               <Tooltip content={dark ? "Switch to light theme" : "Switch to dark theme"}>
                 <Button variant="ghost" size="icon-sm" aria-label="Toggle theme" aria-pressed={dark} onClick={() => setDark((d) => !d)}>
                   {dark ? <Sun /> : <Moon />}

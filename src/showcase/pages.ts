@@ -2,7 +2,7 @@ import type { DocPage, PageGroup } from "./types";
 
 const modules = import.meta.glob<{ page?: DocPage; pages?: DocPage[] }>("./pages/*.tsx", { eager: true });
 
-export const groups: PageGroup[] = ["Get started", "Foundations", "Components", "Patterns"];
+export const groups: PageGroup[] = ["Get started", "Foundations", "Components", "Examples"];
 
 /** Every page, in sidebar order. */
 export const pages: DocPage[] = Object.values(modules)
@@ -16,5 +16,5 @@ export const pages: DocPage[] = Object.values(modules)
 
 export const pagesIn = (group: PageGroup) => pages.filter((p) => p.group === group);
 export const findPage = (slug: string) => pages.find((p) => p.slug === slug);
-/** Components and patterns are installed from the registry under their slug. */
-export const isInstallable = (page: DocPage) => page.group === "Components" || page.group === "Patterns";
+/** Only base components are shared through the registry. Examples are built per project. */
+export const isInstallable = (page: DocPage) => page.group === "Components";

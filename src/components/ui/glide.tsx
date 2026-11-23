@@ -30,6 +30,8 @@ export function Glide({ follow, highlightClassName, className, children, ...prop
   const [box, setBox] = React.useState<Box | null>(null);
   const [shown, setShown] = React.useState(false);
   const wasShown = React.useRef(false);
+  // True for the render that follows a resize: the highlight snaps to the new box instead of gliding to it.
+  const resized = React.useRef(false);
   const reduced = useReducedMotion();
 
   const measure = React.useCallback((el: Element | null) => {
@@ -57,10 +59,30 @@ export function Glide({ follow, highlightClassName, className, children, ...prop
   React.useEffect(() => {
     const host = root.current;
     if (!follow || !host) return;
-    const sync = () => measure(host.querySelector(`[${follow}]`));
+    const sync = () => {
+      resized.current = false;
+      measure(host.querySelector(`[${follow}]`));
+    };
     sync();
     const observer = new MutationObserver(sync);
     observer.observe(host, { attributes: true, attributeFilter: [follow], subtree: true, childList: true });
+    return () => observer.disconnect();
+  }, [follow, measure]);
+
+  // A popup gets its final width a frame after it mounts, and lists reflow
+  // when filtered. Follow the size, or the highlight keeps a stale box.
+  const target = React.useRef<Element | null>(null);
+  React.useEffect(() => {
+    const host = root.current;
+    if (!host) return;
+    const observer = new ResizeObserver(() => {
+      const el = follow ? host.querySelector(`[${follow}]`) : target.current;
+      if (el && host.contains(el)) {
+        resized.current = true;
+        measure(el);
+      }
+    });
+    observer.observe(host);
     return () => observer.disconnect();
   }, [follow, measure]);
 
@@ -68,12 +90,18 @@ export function Glide({ follow, highlightClassName, className, children, ...prop
     wasShown.current = shown;
   }, [shown]);
 
+  const track = (el: Element | null) => {
+    target.current = el;
+    resized.current = false;
+    measure(el);
+  };
+
   const pointer = follow
     ? {}
     : {
-        onPointerOver: (e: React.PointerEvent) => measure((e.target as Element).closest("[data-glide]")),
+        onPointerOver: (e: React.PointerEvent) => track((e.target as Element).closest("[data-glide]")),
         onPointerLeave: () => setShown(false),
-        onFocus: (e: React.FocusEvent) => measure((e.target as Element).closest("[data-glide]")),
+        onFocus: (e: React.FocusEvent) => track((e.target as Element).closest("[data-glide]")),
         onBlur: () => setShown(false),
       };
 
@@ -85,7 +113,7 @@ export function Glide({ follow, highlightClassName, className, children, ...prop
           initial={false}
           animate={{ ...box, opacity: shown ? 1 : 0 }}
           // Appear in place, then glide. Without this the first hover flies in from the corner.
-          transition={reduced || !wasShown.current ? { duration: 0, opacity: { duration: 0.12 } } : { type: "spring", stiffness: 520, damping: 42, mass: 0.8, opacity: { duration: 0.12 } }}
+          transition={reduced || !wasShown.current || resized.current ? { duration: 0, opacity: { duration: 0.12 } } : { type: "spring", stiffness: 520, damping: 42, mass: 0.8, opacity: { duration: 0.12 } }}
           className={cn("pointer-events-none absolute top-0 left-0 -z-10 rounded-sm bg-secondary", highlightClassName)}
         />
       )}

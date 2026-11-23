@@ -33,10 +33,10 @@ function Body() {
       <li className="flex flex-col gap-2">
         <p className="text-title-sm">3. Add components as you need them</p>
         <p className="text-muted-foreground">
-          Each component page shows its own command. Anything a component depends on is added with it. You can also copy the files by hand from the
+          Each component page shows its own command. Only base components are in the registry; the pages under Examples are not. Anything a component depends on is added with it. You can also copy the files by hand from the
           Code view of any example.
         </p>
-        <Command>pnpm dlx shadcn@latest add @rovr/button @rovr/dialog @rovr/appointment-card</Command>
+        <Command>pnpm dlx shadcn@latest add @rovr/button @rovr/dialog @rovr/select</Command>
       </li>
     </ol>
   );

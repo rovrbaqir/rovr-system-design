@@ -11,12 +11,15 @@ export interface BlurSwapProps {
 
 /**
  * The mobile app's blur-replace: content does not cut or cross-fade, it
- * softens, shrinks slightly and resolves into the next state. For icon
+ * softens briefly and resolves into the next state. For icon
  * swaps, labels that change in place and counters.
  */
 export function BlurSwap({ swapKey, children, className }: BlurSwapProps) {
   const reduced = useReducedMotion();
-  const off = reduced ? { opacity: 0 } : { opacity: 0, scale: 0.8, filter: "blur(6px)" };
+  // A small scale and a light blur: enough to read as one thing becoming
+  // another, not enough to smear. The old content leaves faster than the
+  // new one arrives, so the two are never both half-visible for long.
+  const off = reduced ? { opacity: 0 } : { opacity: 0, scale: 0.92, filter: "blur(3px)" };
   return (
     <span className={cn("relative inline-grid place-items-center", className)}>
       <AnimatePresence initial={false} mode="popLayout">
@@ -24,8 +27,8 @@ export function BlurSwap({ swapKey, children, className }: BlurSwapProps) {
           key={swapKey}
           initial={off}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          exit={off}
-          transition={{ duration: 0.3, ease: [0.2, 0, 0, 1] }}
+          exit={{ ...off, transition: { duration: 0.12, ease: [0.4, 0, 1, 1] } }}
+          transition={{ duration: 0.24, ease: [0.23, 1, 0.32, 1], delay: 0.04 }}
           className="inline-flex items-center gap-[inherit]"
         >
           {children}

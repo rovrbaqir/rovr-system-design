@@ -39,7 +39,7 @@ function Body() {
 export const page: DocPage = {
   slug: "stat-card",
   title: "Stat card",
-  group: "Patterns",
+  group: "Examples",
   summary: "One figure with its label and its change against a comparison period. Lay several out in a row for the summary strip at the top of a dashboard.",
   keywords: "kpi metric number figure summary dashboard delta trend tile",
   Body,

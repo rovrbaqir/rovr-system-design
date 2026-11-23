@@ -63,7 +63,7 @@ function Body() {
 export const page: DocPage = {
   slug: "page-header",
   title: "Page header",
-  group: "Patterns",
+  group: "Examples",
   summary: "The single header every screen uses: title, optional description, navigation above and actions at the end. It replaces the per-module headers in both apps.",
   keywords: "title heading h1 toolbar breadcrumbs back actions",
   Body,
