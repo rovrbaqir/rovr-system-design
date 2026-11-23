@@ -45,14 +45,14 @@ export function ChipGroup({ items, trailing, className, ...props }: ChipGroupPro
             initial={{ opacity: 0, scale: reduced ? 1 : 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: reduced ? 1 : 0.85 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1], layout: { type: "spring", damping: 26, stiffness: 320, mass: 0.7 } }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1], layout: { type: "spring", damping: 30, stiffness: 320, mass: 0.7 } }}
             className="inline-flex"
           >
             {item.node}
           </motion.span>
         ))}
         {trailing && (
-          <motion.span key="__trailing" layout={reduced ? false : "position"} transition={{ type: "spring", damping: 26, stiffness: 320, mass: 0.7 }} className="inline-flex">
+          <motion.span key="__trailing" layout={reduced ? false : "position"} transition={{ type: "spring", damping: 30, stiffness: 320, mass: 0.7 }} className="inline-flex">
             {trailing}
           </motion.span>
         )}

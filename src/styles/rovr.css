@@ -454,13 +454,13 @@
   font-size: 1.25rem;
   line-height: 1.3;
   letter-spacing: -0.012em;
-  font-weight: 600;
+  font-weight: 500;
 }
 @utility text-title-md {
   font-size: 1.0625rem;
   line-height: 1.35;
   letter-spacing: -0.008em;
-  font-weight: 600;
+  font-weight: 500;
 }
 @utility text-title-sm {
   font-size: 0.9375rem;
@@ -489,13 +489,12 @@
   font-size: 0.75rem;
   line-height: 1.4;
 }
-/* The landing page's small tracked capitals. For table column headers and
-   group labels only; never stacked above a headline. */
+/* Small group label, in sentence case. For table column headers and group
+   labels only; never stacked above a headline. */
 @utility text-overline {
-  font-size: 0.6875rem;
-  line-height: 1.3;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
   font-weight: 500;
 }
 /* Data: tabular lining figures for vitals, labs, doses, money, times. */

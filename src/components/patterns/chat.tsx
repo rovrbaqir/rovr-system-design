@@ -24,7 +24,7 @@ export function ChatMessage({ from, author, time, className, children, ...props 
       <div
         className={cn(
           "max-w-[min(34rem,85%)] rounded-[1.125rem] px-3.5 py-2.5 text-body leading-snug",
-          from === "self" ? "rounded-br-[5px] bg-primary text-primary-foreground" : "rounded-bl-[5px] rovr-risen",
+          from === "self" ? "rounded-br-xs bg-primary text-primary-foreground" : "rounded-bl-xs rovr-risen",
         )}
       >
         {children}
@@ -36,7 +36,7 @@ export function ChatMessage({ from, author, time, className, children, ...props 
 /** Three dots while the other side is writing. */
 export function ChatTyping({ label = "Pulse is writing" }: { label?: string }) {
   return (
-    <div role="status" aria-label={label} className="flex w-fit gap-1 rounded-[1.125rem] rounded-bl-[5px] rovr-risen px-3.5 py-3.5">
+    <div role="status" aria-label={label} className="flex w-fit gap-1 rounded-[1.125rem] rounded-bl-xs rovr-risen px-3.5 py-3.5">
       {[0, 1, 2].map((i) => (
         <span key={i} className="size-1.5 animate-bounce rounded-full bg-subtle-foreground motion-reduce:animate-none" style={{ animationDelay: `${i * 140}ms` }} />
       ))}

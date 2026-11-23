@@ -3,7 +3,7 @@ import { Avatar as BaseAvatar } from "@base-ui/react/avatar";
 import { cn } from "@/lib/utils";
 
 const sizes = {
-  xs: "size-6 text-[0.625rem]",
+  xs: "size-6 text-[0.6875rem]",
   sm: "size-8 text-caption",
   md: "size-10 text-sm",
   lg: "size-14 text-lg",

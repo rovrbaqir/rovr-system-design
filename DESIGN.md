@@ -39,9 +39,9 @@ One product across the phone and the web. The brand blue, the typeface (DM Sans)
 
 - DM Sans for everything; DM Mono for identifiers (MRN, claim numbers, codes).
 - Headlines (`text-display-*`) are weight 500 and tighten as they grow.
-- Base 15px. `text-body-lg` for patient-facing reading. `text-overline` for table headers and group labels only.
+- Base 15px. `text-body-lg` for patient-facing reading. `text-overline` is a small sentence-case label for table headers and group labels only; no uppercase or wide tracking anywhere.
 - `text-data` (tabular figures) on vitals, labs, doses, money, times, counts.
-- Weights: 400 body, 500 labels, 600 titles and buttons.
+- Weights: 400 body, 500 labels and titles, 600 only for buttons, the smallest title and the active nav item. Size and colour carry the hierarchy, not weight.
 
 ## Shape
 

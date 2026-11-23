@@ -50,7 +50,7 @@ function Ghost({ icon }: { icon?: React.ReactNode }) {
           className="absolute -top-2 -right-1 grid size-10 place-items-center rounded-full bg-surface text-accent-foreground shadow-risen [&_svg]:size-4.5"
           initial={reduced ? false : { opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "spring", damping: 18, mass: 0.6, stiffness: 320, delay: 0.22 }}
+          transition={{ type: "spring", damping: 28, mass: 0.6, stiffness: 320, delay: 0.22 }}
         >
           <motion.span
             className="grid place-items-center"

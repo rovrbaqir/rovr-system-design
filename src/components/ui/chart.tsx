@@ -213,7 +213,7 @@ export function BarChart({ data, height = 200, format = (v) => compact.format(v)
                   style={{ transformOrigin: `${bx}px ${pad.top + h}px`, transformBox: "view-box" }}
                   initial={reduced ? false : { scaleY: 0 }}
                   animate={{ scaleY: 1, opacity: dim ? 0.35 : 1 }}
-                  transition={{ scaleY: { type: "spring", damping: 22, mass: 0.9, stiffness: 180, delay: i * 0.03 }, opacity: { duration: 0.15 } }}
+                  transition={{ scaleY: { type: "spring", damping: 26, mass: 0.9, stiffness: 180, delay: i * 0.03 }, opacity: { duration: 0.15 } }}
                 />
                 <text x={pad.left + band * i + band / 2} y={height - 6} textAnchor="middle" className="fill-(--subtle-foreground) text-[11px]">
                   {d.label}

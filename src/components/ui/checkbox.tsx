@@ -10,8 +10,8 @@ export const Checkbox = React.forwardRef<HTMLElement, React.ComponentProps<typeo
     <BaseCheckbox.Root
       ref={ref}
       className={cn(
-        "peer grid size-5 shrink-0 place-items-center rounded-[5px] border border-input bg-surface text-primary-foreground",
-        "rovr-focus cursor-pointer hover:border-border-strong active:scale-90 data-[checked]:shadow-[0_2px_6px_-2px_color-mix(in_oklab,var(--primary)_60%,transparent)]",
+        "peer grid size-5 shrink-0 place-items-center rounded-xs border border-input bg-surface text-primary-foreground",
+        "rovr-focus cursor-pointer hover:border-border-strong active:scale-90",
         "data-[checked]:border-primary data-[checked]:bg-primary data-[indeterminate]:border-primary data-[indeterminate]:bg-primary",
         "data-[invalid]:border-destructive data-[disabled]:cursor-not-allowed data-[disabled]:opacity-45",
         className,

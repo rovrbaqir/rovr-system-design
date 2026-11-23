@@ -18,11 +18,11 @@ export const badgeVariants = cva("inline-flex w-fit shrink-0 items-center whites
        * A small pill: a soft tone wash with a half-pixel hairline, as the app tints
        * its status surfaces. Round, like every other control. The default.
        */
-      tag: "h-6 gap-1 rounded-full bg-[color-mix(in_oklab,var(--tone)_9%,transparent)] px-2.5 text-[0.75rem] leading-none font-medium tracking-[-0.005em] text-(--tone-fg) shadow-[inset_0_0_0_0.5px_color-mix(in_oklab,var(--tone)_32%,transparent)]",
+      tag: "h-6 gap-1 rounded-full bg-[color-mix(in_oklab,var(--tone)_9%,transparent)] px-2.5 text-[0.75rem] leading-none font-medium text-(--tone-fg) shadow-[inset_0_0_0_0.5px_color-mix(in_oklab,var(--tone)_32%,transparent)]",
       /** A dot and plain text, no container. For table cells and dense lists. */
       status: "gap-2 text-[0.8125rem] font-medium text-foreground",
       /** A count, e.g. unread messages. */
-      count: "h-[1.125rem] min-w-[1.125rem] justify-center rounded-full bg-(--tone) px-1 text-[0.6875rem] leading-none font-bold text-white tabular-nums",
+      count: "h-[1.125rem] min-w-[1.125rem] justify-center rounded-full bg-(--tone) px-1 text-[0.6875rem] leading-none font-semibold text-white tabular-nums",
     },
   },
   compoundVariants: [
@@ -43,7 +43,7 @@ export function Badge({ className, tone, variant, live, children, ...props }: Ba
       {variant === "status" && (
         <span className="relative grid size-2 shrink-0 place-items-center">
           {live && <span className="absolute size-2 animate-ping rounded-full bg-(--tone) opacity-50 motion-reduce:hidden" />}
-          <span className="size-[7px] rounded-full bg-(--tone)" />
+          <span className="size-1.5 rounded-full bg-(--tone)" />
         </span>
       )}
       {children}

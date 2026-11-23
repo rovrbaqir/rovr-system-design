@@ -20,9 +20,9 @@ export const duration = {
 } as const;
 
 /** Panels, dialogs, card entrances: soft landing, no jitter. */
-export const springGentle: Transition = { type: "spring", damping: 22, mass: 0.9, stiffness: 180 };
+export const springGentle: Transition = { type: "spring", damping: 26, mass: 0.9, stiffness: 180 };
 /** Presses, selection highlights, small indicators: quick with a hint of bounce. */
-export const springSnappy: Transition = { type: "spring", damping: 18, mass: 0.6, stiffness: 320 };
+export const springSnappy: Transition = { type: "spring", damping: 28, mass: 0.6, stiffness: 320 };
 /** @deprecated alias of springGentle */
 export const spring = springGentle;
 /** Opacity, colour, blur. Never bounces. */
