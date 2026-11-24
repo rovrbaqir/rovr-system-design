@@ -11,6 +11,7 @@ import { springSnappy } from "@/lib/motion-tokens";
 import { cn } from "@/lib/utils";
 import figmaLinks from "./figma-links.json";
 import { findPage, groups, isInstallable, pages, pagesIn } from "./pages";
+import { SpecSheet, findSpec } from "./specs/sheet";
 import type { DocPage } from "./types";
 
 function useTheme() {
@@ -39,7 +40,7 @@ function useRoute() {
   }, []);
   React.useEffect(() => {
     window.scrollTo(0, 0);
-    const page = findPage(slug);
+    const page = findPage(slug.replace(/^spec\//, ""));
     document.title = page ? `${page.title} · RoVR design system` : "RoVR design system";
   }, [slug]);
   return slug;
@@ -162,7 +163,14 @@ function PageView({ page }: { page: DocPage }) {
         <h1 className="text-display-lg">{page.title}</h1>
         <p className="max-w-[62ch] text-body-lg text-muted-foreground">{page.summary}</p>
         {isInstallable(page) && <InstallLine slug={page.slug} />}
-        <FigmaLink slug={page.slug} />
+        <div className="flex flex-wrap gap-2 empty:hidden">
+          {findSpec(page.slug) && (
+            <a href={`#/spec/${page.slug}`} className={cn(buttonVariants({ variant: "outline", size: "sm" }), "w-fit")}>
+              All props and states <ArrowRight />
+            </a>
+          )}
+          <FigmaLink slug={page.slug} />
+        </div>
         {page.group === "Examples" && (
           <p className="max-w-[62ch] rounded-lg bg-surface-sunken px-4 py-3 text-body-sm text-muted-foreground">
             This is an example of how the base components combine, not a shared component. It cannot be installed. Build your own version in your
@@ -262,53 +270,28 @@ function NotFound({ slug }: { slug: string }) {
   );
 }
 
-// Dev only: `await __rovrFigma()` in the console exports every page for the Figma plugin (see figma/README.md).
+// Dev only: `await __rovrSheets()` writes each page's spec sheet to figma/html/sheet-<slug>.html and the tokens to figma/data/tokens.json.
 if (import.meta.env.DEV) {
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-  const save = (name: string, data: unknown) => fetch(`/__figma/save?name=${name}`, { method: "POST", body: JSON.stringify(data) }).then((r) => r.ok);
-  (window as unknown as { __rovrFigma: (only?: string[]) => Promise<unknown> }).__rovrFigma = async (only) => {
-    const { extractPage, extractTokens } = await import("./figma-extract");
+  (window as unknown as { __rovrSheets: (only?: string[]) => Promise<unknown> }).__rovrSheets = async (only) => {
+    const { snapshotSheet, extractTokens } = await import("./figma-extract");
     document.documentElement.classList.remove("dark");
-    await sleep(200);
-    await save("tokens", extractTokens());
-    const report: Record<string, number | string> = {};
+    await fetch("/__figma/save?name=tokens", { method: "POST", body: JSON.stringify(extractTokens()) });
+    const report: Record<string, unknown> = {};
     for (const page of pages) {
       if (page.slug === "install" || (only && !only.includes(page.slug))) continue;
-      window.location.hash = `#/${page.slug}`;
-      // Long enough for entrance animations (chart lines, bars, empty states) to finish.
-      await sleep(1700);
+      window.location.hash = `#/spec/${page.slug}`;
+      // Long enough for chart lines and bars to finish drawing, then until every grid has been measured.
+      await sleep(3200);
+      for (let i = 0; i < 40 && [...document.querySelectorAll<HTMLElement>("[data-spec-set]")].some((el) => getComputedStyle(el).visibility === "hidden"); i++) await sleep(150);
       try {
-        const data = await extractPage({ slug: page.slug, title: page.title, group: page.group, summary: page.summary });
-        await save(page.slug, data);
-        report[page.slug] = data.demos.length;
+        const { html, meta } = await snapshotSheet({ slug: page.slug, title: page.title, group: page.group, summary: page.summary });
+        await fetch(`/__figma/save?name=sheet-${page.slug}&kind=html`, { method: "POST", body: html });
+        report[page.slug] = { kb: Math.round(html.length / 1024), sets: meta.sets.length };
       } catch (error) {
         report[page.slug] = `failed: ${String(error)}`;
       }
     }
-    return report;
-  };
-}
-
-// Dev only: `await __rovrSnapshot()` writes a self-contained HTML copy of each page's examples to figma/html/.
-if (import.meta.env.DEV) {
-  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-  (window as unknown as { __rovrSnapshot: (only?: string[]) => Promise<unknown> }).__rovrSnapshot = async (only) => {
-    const { snapshotPage } = await import("./figma-extract");
-    document.documentElement.classList.remove("dark");
-    const report: Record<string, string[] | string> = {};
-    for (const page of pages) {
-      if (page.slug === "install" || (only && !only.includes(page.slug))) continue;
-      window.location.hash = `#/${page.slug}`;
-      await sleep(1700);
-      try {
-        const { html, names } = await snapshotPage({ slug: page.slug, title: page.title });
-        await fetch(`/__figma/save?name=${page.slug}&kind=html`, { method: "POST", body: html });
-        report[page.slug] = names;
-      } catch (error) {
-        report[page.slug] = `failed: ${String(error)}`;
-      }
-    }
-    await fetch("/__figma/save?name=_names", { method: "POST", body: JSON.stringify(report) });
     return report;
   };
 }
@@ -318,6 +301,19 @@ export function App() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const slug = useRoute();
   const page = findPage(slug);
+
+  // `#/spec/<slug>`: the component's spec sheet on its own, without the site around it.
+  const sheetPage = slug.startsWith("spec/") ? findPage(slug.slice(5)) : undefined;
+  if (sheetPage) {
+    return (
+      <TooltipProvider delay={300}>
+        <PageBoundary key={slug}>
+          <SpecSheet page={sheetPage} />
+        </PageBoundary>
+        <Toaster />
+      </TooltipProvider>
+    );
+  }
 
   return (
     <TooltipProvider delay={300}>

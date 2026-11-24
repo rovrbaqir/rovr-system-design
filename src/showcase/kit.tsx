@@ -141,6 +141,7 @@ export function Demo({
         <h3 className="text-title-md">{title}</h3>
         {note && <p className="text-body-sm text-muted-foreground">{note}</p>}
         {hasCode && (
+          <div data-demo-switch className="contents">
           <SegmentedControl<"preview" | "code">
             size="sm"
             aria-label={`${title}: preview or code`}
@@ -152,6 +153,7 @@ export function Demo({
               { value: "code", label: "Code" },
             ]}
           />
+          </div>
         )}
       </div>
       {/* The preview stays mounted while the code is shown, so its state survives switching back. */}

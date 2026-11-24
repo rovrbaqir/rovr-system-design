@@ -1,71 +1,56 @@
 # RoVR in Figma
 
-How the component library gets from the docs site into a private Figma file, and how the docs link back to it.
+The Figma library is generated from the component code. This folder holds the tools that do it.
 
-The file is **RoVR Design System** in Baqir's Figma drafts:
-https://www.figma.com/design/PJiM9Tnb7hN2R74OESBl7x
+The file is **RoVR system Design by Baqir**, in the RoVR Technologies team:
+https://www.figma.com/design/NzaPbdS0iqbZ5sZOROCwcX
 
 It is private. The "Open in Figma" links on the docs site only open for people the file has been shared with.
 
-## How the file is organised
+## What is in the file
 
-The free Figma plan allows three pages, so there is no page per component. Instead:
+- **Cover** and **Getting started** (how a designer uses the file).
+- **Foundations**: Colour, Typography, Shape and density, Motion, Icons.
+- **Components**: one page per base component, 63 in all, named and ordered like the docs.
+- **Examples**: the 11 example screens.
 
-- three pages: **Foundations**, **Components**, **Examples**;
-- one **section** per component on its page, named after the component;
-- inside a section: the component's examples, each as a Figma component, with open dialogs, menus and pickers beside the example that opens them;
-- colour variables (`RoVR colour`), radius variables (`RoVR radius`) and text styles (`RoVR/…`). The plan allows one variable mode, so dark values sit in a second collection, `RoVR colour (dark reference)`.
+Each component page has two parts:
 
-## Finish the build (about two minutes)
+- **Props and states**: a labelled grid of the real component in every variant, size and state. Each grid is a Figma component set, and each cell is a variant named with the props from code, for example `variant=secondary, size=lg, state=hover`.
+- **Examples**: the examples from the component's docs page, with dialogs, menus and pickers drawn open.
 
-14 components were brought in through Figma's own HTML importer, which keeps auto-layout. Figma's free plan then ran out of Claude calls for the month, so the remaining 65 are built by a small local plugin, which has no such limit. The plugin also tidies the 14 imported ones into their sections.
+Colours are bound to the `RoVR colour` variables (Light and Dark modes), text uses the `RoVR/…` text styles, and corner radii are in `RoVR radius`.
 
-1. Open the file in the **Figma desktop app**.
-2. Menu: **Plugins → Development → Import plugin from manifest…** and choose `figma/plugin/manifest.json` from this repo.
-3. Menu: **Plugins → Development → RoVR library builder**, then press **Build the library**. It takes a minute or two.
+## Where the grids come from
 
-The plugin runs inside your own file and has no network access. It fills empty sections and leaves any section that already has content alone, so it is safe to run again.
+Every component has a spec in `src/showcase/specs/<slug>.tsx`. A spec lists the props to show as rows and column groups, and the states to show as columns. The page at `#/spec/<slug>` renders it with the real component in every cell. Hover, focus and pressed are forced with CSS, so they can be shown without a pointer.
 
-## How it works
+`src/showcase/specs/kit.tsx` is the API, and `button.tsx` is the example to copy.
 
-1. **Export.** With the docs site running, the page reads every live example and writes it to `figma/data/` (layer data for the plugin) and `figma/html/` (self-contained HTML for Figma's importer).
-2. **Build.** `figma/build.mjs` bundles the data with `figma/builder.js` into `figma/plugin/code.js`.
-3. **Link.** `src/showcase/figma-links.json` maps each docs page to its Figma section, which puts an "Open in Figma" button on the page.
+Ten components have no spec because they only exist in a portal or have nothing static to show: alert-dialog, dialog, sheet, popover, hover-card, tooltip, toast, blur-swap, smooth-height and motion. Their pages show the examples only.
 
-## Refresh after components change
+## Refresh the file after components change
 
-```bash
-pnpm dev                 # the docs site must be running at localhost:5199
-```
+This needs Claude with the Figma connector, on a Figma plan with a Full seat (the free plan allows too few calls). One page costs one import call.
 
-Open `http://localhost:5199`, open the browser console and run:
+1. Update or add the spec in `src/showcase/specs/`.
+2. Start the docs site (`pnpm dev`), open `http://localhost:5199`, and run in the browser console:
 
-```js
-await __rovrFigma()      // layer data for the plugin
-```
+   ```js
+   await __rovrSheets(["button", "input"])   // or no argument for every page
+   ```
 
-Then:
+   This writes `figma/html/sheet-<slug>.html` (a self-contained copy of each spec sheet) and `figma/data/tokens.json`.
 
-```bash
-pnpm figma:build         # bundles figma/data into figma/plugin/code.js
-pnpm figma:test          # runs the builder against a stand-in for Figma's API
-```
+3. Ask Claude to import those sheets into the file. For each sheet it calls Figma's HTML importer once, posts the HTML with `node figma/upload.mjs <slug>=<uploadId>`, then runs `figma/process.js` inside the file.
 
-In Figma, delete the contents of the sections you want rebuilt (or tick "Rebuild sections this plugin built before") and run the plugin again.
+`process.js` reads the description each sheet carries, turns its grids into component sets, applies the text styles, and moves the sheet to the page named after the component, replacing what was there. It only touches frames it imported.
 
-## Two import routes, two qualities
+4. If a page is new, add its Figma page id to `src/showcase/figma-links.json` so the docs link to it.
 
-| | HTML importer (through Claude's Figma connector) | Local plugin |
-| --- | --- | --- |
-| Layout | Auto-layout, like a hand-built file | Layers at fixed positions |
-| Limit | A few dozen calls a month on the free plan | None |
-| Used for | 14 components so far | The other 65 |
+## What the file does not have
 
-To move a component to the better route later: delete its section's contents, ask Claude to import `figma/html/<slug>.html` into that section, and run the plugin once to tidy it. This needs the Figma connector's monthly allowance to have reset, or a paid Figma plan.
-
-## What you do not get
-
-- **Variants.** Each example is one component. Combining them into a single component with variant properties is design work.
-- **Not captured:** tooltips and hover cards (they need a real pointer), toasts, photos in avatars, hover and focus states.
-- **Gradients** from the plugin route (the aurora surface) arrive as an image fill, so they look right but have no editable stops.
-- **Dark mode switching.** One variable mode on this plan; the dark values are there for reference only.
+- **Live states and motion.** Hover, focus and pressed are fixed variants. Animation is not shown.
+- **Tooltips, hover cards and toasts** as components. They appear only where an example shows them.
+- **Layers named for designers.** Layer names come from the HTML (`Button`, `Container`, `Text`).
+- **A file thumbnail.** Right-click the Cover frame in Figma and choose "Set as thumbnail".
