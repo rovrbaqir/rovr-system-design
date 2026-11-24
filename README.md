@@ -21,6 +21,10 @@ Every example in the showcase has a **Preview / Code** switch. Code shows one ta
 
 "Copy" copies the whole file. Under a component file is the `pnpm add` line for the npm packages it needs. The code is read from the real source files when the page is built, so it cannot drift from what the showcase runs.
 
+## Figma
+
+`figma/` turns the docs site into a private Figma file: one Figma page per component, with colour variables and text styles, and an "Open in Figma" link back from each docs page. See [figma/README.md](figma/README.md).
+
 ## Adding a page
 
 The showcase has one page per component, listed in the sidebar and reached at `#/<slug>`. To document a new component, add `src/showcase/pages/<slug>.tsx` that exports a `page` (see `pages/button.tsx`). It is picked up automatically: there is no list to edit.

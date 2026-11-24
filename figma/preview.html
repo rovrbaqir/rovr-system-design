@@ -1,0 +1,72 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Figma export preview</title>
+<!-- Redraws figma/data/<slug>.json the way the plugin lays it out, to compare with the live page. Open /figma/preview.html?slug=button with the dev server running. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+  body { margin: 32px; background: #fcfbfa; font-family: "DM Sans", sans-serif; color: #152163; }
+  .n { position: absolute; box-sizing: border-box; }
+  .t { position: absolute; white-space: nowrap; margin: 0; }
+  h2 { font-weight: 600; font-size: 18px; margin: 40px 0 12px; }
+  .row { position: relative; }
+</style>
+<div id="out"></div>
+<script type="module">
+  const slug = new URLSearchParams(location.search).get("slug") ?? "button";
+  const data = await (await fetch(`/figma/data/${slug}.json`)).json();
+  const css = (c) => `rgba(${Math.round(c[0] * 255)},${Math.round(c[1] * 255)},${Math.round(c[2] * 255)},${c[3]})`;
+  function draw(n, parent) {
+    if (n.t === "T") {
+      const el = document.createElement("p");
+      el.className = "t";
+      const lines = Math.max(1, Math.round(n.h / n.font.lineHeight));
+      Object.assign(el.style, { left: n.x + "px", top: n.y + (n.h - lines * n.font.lineHeight) / 2 + "px", fontFamily: `"${n.font.family}"`, fontWeight: n.font.weight, fontSize: n.font.size + "px", lineHeight: n.font.lineHeight + "px", letterSpacing: n.font.letterSpacing + "px", color: css(n.color), fontStyle: n.font.italic ? "italic" : "normal", textAlign: n.align.toLowerCase(), textDecoration: n.underline ? "underline" : "none" });
+      if (n.wrap) Object.assign(el.style, { whiteSpace: "normal", width: Math.ceil(n.w) + 1 + "px" });
+      else if (n.align !== "LEFT") el.style.width = n.w + "px";
+      el.textContent = n.text;
+      parent.appendChild(el);
+      return;
+    }
+    const el = document.createElement("div");
+    el.className = "n";
+    Object.assign(el.style, { left: n.x + "px", top: n.y + "px", width: n.w + "px", height: n.h + "px", opacity: n.opacity ?? 1 });
+    if (n.t === "S") {
+      el.innerHTML = n.svg;
+      parent.appendChild(el);
+      return;
+    }
+    for (const p of n.fills ?? []) el.style.background = p.kind === "solid" ? css(p.color) : `url(${p.png}) center/100% 100%`;
+    if (n.radius) el.style.borderRadius = n.radius.map((r) => r + "px").join(" ");
+    if (n.stroke) {
+      const s = n.stroke;
+      el.style.borderStyle = s.dashed ? "dashed" : "solid";
+      el.style.borderColor = css(s.color);
+      el.style.borderWidth = `${s.top}px ${s.right}px ${s.bottom}px ${s.left}px`;
+    }
+    if (n.shadows) el.style.boxShadow = n.shadows.map((s) => `${s.inset ? "inset " : ""}${s.x}px ${s.y}px ${s.blur}px ${s.spread}px ${css(s.color)}`).join(",");
+    if (n.clip) el.style.overflow = "hidden";
+    if (n.blur) el.style.backdropFilter = `blur(${n.blur}px)`;
+    parent.appendChild(el);
+    for (const c of n.c ?? []) draw(c, el);
+  }
+  const out = document.getElementById("out");
+  for (const demo of data.demos) {
+    const h = document.createElement("h2");
+    h.textContent = demo.title;
+    out.appendChild(h);
+    const row = document.createElement("div");
+    row.className = "row";
+    let x = 0;
+    let height = 0;
+    for (const n of [demo.node, ...demo.overlays]) {
+      draw({ ...n, x, y: 0 }, row);
+      x += n.w + 80;
+      height = Math.max(height, n.h);
+    }
+    row.style.height = height + "px";
+    row.style.width = x + "px";
+    out.appendChild(row);
+  }
+  document.title = `${data.title} · export preview`;
+</script>

@@ -1,0 +1,50 @@
+<!doctype html>
+<meta charset="utf-8" />
+<style>
+  body { font: 13px/1.45 Inter, system-ui, sans-serif; margin: 0; padding: 16px; color: #152163; }
+  h1 { font-size: 15px; margin: 0 0 6px; }
+  p { margin: 0 0 12px; color: #5b6385; }
+  button { font: inherit; font-weight: 600; height: 36px; padding: 0 16px; border: 0; border-radius: 18px; background: #455eee; color: #fff; cursor: pointer; }
+  button[disabled] { opacity: 0.5; cursor: default; }
+  label { display: flex; gap: 8px; align-items: center; margin: 0 0 12px; }
+  #status { margin-top: 12px; min-height: 18px; }
+  textarea { width: 100%; box-sizing: border-box; height: 120px; margin-top: 8px; font: 11px/1.4 ui-monospace, Menlo, monospace; border: 1px solid #d9dcec; border-radius: 10px; padding: 8px; }
+  #after { display: none; }
+</style>
+<h1>RoVR library builder</h1>
+<p id="intro"></p>
+<label><input type="checkbox" id="replace" checked /> Rebuild sections this plugin built before</label>
+<button id="build">Build the library</button>
+<p id="status"></p>
+<div id="after">
+  <p>Done. To link the docs site to this file, copy the text below into <b>src/showcase/figma-links.json</b> in the design system repo.</p>
+  <textarea id="links" readonly></textarea>
+  <button id="copy" style="margin-top:8px">Copy</button>
+</div>
+<script>
+  const $ = (id) => document.getElementById(id);
+  $("build").onclick = () => {
+    $("build").disabled = true;
+    parent.postMessage({ pluginMessage: { type: "build", replace: $("replace").checked } }, "*");
+  };
+  $("copy").onclick = () => {
+    $("links").select();
+    document.execCommand("copy");
+    $("copy").textContent = "Copied";
+  };
+  onmessage = (event) => {
+    const msg = event.data.pluginMessage;
+    if (!msg) return;
+    if (msg.type === "intro") $("intro").textContent = msg.text;
+    if (msg.type === "progress") $("status").textContent = msg.text;
+    if (msg.type === "done") {
+      $("status").textContent = msg.text;
+      $("links").value = msg.links;
+      $("after").style.display = "block";
+    }
+    if (msg.type === "error") {
+      $("status").textContent = msg.text;
+      $("build").disabled = false;
+    }
+  };
+</script>

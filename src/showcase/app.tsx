@@ -1,7 +1,7 @@
 import * as React from "react";
 import { motion } from "motion/react";
-import { ArrowLeft, ArrowRight, Menu as MenuIcon, Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft, ArrowRight, ExternalLink, Menu as MenuIcon, Moon, Sun } from "lucide-react";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { SearchInput } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/toast";
 import { Tooltip, TooltipProvider } from "@/components/ui/tooltip";
 import { springSnappy } from "@/lib/motion-tokens";
 import { cn } from "@/lib/utils";
+import figmaLinks from "./figma-links.json";
 import { findPage, groups, isInstallable, pages, pagesIn } from "./pages";
 import type { DocPage } from "./types";
 
@@ -115,6 +116,25 @@ function InstallLine({ slug }: { slug: string }) {
   );
 }
 
+/** Where this page lives in the team's Figma file, if the file has been linked (see figma/README.md). */
+function figmaUrl(slug: string): string | null {
+  const links = figmaLinks as { file: string; pages: Record<string, string> };
+  const node = links.pages[slug];
+  if (!links.file || !node) return null;
+  return `${links.file.replace(/[?#].*$/, "")}?node-id=${node.replace(":", "-")}`;
+}
+
+/** The Figma file is private: the link only opens for people who have been given access to it. */
+function FigmaLink({ slug }: { slug: string }) {
+  const url = figmaUrl(slug);
+  if (!url) return null;
+  return (
+    <a href={url} target="_blank" rel="noreferrer" className={cn(buttonVariants({ variant: "outline", size: "sm" }), "w-fit")}>
+      Open in Figma <ExternalLink />
+    </a>
+  );
+}
+
 function StepLink({ page, direction }: { page: DocPage; direction: "previous" | "next" }) {
   return (
     <a
@@ -142,6 +162,7 @@ function PageView({ page }: { page: DocPage }) {
         <h1 className="text-display-lg">{page.title}</h1>
         <p className="max-w-[62ch] text-body-lg text-muted-foreground">{page.summary}</p>
         {isInstallable(page) && <InstallLine slug={page.slug} />}
+        <FigmaLink slug={page.slug} />
         {page.group === "Examples" && (
           <p className="max-w-[62ch] rounded-lg bg-surface-sunken px-4 py-3 text-body-sm text-muted-foreground">
             This is an example of how the base components combine, not a shared component. It cannot be installed. Build your own version in your
@@ -239,6 +260,57 @@ function NotFound({ slug }: { slug: string }) {
       </a>
     </div>
   );
+}
+
+// Dev only: `await __rovrFigma()` in the console exports every page for the Figma plugin (see figma/README.md).
+if (import.meta.env.DEV) {
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  const save = (name: string, data: unknown) => fetch(`/__figma/save?name=${name}`, { method: "POST", body: JSON.stringify(data) }).then((r) => r.ok);
+  (window as unknown as { __rovrFigma: (only?: string[]) => Promise<unknown> }).__rovrFigma = async (only) => {
+    const { extractPage, extractTokens } = await import("./figma-extract");
+    document.documentElement.classList.remove("dark");
+    await sleep(200);
+    await save("tokens", extractTokens());
+    const report: Record<string, number | string> = {};
+    for (const page of pages) {
+      if (page.slug === "install" || (only && !only.includes(page.slug))) continue;
+      window.location.hash = `#/${page.slug}`;
+      // Long enough for entrance animations (chart lines, bars, empty states) to finish.
+      await sleep(1700);
+      try {
+        const data = await extractPage({ slug: page.slug, title: page.title, group: page.group, summary: page.summary });
+        await save(page.slug, data);
+        report[page.slug] = data.demos.length;
+      } catch (error) {
+        report[page.slug] = `failed: ${String(error)}`;
+      }
+    }
+    return report;
+  };
+}
+
+// Dev only: `await __rovrSnapshot()` writes a self-contained HTML copy of each page's examples to figma/html/.
+if (import.meta.env.DEV) {
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  (window as unknown as { __rovrSnapshot: (only?: string[]) => Promise<unknown> }).__rovrSnapshot = async (only) => {
+    const { snapshotPage } = await import("./figma-extract");
+    document.documentElement.classList.remove("dark");
+    const report: Record<string, string[] | string> = {};
+    for (const page of pages) {
+      if (page.slug === "install" || (only && !only.includes(page.slug))) continue;
+      window.location.hash = `#/${page.slug}`;
+      await sleep(1700);
+      try {
+        const { html, names } = await snapshotPage({ slug: page.slug, title: page.title });
+        await fetch(`/__figma/save?name=${page.slug}&kind=html`, { method: "POST", body: html });
+        report[page.slug] = names;
+      } catch (error) {
+        report[page.slug] = `failed: ${String(error)}`;
+      }
+    }
+    await fetch("/__figma/save?name=_names", { method: "POST", body: JSON.stringify(report) });
+    return report;
+  };
 }
 
 export function App() {

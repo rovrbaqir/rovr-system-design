@@ -9,7 +9,9 @@
     "build": "node ./node_modules/vite/bin/vite.js build",
     "preview": "node ./node_modules/vite/bin/vite.js preview",
     "typecheck": "node ./node_modules/typescript/bin/tsc --noEmit",
-    "registry:build": "node ./scripts/registry.mjs && node ./node_modules/shadcn/dist/index.js build"
+    "registry:build": "node ./scripts/registry.mjs && node ./node_modules/shadcn/dist/index.js build",
+    "figma:build": "node ./figma/build.mjs",
+    "figma:test": "node ./figma/test.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

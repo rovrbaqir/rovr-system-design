@@ -155,7 +155,13 @@ export function Demo({
         )}
       </div>
       {/* The preview stays mounted while the code is shown, so its state survives switching back. */}
-      <div className={cn(!bare && "rounded-xl rovr-risen p-6", "flex min-w-0 flex-wrap items-center gap-3", className, view === "code" && "hidden")}>
+      <div
+        // Read by the Figma export (figma/README.md) to find each example.
+        data-figma-demo={id ?? title}
+        data-figma-title={title}
+        data-figma-note={typeof note === "string" ? note : undefined}
+        className={cn(!bare && "rounded-xl rovr-risen p-6", "flex min-w-0 flex-wrap items-center gap-3", className, view === "code" && "hidden")}
+      >
         {children}
       </div>
       {hasCode && view === "code" && <CodeView id={id} files={files} />}
