@@ -936,6 +936,22 @@
       ]
     },
     {
+      "name": "orb",
+      "type": "registry:ui",
+      "title": "Orb",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/orb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "otp-input",
       "type": "registry:ui",
       "title": "Otp Input",
@@ -1542,6 +1558,7 @@
         "@rovr/motion",
         "@rovr/notch-card",
         "@rovr/number-field",
+        "@rovr/orb",
         "@rovr/otp-input",
         "@rovr/pagination",
         "@rovr/password-input",

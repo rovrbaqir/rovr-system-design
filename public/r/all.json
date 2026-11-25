@@ -52,6 +52,7 @@
     "@rovr/motion",
     "@rovr/notch-card",
     "@rovr/number-field",
+    "@rovr/orb",
     "@rovr/otp-input",
     "@rovr/pagination",
     "@rovr/password-input",
