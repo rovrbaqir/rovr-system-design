@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "loading-overlay",
+  "title": "Loading Overlay",
+  "dependencies": [
+    "motion",
+    "react-dom"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/motion-tokens",
+    "@rovr/spinner",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/loading-overlay.tsx",
+      "content": "import * as React from \"react\";\nimport { createPortal } from \"react-dom\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport { duration, ease } from \"@/lib/motion-tokens\";\nimport { cn } from \"@/lib/utils\";\nimport { Spinner } from \"./spinner\";\n\nexport interface LoadingOverlayProps {\n  /** Whether the overlay is shown. */\n  open?: boolean;\n  /** A short sentence under the spinner that says what is happening, such as \"Saving visit note\". */\n  message?: React.ReactNode;\n  /** Cover the whole viewport instead of the nearest positioned parent. Rendered in a portal. */\n  fullscreen?: boolean;\n  /** Blur what is underneath. Turn it off over video or very large areas. */\n  blur?: boolean;\n  /** Milliseconds to wait before it appears, so a fast response never flashes an overlay. */\n  delay?: number;\n  className?: string;\n}\n\n/**\n * A layer that blocks an area while it loads or saves. It covers its nearest\n * positioned parent (give that parent `relative`), or the viewport with\n * `fullscreen`. Prefer Skeleton when content is loading for the first time and\n * a Button's `loading` when one action is pending.\n */\nexport function LoadingOverlay({ open = true, message, fullscreen = false, blur = true, delay = 0, className }: LoadingOverlayProps) {\n  const [shown, setShown] = React.useState(open && delay <= 0);\n  const anchor = React.useRef<HTMLSpanElement>(null);\n\n  React.useEffect(() => {\n    if (!open) return setShown(false);\n    if (delay <= 0) return setShown(true);\n    const timer = setTimeout(() => setShown(true), delay);\n    return () => clearTimeout(timer);\n  }, [open, delay]);\n\n  // The area being covered is the busy one, so it carries aria-busy while the overlay is up.\n  React.useEffect(() => {\n    const region = fullscreen ? null : anchor.current?.parentElement;\n    if (!shown || !region) return;\n    const before = region.getAttribute(\"aria-busy\");\n    region.setAttribute(\"aria-busy\", \"true\");\n    return () => {\n      if (before === null) region.removeAttribute(\"aria-busy\");\n      else region.setAttribute(\"aria-busy\", before);\n    };\n  }, [shown, fullscreen]);\n\n  const layer = (\n    <AnimatePresence>\n      {shown && (\n        <motion.div\n          key=\"overlay\"\n          role=\"status\"\n          aria-live=\"polite\"\n          initial={{ opacity: 0 }}\n          animate={{ opacity: 1, transition: { duration: duration.base, ease: ease.out } }}\n          exit={{ opacity: 0, transition: { duration: duration.fast, ease: ease.out } }}\n          className={cn(\n            \"inset-0 grid cursor-progress place-items-center p-4\",\n            fullscreen ? \"fixed z-50 bg-scrim\" : \"absolute z-10 rounded-[inherit]\",\n            !fullscreen && (blur ? \"bg-background/55\" : \"bg-background/80\"),\n            blur && \"backdrop-blur-sm\",\n            className,\n          )}\n        >\n          <div\n            className={cn(\n              \"flex max-w-xs flex-col items-center gap-3 text-center\",\n              // Over a whole page the spinner sits on its own panel, so it reads on any content.\n              fullscreen && \"rounded-xl rovr-chrome px-8 py-6\",\n            )}\n          >\n            <Spinner label={message ? \"\" : \"Loading\"} className=\"size-6 text-primary\" />\n            {message && <p className=\"text-label text-foreground\">{message}</p>}\n          </div>\n        </motion.div>\n      )}\n    </AnimatePresence>\n  );\n\n  if (fullscreen) return typeof document === \"undefined\" ? null : createPortal(layer, document.body);\n  return (\n    <>\n      {/* Finds the parent without adding a box to its layout. */}\n      <span ref={anchor} hidden />\n      {layer}\n    </>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "delta",
+  "title": "Delta",
+  "dependencies": [
+    "class-variance-authority",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/delta.tsx",
+      "content": "import * as React from \"react\";\nimport { ArrowDownRight, ArrowUpRight, Minus } from \"lucide-react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"@/lib/utils\";\n\nexport const deltaVariants = cva(\"inline-flex w-fit shrink-0 items-center gap-0.5 font-medium whitespace-nowrap text-data\", {\n  variants: {\n    size: {\n      sm: \"text-caption [&_svg]:size-3\",\n      md: \"text-body-sm [&_svg]:size-3.5\",\n      lg: \"text-body [&_svg]:size-4\",\n    },\n    tone: {\n      neutral: \"text-muted-foreground\",\n      success: \"text-success-fg\",\n      danger: \"text-destructive-fg\",\n    },\n  },\n  defaultVariants: { size: \"md\", tone: \"neutral\" },\n});\n\nconst icons = { up: ArrowUpRight, down: ArrowDownRight, flat: Minus } as const;\nconst words = { up: \"Up\", down: \"Down\", flat: \"No change\" } as const;\n\nexport interface DeltaProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, \"title\">, Pick<VariantProps<typeof deltaVariants>, \"size\"> {\n  /** Which way the figure moved. The arrow and the screen-reader text come from this. */\n  direction: \"up\" | \"down\" | \"flat\";\n  /** The amount of change: \"4.2%\". */\n  children: React.ReactNode;\n  /**\n   * The direction that is good news. A change that way reads as success, the other way as destructive.\n   * Leave it out for a neutral change, so a cost going down and a rate going up never read the same by accident.\n   */\n  good?: \"up\" | \"down\";\n  /** What the change is measured against: \"vs prior period\". Shown on hover and read by screen readers. */\n  title?: string;\n}\n\n/** A change next to a figure: an arrow and the amount. The direction is said in words to screen readers, so it never rests on the arrow or the colour. */\nexport const Delta = React.forwardRef<HTMLSpanElement, DeltaProps>(function Delta({ direction, good, title, size, className, children, ...props }, ref) {\n  const Icon = icons[direction];\n  const tone = !good || direction === \"flat\" ? \"neutral\" : good === direction ? \"success\" : \"danger\";\n  return (\n    <span ref={ref} title={title} data-direction={direction} className={cn(deltaVariants({ size, tone }), className)} {...props}>\n      <Icon aria-hidden />\n      <span className=\"sr-only\">{words[direction]} </span>\n      {children}\n      {title && <span className=\"sr-only\">, {title}</span>}\n    </span>\n  );\n});\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

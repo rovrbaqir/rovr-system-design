@@ -275,7 +275,7 @@ function MotionBody() {
 
 export const pages: DocPage[] = [
   { slug: "colour", title: "Colour", group: "Foundations", order: 1, summary: "The mobile app's palette: navy ink on warm paper, white forms that float on a soft warm shadow, lavender rows inside them, and RoVR blue kept for action. Red appears only when something is wrong.", keywords: "color palette tokens surfaces status", Body: ColourBody },
-  { slug: "typography", title: "Typography", group: "Foundations", order: 2, summary: "DM Sans throughout, as on the landing page. Headlines are medium weight and set tight; everything else is regular, medium or semibold at its natural spacing.", keywords: "type font text scale", Body: TypographyBody },
+  { slug: "typography", title: "Typography", group: "Foundations", order: 2, summary: "Manrope throughout, the same typeface as the mobile app and both web apps. Headlines are medium weight and set tight; everything else is regular, medium or semibold at its natural spacing.", keywords: "type font text scale", Body: TypographyBody },
   { slug: "shape", title: "Shape and density", group: "Foundations", order: 3, summary: "Forms are generously curved and controls are full pills: 14px fields, 20px inner cards, 28px forms, 36px for the hero. Compact density tightens the same components for the provider app.", keywords: "radius density corners spacing", Body: ShapeBody },
   { slug: "motion-tokens", title: "Motion", group: "Foundations", order: 4, summary: "Controls respond like physical things: they sink under the pointer and spring back, and one highlight glides between items. Overlays do the opposite. They arrive quickly and plainly, because a dialog should not perform.", keywords: "animation easing spring duration", Body: MotionBody },
 ];

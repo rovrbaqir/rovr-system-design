@@ -9,7 +9,7 @@
       "title": "RoVR theme",
       "description": "Design tokens: colour, type, radius, density and motion. Install once per app.",
       "dependencies": [
-        "@fontsource-variable/dm-sans",
+        "@fontsource-variable/manrope",
         "@fontsource/dm-mono",
         "tailwindcss"
       ],
@@ -143,6 +143,22 @@
       ]
     },
     {
+      "name": "bar-list",
+      "type": "registry:ui",
+      "title": "Bar List",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/bar-list.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "blur-swap",
       "type": "registry:ui",
       "title": "Blur Swap",
@@ -255,6 +271,25 @@
       ]
     },
     {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/button",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/carousel.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "chart",
       "type": "registry:ui",
       "title": "Chart",
@@ -306,6 +341,23 @@
       "files": [
         {
           "path": "src/components/ui/chip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "clamp-text",
+      "type": "registry:ui",
+      "title": "Clamp Text",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/button",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/clamp-text.tsx",
           "type": "registry:ui"
         }
       ]
@@ -454,6 +506,25 @@
       ]
     },
     {
+      "name": "delta",
+      "type": "registry:ui",
+      "title": "Delta",
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/delta.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "description-list",
       "type": "registry:ui",
       "title": "Description List",
@@ -485,6 +556,28 @@
       "files": [
         {
           "path": "src/components/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "editable-field",
+      "type": "registry:ui",
+      "title": "Editable Field",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/button",
+        "@rovr/input",
+        "@rovr/masked-input",
+        "@rovr/password-input",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/editable-field.tsx",
           "type": "registry:ui"
         }
       ]
@@ -545,6 +638,27 @@
       ]
     },
     {
+      "name": "floating-panel",
+      "type": "registry:ui",
+      "title": "Floating Panel",
+      "dependencies": [
+        "lucide-react",
+        "motion",
+        "react-dom"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/button",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/floating-panel.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "frost",
       "type": "registry:ui",
       "title": "Frost",
@@ -579,6 +693,24 @@
       ]
     },
     {
+      "name": "gradient-text",
+      "type": "registry:ui",
+      "title": "Gradient Text",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/gradient-text.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "hover-card",
       "type": "registry:ui",
       "title": "Hover Card",
@@ -592,6 +724,25 @@
       "files": [
         {
           "path": "src/components/ui/hover-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "image",
+      "type": "registry:ui",
+      "title": "Image",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/skeleton",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/image.tsx",
           "type": "registry:ui"
         }
       ]
@@ -646,6 +797,46 @@
       "files": [
         {
           "path": "src/components/ui/list.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "loading-overlay",
+      "type": "registry:ui",
+      "title": "Loading Overlay",
+      "dependencies": [
+        "motion",
+        "react-dom"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/motion-tokens",
+        "@rovr/spinner",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/loading-overlay.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "masked-input",
+      "type": "registry:ui",
+      "title": "Masked Input",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/input",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/masked-input.tsx",
           "type": "registry:ui"
         }
       ]
@@ -782,6 +973,25 @@
       ]
     },
     {
+      "name": "password-input",
+      "type": "registry:ui",
+      "title": "Password Input",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/input",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/password-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
@@ -818,6 +1028,22 @@
       ]
     },
     {
+      "name": "prose",
+      "type": "registry:ui",
+      "title": "Prose",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/prose.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "radio-group",
       "type": "registry:ui",
       "title": "Radio Group",
@@ -831,6 +1057,22 @@
       "files": [
         {
           "path": "src/components/ui/radio-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "reference-range",
+      "type": "registry:ui",
+      "title": "Reference Range",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/reference-range.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1007,6 +1249,23 @@
       "files": [
         {
           "path": "src/components/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "stacked-bar",
+      "type": "registry:ui",
+      "title": "Stacked Bar",
+      "dependencies": [],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/chart",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/stacked-bar.tsx",
           "type": "registry:ui"
         }
       ]
@@ -1212,6 +1471,24 @@
       ]
     },
     {
+      "name": "typewriter",
+      "type": "registry:ui",
+      "title": "Typewriter",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@rovr/theme",
+        "@rovr/utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/typewriter.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "all",
       "type": "registry:ui",
       "title": "All components",
@@ -1223,15 +1500,18 @@
         "@rovr/avatar",
         "@rovr/badge",
         "@rovr/banner",
+        "@rovr/bar-list",
         "@rovr/blur-swap",
         "@rovr/breadcrumbs",
         "@rovr/button",
         "@rovr/calendar",
         "@rovr/callout",
         "@rovr/card",
+        "@rovr/carousel",
         "@rovr/chart",
         "@rovr/checkbox",
         "@rovr/chip",
+        "@rovr/clamp-text",
         "@rovr/collapsible",
         "@rovr/combobox",
         "@rovr/command",
@@ -1239,17 +1519,24 @@
         "@rovr/copy-button",
         "@rovr/data-table",
         "@rovr/date-picker",
+        "@rovr/delta",
         "@rovr/description-list",
         "@rovr/dialog",
+        "@rovr/editable-field",
         "@rovr/empty-state",
         "@rovr/field",
         "@rovr/file-upload",
+        "@rovr/floating-panel",
         "@rovr/frost",
         "@rovr/glide",
+        "@rovr/gradient-text",
         "@rovr/hover-card",
+        "@rovr/image",
         "@rovr/input",
         "@rovr/kbd",
         "@rovr/list",
+        "@rovr/loading-overlay",
+        "@rovr/masked-input",
         "@rovr/menu",
         "@rovr/meter",
         "@rovr/motion",
@@ -1257,9 +1544,12 @@
         "@rovr/number-field",
         "@rovr/otp-input",
         "@rovr/pagination",
+        "@rovr/password-input",
         "@rovr/popover",
         "@rovr/progress",
+        "@rovr/prose",
         "@rovr/radio-group",
+        "@rovr/reference-range",
         "@rovr/scroll-area",
         "@rovr/segmented-control",
         "@rovr/segments",
@@ -1270,6 +1560,7 @@
         "@rovr/slider",
         "@rovr/smooth-height",
         "@rovr/spinner",
+        "@rovr/stacked-bar",
         "@rovr/stepper",
         "@rovr/success-burst",
         "@rovr/switch",
@@ -1280,7 +1571,8 @@
         "@rovr/timeline",
         "@rovr/toast",
         "@rovr/toggle-group",
-        "@rovr/tooltip"
+        "@rovr/tooltip",
+        "@rovr/typewriter"
       ],
       "files": []
     }

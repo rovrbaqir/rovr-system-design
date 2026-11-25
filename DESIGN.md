@@ -1,6 +1,6 @@
 # RoVR design system
 
-One product across the phone and the web. The brand blue, the typeface (DM Sans) and the motion springs carry over from the mobile app and the landing page. Everything else follows one idea: soft forms resting on a calm canvas, with one rich surface per page. Source of truth for values is `src/styles/rovr.css`; this file is the rules.
+One product across the phone and the web. The brand blue, the typeface (Manrope) and the motion springs carry over from the mobile app. Everything else follows one idea: soft forms resting on a calm canvas, with one rich surface per page. Source of truth for values is `src/styles/rovr.css`; this file is the rules.
 
 ## Why it looks this way
 
@@ -37,7 +37,7 @@ One product across the phone and the web. The brand blue, the typeface (DM Sans)
 
 ## Type
 
-- DM Sans for everything; DM Mono for identifiers (MRN, claim numbers, codes).
+- Manrope for everything, as in the mobile app and both web apps; DM Mono for identifiers (MRN, claim numbers, codes).
 - Headlines (`text-display-*`) are weight 500 and tighten as they grow.
 - Base 15px. `text-body-lg` for patient-facing reading. `text-overline` is a small sentence-case label for table headers and group labels only; no uppercase or wide tracking anywhere.
 - `text-data` (tabular figures) on vitals, labs, doses, money, times, counts.

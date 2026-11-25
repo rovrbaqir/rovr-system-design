@@ -38,7 +38,7 @@ for (const root of sheets.slice(0, LIMIT)) {
 
   // 3. text styles (the importer binds colours to the variables itself)
   for (const n of texts) {
-    if (n.type === "TEXT" && n.fontName !== figma.mixed && n.fontSize !== figma.mixed && n.lineHeight !== figma.mixed && n.lineHeight.unit === "PIXELS" && n.fontName.family === "DM Sans") {
+    if (n.type === "TEXT" && n.fontName !== figma.mixed && n.fontSize !== figma.mixed && n.lineHeight !== figma.mixed && n.lineHeight.unit === "PIXELS" && n.fontName.family === "Manrope") {
       const ls = n.letterSpacing !== figma.mixed && n.letterSpacing.unit === "PIXELS" ? n.letterSpacing.value : 0;
       const s = styles.find((st) => st.fontName.style === n.fontName.style && st.fontSize === n.fontSize && near(st.lineHeight.value, n.lineHeight.value, 0.6) && near(st.letterSpacing.value, ls, 0.06));
       if (s) {

@@ -34,7 +34,7 @@ function textStyle(cs: CSSStyleDeclaration) {
   const size = parseFloat(cs.fontSize);
   const lh = cs.lineHeight === "normal" ? size * 1.2 : parseFloat(cs.lineHeight);
   return {
-    family: /mono/i.test(cs.fontFamily) ? "DM Mono" : "DM Sans",
+    family: /mono/i.test(cs.fontFamily) ? "DM Mono" : "Manrope",
     weight: parseInt(cs.fontWeight, 10) || 400,
     size: round(size),
     lineHeight: round(lh),
@@ -166,8 +166,8 @@ function pageCss(): Promise<string> {
         } else parts.push(rule.cssText);
       }
     }
-    // Figma knows the family as "DM Sans", not the web package's "DM Sans Variable".
-    return parts.join("\n").replace(/DM Sans Variable/g, "DM Sans");
+    // Figma knows the family as "Manrope", not the web package's "Manrope Variable".
+    return parts.join("\n").replace(/Manrope Variable/g, "Manrope");
   })();
   return cssCache;
 }

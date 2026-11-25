@@ -11,15 +11,15 @@ It is private. The "Open in Figma" links on the docs site only open for people t
 
 - **Cover** and **Getting started** (how a designer uses the file).
 - **Foundations**: Colour, Typography, Shape and density, Motion, Icons.
-- **Components**: one page per base component, 63 in all, named and ordered like the docs.
-- **Examples**: the 11 example screens.
+- **Components**: one page per base component, 78 in all, named and ordered like the docs.
+- **Examples**: 18 shared composites from the patient and provider web apps, rebuilt from the base components.
 
 Each component page has two parts:
 
 - **Props and states**: a labelled grid of the real component in every variant, size and state. Each grid is a Figma component set, and each cell is a variant named with the props from code, for example `variant=secondary, size=lg, state=hover`.
 - **Examples**: the examples from the component's docs page, with dialogs, menus and pickers drawn open.
 
-Colours are bound to the `RoVR colour` variables (Light and Dark modes), text uses the `RoVR/…` text styles, and corner radii are in `RoVR radius`.
+Colours are bound to the `RoVR colour` variables (Light and Dark modes), text uses the `RoVR/…` text styles (Manrope), and corner radii are in `RoVR radius`.
 
 ## Where the grids come from
 
@@ -27,7 +27,7 @@ Every component has a spec in `src/showcase/specs/<slug>.tsx`. A spec lists the 
 
 `src/showcase/specs/kit.tsx` is the API, and `button.tsx` is the example to copy.
 
-Ten components have no spec because they only exist in a portal or have nothing static to show: alert-dialog, dialog, sheet, popover, hover-card, tooltip, toast, blur-swap, smooth-height and motion. Their pages show the examples only.
+Twelve components have no spec because they only exist in a portal or have nothing static to show: alert-dialog, dialog, sheet, popover, hover-card, tooltip, toast, blur-swap, smooth-height, motion, typewriter and floating-panel. Examples have no spec either. Their pages show the examples only.
 
 ## Refresh the file after components change
 

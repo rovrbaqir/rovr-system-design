@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stacked-bar",
+  "title": "Stacked Bar",
+  "dependencies": [],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/chart",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/stacked-bar.tsx",
+      "content": "import * as React from \"react\";\nimport { chartColors } from \"@/components/ui/chart\";\nimport { cn } from \"@/lib/utils\";\n\nconst sizes = { sm: \"h-1.5\", md: \"h-2\", lg: \"h-3\" } as const;\n\nexport interface StackedBarSegment {\n  /** Stable identity of the segment. */\n  key: string;\n  /** Names the segment in the legend: \"Paid\". */\n  label: string;\n  /** The segment's share of the whole, in any unit. */\n  value: number;\n  /** A CSS colour. Defaults to the chart colour at the segment's position in `segments`. */\n  color?: string;\n}\n\nexport interface StackedBarProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"children\"> {\n  /** Two to five parts of one whole. Segments with no value are left out. */\n  segments: StackedBarSegment[];\n  /** Formats the value shown in the legend: a count, a percentage, money. */\n  formatValue?: (value: number) => string;\n  /** Height of the bar. */\n  size?: keyof typeof sizes;\n  /** Shows the dot, label and value of each segment under the bar. Without it the bar describes itself to screen readers. */\n  legend?: boolean;\n  /** Says what the whole is: \"Claims by status\". */\n  \"aria-label\": string;\n}\n\nconst defaultFormat = (value: number) => value.toLocaleString(\"en-US\");\n\n/** Parts of one whole on a single bar. The legend carries names and values, so identity is never colour alone. */\nexport const StackedBar = React.forwardRef<HTMLDivElement, StackedBarProps>(function StackedBar(\n  { segments, formatValue = defaultFormat, size = \"md\", legend = true, className, \"aria-label\": ariaLabel, ...props },\n  ref,\n) {\n  // Colour follows the segment's place in `segments`, so it does not change when another segment drops to zero.\n  const visible = segments.map((segment, i) => ({ ...segment, color: segment.color ?? chartColors[i % chartColors.length] })).filter((segment) => segment.value > 0);\n  const description = visible.map((segment) => `${formatValue(segment.value)} ${segment.label}`).join(\", \");\n\n  return (\n    <div ref={ref} role=\"group\" aria-label={ariaLabel} className={cn(\"flex w-full flex-col gap-2\", className)} {...props}>\n      <div\n        role={legend ? undefined : \"img\"}\n        aria-label={legend ? undefined : description || \"No data\"}\n        aria-hidden={legend || undefined}\n        className={cn(\"flex w-full gap-0.5 overflow-hidden rounded-full\", sizes[size], visible.length === 0 && \"bg-secondary-hover\")}\n      >\n        {visible.map((segment) => (\n          <span\n            key={segment.key}\n            title={`${segment.label}: ${formatValue(segment.value)}`}\n            className=\"min-w-1 transition-[flex-grow] duration-(--dur-gentle) ease-gentle\"\n            style={{ flex: `${segment.value} 1 0%`, background: segment.color }}\n          />\n        ))}\n      </div>\n      {legend && visible.length > 0 && (\n        <ul className=\"flex flex-wrap gap-x-4 gap-y-1 text-caption text-muted-foreground\">\n          {visible.map((segment) => (\n            <li key={segment.key} className=\"flex items-center gap-1.5\">\n              <span aria-hidden className=\"size-2 shrink-0 rounded-full\" style={{ background: segment.color }} />\n              {segment.label}\n              <span className=\"font-semibold text-foreground text-data\">{formatValue(segment.value)}</span>\n            </li>\n          ))}\n        </ul>\n      )}\n    </div>\n  );\n});\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

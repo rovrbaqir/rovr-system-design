@@ -56,7 +56,7 @@ items.unshift(
     type: "registry:style",
     title: "RoVR theme",
     description: "Design tokens: colour, type, radius, density and motion. Install once per app.",
-    dependencies: ["@fontsource-variable/dm-sans", "@fontsource/dm-mono", "tailwindcss"],
+    dependencies: ["@fontsource-variable/manrope", "@fontsource/dm-mono", "tailwindcss"],
     files: [{ path: "src/styles/rovr.css", type: "registry:file", target: "src/styles/rovr.css" }],
   },
   {

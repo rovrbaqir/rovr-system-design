@@ -64,7 +64,7 @@ To add every base component in one command:
 pnpm dlx shadcn@latest add @rovr/all
 ```
 
-Import `rovr.css` once, load the fonts (`@fontsource-variable/dm-sans`, `@fontsource/dm-mono`), and mount `<TooltipProvider>` and `<Toaster />` at the root.
+Import `rovr.css` once, load the fonts (`@fontsource-variable/manrope`, `@fontsource/dm-mono`), and mount `<TooltipProvider>` and `<Toaster />` at the root.
 
 ## Publish the registry
 

@@ -258,7 +258,7 @@
 /* ------------------------------------------------------------------ */
 
 @theme inline {
-  --font-sans: "DM Sans Variable", "DM Sans", Helvetica, Arial, sans-serif;
+  --font-sans: "Manrope Variable", "Manrope", Helvetica, Arial, sans-serif;
   --font-mono: "DM Mono", ui-monospace, "SF Mono", monospace;
 
   --color-background: var(--background);
@@ -439,7 +439,7 @@
 /* 4. Type roles                                                       */
 /* ------------------------------------------------------------------ */
 
-/* Display: DM Sans medium, set tight, as on the landing page.
+/* Display: Manrope medium, set tight.
    For page and section headlines. */
 @utility text-display-xl {
   font-size: 3.25rem;

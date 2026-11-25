@@ -1,128 +1,279 @@
-import { Bell, CalendarDays, FileText, FlaskConical, LayoutDashboard, MessageSquare, PanelLeft, Pill, Settings, Stethoscope, Users } from "lucide-react";
-import { Avatar } from "@/components/ui/avatar";
+import * as React from "react";
+import {
+  ArrowLeftRight,
+  Bug,
+  CalendarDays,
+  CreditCard,
+  FileText,
+  HeartPulse,
+  House,
+  LayoutDashboard,
+  LifeBuoy,
+  ListChecks,
+  LogOut,
+  MessageSquare,
+  Search,
+  Send,
+  Settings,
+  ShieldCheck,
+  Sparkles,
+  SquarePen,
+  Users,
+  Video,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { AppShell, Sidebar, SidebarItem, SidebarSection, useAppShell } from "@/components/patterns/app-shell";
-import { PageHeader } from "@/components/patterns/page-header";
-import { StatCard } from "@/components/patterns/stat-card";
+import { MenuItem } from "@/components/ui/menu";
+import { toast } from "@/components/ui/toast";
+import {
+  AppHeader,
+  AppShell,
+  AppSidebar,
+  SidebarAccount,
+  SidebarItem,
+  SidebarRecent,
+  SidebarSection,
+  SidebarSeparator,
+  SidebarWorkspaceSwitch,
+  type SidebarRecentItem,
+} from "@/components/patterns/app-shell";
+import { PoweredByRovr, RovrWordmark } from "@/components/patterns/intake-page";
+import { HeaderActions } from "@/components/patterns/page-header";
 import { Demo } from "../kit";
 import type { DocPage } from "../types";
 
-function ShellDemo() {
+const frame = "w-full overflow-hidden rounded-xl border border-border";
+const reportError = () => toast.message("Error report opened", { description: "The app opens its report form here." });
+
+/* Provider app ------------------------------------------------------- */
+
+const providerModules = [
+  { id: "mission-control", label: "Mission Control", icon: <LayoutDashboard /> },
+  { id: "schedule", label: "Schedule", icon: <CalendarDays /> },
+  { id: "patients", label: "Patients", icon: <Users /> },
+  { id: "documents", label: "Document Center", icon: <FileText />, badge: 4 },
+  { id: "tasks", label: "Task Management", icon: <ListChecks />, badge: 12 },
+  { id: "referrals", label: "Referrals", icon: <Send /> },
+  { id: "prior-auth", label: "Prior Authorization", icon: <ShieldCheck /> },
+  { id: "payments", label: "Payments", icon: <CreditCard /> },
+];
+
+const providerRecent: SidebarRecentItem[] = [
+  { id: "c1", title: "Amara Osei: lipid panel follow-up", unread: true },
+  { id: "c2", title: "Front desk: Thursday schedule" },
+  { id: "c3", title: "Daniel Reyes: refill request" },
+  { id: "c4", title: "Billing: claim CLM-2026-004871", unread: true },
+];
+
+const visits = [
+  { time: "09:00", patient: "Daniel Reyes", reason: "Medication review", status: "Checked in" },
+  { time: "09:30", patient: "Amara Osei", reason: "Lipid panel follow-up", status: "Confirmed" },
+  { time: "10:30", patient: "Mei Tanaka", reason: "New patient visit", status: "Intake due" },
+  { time: "11:15", patient: "Joseph Adeyemi", reason: "Blood pressure check", status: "Confirmed" },
+  { time: "13:00", patient: "Priya Raman", reason: "Annual physical", status: "Confirmed" },
+  { time: "14:00", patient: "Lucas Moreau", reason: "Video visit, asthma", status: "Confirmed" },
+];
+
+function VisitList() {
   return (
-    <div data-density="compact" className="h-[34rem] w-full overflow-hidden rounded-xl border border-border max-md:h-auto">
+    <section className="rounded-xl rovr-risen p-5">
+      <h2 className="text-title-md">Today's visits</h2>
+      <ul className="mt-3 flex flex-col">
+        {visits.map((visit) => (
+          <li key={visit.time} className="flex items-center gap-4 border-t border-border py-3">
+            <span className="w-12 shrink-0 text-body-sm text-data text-muted-foreground">{visit.time}</span>
+            <span className="min-w-0 flex-1">
+              <span className="block truncate text-label">{visit.patient}</span>
+              <span className="block truncate text-caption text-muted-foreground">{visit.reason}</span>
+            </span>
+            <span className="shrink-0 text-caption text-muted-foreground">{visit.status}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function ProviderShell({ defaultExpanded = true }: { defaultExpanded?: boolean }) {
+  const [active, setActive] = React.useState("mission-control");
+  const [opening, setOpening] = React.useState<string | null>(null);
+  const title = active === "pulse" ? "Pulse" : (providerModules.find((item) => item.id === active)?.label ?? "Mission Control");
+
+  const openConversation = (item: SidebarRecentItem) => {
+    setOpening(item.id);
+    setTimeout(() => {
+      setOpening(null);
+      setActive("pulse");
+    }, 900);
+  };
+
+  return (
+    <div className={frame}>
       <AppShell
-        className="h-full"
+        height={560}
         sidebar={
-          <Sidebar
-            className="h-[34rem]"
-            header={<span className="text-lg leading-none font-bold tracking-[-0.035em]">RoVR</span>}
+          <AppSidebar
+            defaultExpanded={defaultExpanded}
+            logo={<RovrWordmark className="h-5 w-[60px]" />}
+            onLogoClick={() => setActive("mission-control")}
             footer={
-              <div className="flex items-center gap-2.5 overflow-hidden rounded-md p-1.5">
-                <Avatar name="Ngozi Okafor" size="sm" />
-                <div className="min-w-0 transition-opacity duration-(--dur-base) group-data-[collapsed]/shell:opacity-0">
-                  <p className="truncate text-body-sm font-medium">Dr. Ngozi Okafor</p>
-                  <p className="truncate text-caption text-muted-foreground">Mission St Clinic</p>
-                </div>
-              </div>
-            }
-          >
-            <SidebarItem icon={<LayoutDashboard />} label="Mission control" active href="#/app-shell" />
-            <SidebarItem icon={<CalendarDays />} label="Schedule" badge="14" href="#/app-shell" />
-            <SidebarItem icon={<Users />} label="Patients" href="#/app-shell" />
-            <SidebarItem icon={<MessageSquare />} label="Messages" badge="3" href="#/app-shell" />
-            <SidebarSection label="Clinical">
-              <SidebarItem icon={<FlaskConical />} label="Labs and imaging" href="#/app-shell" />
-              <SidebarItem icon={<Pill />} label="Prescriptions" href="#/app-shell" />
-              <SidebarItem icon={<FileText />} label="Documents" href="#/app-shell" />
-            </SidebarSection>
-            <SidebarSection label="Workspace">
-              <SidebarItem icon={<Settings />} label="Settings" href="#/app-shell" />
-            </SidebarSection>
-          </Sidebar>
-        }
-      >
-        <div className="flex h-full flex-col gap-5 overflow-y-auto p-6">
-          <PageHeader
-            title="Mission control"
-            description="Monday 23 November. 14 visits scheduled, 2 patients waiting."
-            actions={
               <>
-                <Button variant="ghost" size="icon-md" aria-label="Notifications">
-                  <Bell />
-                </Button>
-                <Button>
-                  <Stethoscope /> Start next visit
-                </Button>
+                <SidebarWorkspaceSwitch icon={<ArrowLeftRight />} label="RCM Home" description="Go to workspace" onClick={() => toast.message("Switched to the RCM workspace")} />
+                <SidebarAccount name="Ngozi Okafor" detail="Provider">
+                  <MenuItem>Settings</MenuItem>
+                  <MenuItem className="justify-between">
+                    Logout
+                    <LogOut />
+                  </MenuItem>
+                </SidebarAccount>
               </>
             }
-          />
-          <div className="grid gap-3 sm:grid-cols-3">
-            <StatCard label="Visits today" value="14" caption="6 completed" />
-            <StatCard label="Waiting now" value="2" caption="Longest 9 min" />
-            <StatCard label="Unsigned notes" value="5" delta="+2" trend="negative" caption="since Friday" />
-          </div>
-        </div>
-      </AppShell>
-    </div>
-  );
-}
-
-function CollapsedShell() {
-  return (
-    <div className="h-80 w-full overflow-hidden rounded-xl border border-border max-md:h-auto">
-      <AppShell
-        defaultCollapsed
-        className="h-full"
-        sidebar={
-          <Sidebar className="h-80" header={<span className="text-lg leading-none font-bold tracking-[-0.035em]">RoVR</span>}>
-            <SidebarItem icon={<LayoutDashboard />} label="Home" href="#/app-shell" />
-            <SidebarItem icon={<CalendarDays />} label="Appointments" active href="#/app-shell" />
-            <SidebarItem icon={<MessageSquare />} label="Messages" badge="1" href="#/app-shell" />
-            <SidebarSection label="Records">
-              <SidebarItem icon={<FlaskConical />} label="Lab results" href="#/app-shell" />
-              <SidebarItem icon={<Pill />} label="Medications" href="#/app-shell" />
+          >
+            <SidebarSection aria-label="Pulse">
+              <SidebarItem icon={<Sparkles />} label="Pulse" badge={3} active={active === "pulse"} onClick={() => setActive("pulse")} />
             </SidebarSection>
-          </Sidebar>
+            <SidebarSection label="Modules">
+              {providerModules.map((item) => (
+                <SidebarItem key={item.id} icon={item.icon} label={item.label} badge={item.badge} active={active === item.id} onClick={() => setActive(item.id)} />
+              ))}
+            </SidebarSection>
+            <SidebarRecent items={providerRecent.map((item) => ({ ...item, opening: opening === item.id }))} onSelect={openConversation} />
+          </AppSidebar>
+        }
+        header={
+          <AppHeader
+            title={title}
+            actions={
+              <Button variant="secondary" size="sm" onClick={reportError}>
+                <Bug />
+                Report an error
+              </Button>
+            }
+          />
         }
       >
-        <div className="flex h-full flex-col gap-2 p-6">
-          <p className="text-title-md">Appointments</p>
-          <p className="max-w-[52ch] text-body-sm text-muted-foreground">
-            The rail keeps every destination one click away and leaves the width to the content. Hover an icon for its name, or press the button at the top of the rail to expand it.
-          </p>
-        </div>
+        <VisitList />
       </AppShell>
     </div>
   );
 }
 
-function FocusToggle() {
-  const { collapsed, toggle } = useAppShell();
+/* Patient app -------------------------------------------------------- */
+
+const patientNav = [
+  { id: "home", label: "Home", icon: <House /> },
+  { id: "appointments", label: "Appointments", icon: <CalendarDays /> },
+  { id: "health-record", label: "Health Record", icon: <HeartPulse /> },
+  { id: "care-team", label: "Care Team", icon: <Users /> },
+  { id: "virtual-lobby", label: "Virtual Lobby", icon: <Video />, dot: "A visit is ready to join" },
+  { id: "payments", label: "Payments", icon: <CreditCard /> },
+  { id: "marketplace", label: "Marketplace", icon: <ShieldCheck />, disabled: true },
+];
+
+const patientRecent: SidebarRecentItem[] = [
+  { id: "p1", title: "What does my LDL result mean?", unread: true },
+  { id: "p2", title: "Dr. Okafor: follow-up plan" },
+  { id: "p3", title: "Preparing for a fasting blood test" },
+];
+
+function NotificationList() {
   return (
-    <Button variant="outline" size="sm" className="w-fit" onClick={toggle}>
-      <PanelLeft /> {collapsed ? "Show navigation" : "Hide navigation"}
-    </Button>
+    <div className="flex flex-col p-2">
+      <h2 className="pb-3 text-title-sm">Notifications</h2>
+      <p className="border-t border-border py-3 text-body-sm">Your lipid panel results are ready.</p>
+      <p className="border-t border-border py-3 text-body-sm">Dr. Okafor replied to your message.</p>
+    </div>
   );
 }
 
-function ShellWithToggle() {
+function PatientShell({ loading = false }: { loading?: boolean }) {
+  const [active, setActive] = React.useState("home");
+  const title = active === "chat-history" ? "Chat History" : (patientNav.find((item) => item.id === active)?.label ?? "Home");
   return (
-    <div className="h-72 w-full overflow-hidden rounded-xl border border-border max-md:h-auto">
+    <div className={frame}>
       <AppShell
-        className="h-full"
+        height={560}
+        contentClassName="px-4 pt-4"
         sidebar={
-          <Sidebar className="h-72" header={<span className="text-lg leading-none font-bold tracking-[-0.035em]">RoVR</span>}>
-            <SidebarItem icon={<Users />} label="Patients" active href="#/app-shell" />
-            <SidebarItem icon={<CalendarDays />} label="Schedule" href="#/app-shell" />
-            <SidebarItem icon={<MessageSquare />} label="Messages" href="#/app-shell" />
-          </Sidebar>
+          <AppSidebar
+            logo={<RovrWordmark className="mb-2 h-5 w-[60px]" />}
+            logoCaption={<PoweredByRovr disableLink />}
+            onLogoClick={() => setActive("home")}
+            footer={
+              <>
+                <SidebarSeparator />
+                <SidebarAccount name="Amara Osei" detail="Complete Care plan" size="md" menuHeader loading={loading}>
+                  <MenuItem>
+                    <LifeBuoy />
+                    Contact Support
+                  </MenuItem>
+                  <MenuItem>
+                    <Settings />
+                    Settings
+                  </MenuItem>
+                  <MenuItem>
+                    <LogOut />
+                    Sign Out
+                  </MenuItem>
+                </SidebarAccount>
+              </>
+            }
+          >
+            <SidebarSection aria-label="Chat">
+              <SidebarItem icon={<MessageSquare />} label="Message Your Care Team" onClick={() => toast.message("Opened a chat with your care team")} />
+              <SidebarItem icon={<SquarePen />} label="New Chat" onClick={() => toast.message("Started a new chat with Pulse")} />
+              <SidebarItem icon={<Search />} label="Chat History" active={active === "chat-history"} onClick={() => setActive("chat-history")} />
+            </SidebarSection>
+            <SidebarSection label="Health OS">
+              {patientNav.map((item) => (
+                <SidebarItem key={item.id} icon={item.icon} label={item.label} dot={item.dot} disabled={item.disabled} active={active === item.id} onClick={() => setActive(item.id)} />
+              ))}
+            </SidebarSection>
+            <SidebarRecent items={loading ? [] : patientRecent} loading={loading} />
+          </AppSidebar>
         }
+        header={<AppHeader title={title} className="pl-8" actions={<HeaderActions unread onReportError={reportError} notifications={<NotificationList />} />} />}
       >
-        <div className="flex h-full flex-col gap-3 p-6">
-          <p className="text-title-md">Amara Osei, visit note</p>
-          <p className="max-w-[52ch] text-body-sm text-muted-foreground">Any component inside the shell can read and change the sidebar state, for example to give a long note more room.</p>
-          <FocusToggle />
-        </div>
+        <section className="rounded-xl rovr-risen p-5">
+          <h2 className="text-title-md">Your next visit</h2>
+          <p className="mt-1 text-body text-muted-foreground">Follow-up with Dr. Ngozi Okafor on Thursday 3 December at 10:30. It is a video visit; the lobby opens ten minutes before.</p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Button size="sm">Join the lobby</Button>
+            <Button size="sm" variant="secondary">
+              Reschedule
+            </Button>
+          </div>
+        </section>
+      </AppShell>
+    </div>
+  );
+}
+
+function EmptyRecentShell() {
+  return (
+    <div className={frame}>
+      <AppShell
+        height={320}
+        sidebar={
+          <AppSidebar
+            hideCollapse
+            logo={<RovrWordmark className="h-5 w-[60px]" />}
+            footer={
+              <>
+                <SidebarSeparator />
+                <SidebarAccount name="Mei Tanaka" detail="New member" size="md" />
+              </>
+            }
+          >
+            <SidebarSection label="Health OS">
+              <SidebarItem icon={<Sparkles />} label="Pulse" active />
+              <SidebarItem icon={<House />} label="Home" disabled />
+            </SidebarSection>
+            <SidebarRecent items={[]} />
+          </AppSidebar>
+        }
+        header={<AppHeader title="Welcome, Mei" />}
+      >
+        <p className="text-body text-muted-foreground">During onboarding the sidebar stays open and the collapse button is hidden.</p>
       </AppShell>
     </div>
   );
@@ -131,15 +282,46 @@ function ShellWithToggle() {
 function Body() {
   return (
     <>
-      <Demo id="app-shell-full" files={["patterns/app-shell", "patterns/page-header", "patterns/stat-card", "ui/avatar", "ui/button"]} title="Sidebar and content" note="One frame for both apps: a collapsible sidebar with a header, sections and a footer, then the page. Shown at compact density, as the provider app uses it. The sidebar is hidden at phone width; apps show navigation in a Sheet there." bare className="flex-col items-stretch">
-        <ShellDemo />
-        <p className="text-body-sm text-muted-foreground md:hidden">The sidebar is hidden at phone width; apps show navigation in a Sheet there.</p>
+      <Demo
+        id="app-shell-provider"
+        files={["patterns/app-shell", "patterns/intake-page", "ui/menu", "ui/button", "ui/toast"]}
+        title="Provider app"
+        note="The sidebar has the Pulse item, the modules with their counts, recent conversations, the workspace switch between two rules, and the account row. The header shows the current page and the report button. The sidebar is hidden on narrow screens, where the apps use a drawer."
+        bare
+        className="flex-col items-stretch"
+      >
+        <ProviderShell />
       </Demo>
-      <Demo id="app-shell-collapsed" files={["patterns/app-shell"]} title="Collapsed by default" note="defaultCollapsed starts the shell as a rail of icons. Labels move into tooltips, section labels become short rules and badges are hidden." bare className="flex-col items-stretch">
-        <CollapsedShell />
+      <Demo
+        id="app-shell-patient"
+        files={["patterns/app-shell", "patterns/page-header", "patterns/intake-page", "ui/menu", "ui/button", "ui/toast"]}
+        title="Patient app"
+        note="The same sidebar with the patient app's parts: quick chat actions on top, the Health OS group with a live dot on the lobby, the powered by RoVR line under the logo, and a roomier account row whose menu repeats the name."
+        bare
+        className="flex-col items-stretch"
+      >
+        <PatientShell />
       </Demo>
-      <Demo id="app-shell-use-app-shell" files={["patterns/app-shell", "ui/button"]} title="Reading the sidebar state" note="useAppShell returns collapsed and toggle to anything rendered inside the shell." bare className="flex-col items-stretch">
-        <ShellWithToggle />
+      <Demo
+        id="app-shell-collapsed"
+        files={["patterns/app-shell", "patterns/intake-page", "ui/menu", "ui/button", "ui/toast"]}
+        title="Collapsed"
+        note="defaultExpanded false starts the sidebar as a 60px rail. Labels, group headings, counts and recent conversations are hidden; the account row shows the avatar alone. The button at the top opens it again."
+        bare
+        className="flex-col items-stretch"
+      >
+        <ProviderShell defaultExpanded={false} />
+      </Demo>
+      <Demo
+        id="app-shell-loading"
+        files={["patterns/app-shell", "patterns/page-header", "patterns/intake-page", "ui/skeleton", "ui/menu"]}
+        title="Loading and empty"
+        note="While the profile and conversations load, the account row and the recent list show placeholders. With no conversations the list says so. hideCollapse keeps the sidebar open during onboarding."
+        bare
+        className="flex-col items-stretch gap-4"
+      >
+        <PatientShell loading />
+        <EmptyRecentShell />
       </Demo>
     </>
   );
@@ -149,7 +331,8 @@ export const page: DocPage = {
   slug: "app-shell",
   title: "App shell",
   group: "Examples",
-  summary: "The frame shared by the patient and provider apps: a collapsible sidebar and the content area beside it. Use it once, at the root of an app.",
-  keywords: "sidebar layout navigation nav rail frame menu collapse",
+  summary:
+    "Both apps. The frame around every signed-in page: a collapsible sidebar on the left and a content column with a sticky header on the right. Replaces DashboardSidebar, DashboardLayout and DashboardHeader in the patient and provider apps.",
+  keywords: "sidebar navigation layout dashboard header frame nav rail collapse account menu workspace",
   Body,
 };

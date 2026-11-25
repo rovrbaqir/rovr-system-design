@@ -154,7 +154,7 @@ function Matrix({ section }: { section: MatrixSection }) {
       setSize({ w: Math.ceil(w) + 32, h: Math.ceil(h) + 28 });
     };
     // After the web fonts are in: measuring with the fallback font gives cells that are too wide.
-    Promise.all([document.fonts.load('600 14px "DM Sans Variable"'), document.fonts.load('400 12px "DM Mono"')])
+    Promise.all([document.fonts.load('600 14px "Manrope Variable"'), document.fonts.load('400 12px "DM Mono"')])
       .catch(() => null)
       .then(() => document.fonts.ready)
       // A timer, not an animation frame: frames do not fire in a background tab.

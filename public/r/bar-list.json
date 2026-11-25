@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bar-list",
+  "title": "Bar List",
+  "dependencies": [],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/bar-list.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nconst tones = { primary: \"bg-primary\", success: \"bg-success\", warning: \"bg-warning\", danger: \"bg-destructive\" } as const;\n\nexport interface BarListRow {\n  /** Names the row: \"Prior authorisation\". */\n  label: string;\n  /** Sets the length of the bar. */\n  value: number;\n  /** Text shown on the right. Defaults to the formatted value. */\n  valueLabel?: React.ReactNode;\n  /** Muted note after the label: \"human step\". */\n  hint?: string;\n}\n\nexport interface BarListProps extends Omit<React.HTMLAttributes<HTMLUListElement>, \"children\"> {\n  /** The rows, in the order to show them. Sort them largest first for a ranking. */\n  rows: BarListRow[];\n  /** Colours every bar. One tone for the whole list: the rows are one measure. */\n  tone?: keyof typeof tones;\n  /** Formats `value` on the right when a row has no `valueLabel`. */\n  format?: (value: number) => string;\n  /** The value a full bar stands for. Defaults to the largest value in the list. */\n  max?: number;\n}\n\nconst defaultFormat = (value: number) => value.toLocaleString(\"en-US\");\n\n/** Ranked horizontal bars: a label, a bar scaled to the largest value, and the value. The bars share one track, so lengths compare across rows. */\nexport const BarList = React.forwardRef<HTMLUListElement, BarListProps>(function BarList({ rows, tone = \"primary\", format = defaultFormat, max, className, ...props }, ref) {\n  const top = max ?? Math.max(...rows.map((row) => row.value), 0);\n  return (\n    <ul ref={ref} className={cn(\"grid w-full grid-cols-[minmax(0,38%)_minmax(0,1fr)_auto] gap-x-3\", className)} {...props}>\n      {rows.map((row, i) => {\n        const share = top > 0 ? Math.min(100, Math.max(0, (row.value / top) * 100)) : 0;\n        return (\n          <li key={`${row.label}-${i}`} className=\"col-span-3 grid grid-cols-subgrid items-center py-2\">\n            <span className=\"truncate text-label\" title={row.hint ? `${row.label}, ${row.hint}` : row.label}>\n              {row.label}\n              {row.hint && <span className=\"ml-1.5 text-caption font-normal text-muted-foreground\">{row.hint}</span>}\n            </span>\n            <span aria-hidden className=\"h-2 overflow-hidden rounded-full bg-secondary-hover\">\n              <span\n                className={cn(\"block h-full rounded-full transition-[width] duration-(--dur-gentle) ease-gentle\", tones[tone])}\n                // A small value still shows as a sliver; zero shows the empty track.\n                style={{ width: `${row.value > 0 ? Math.max(share, 2) : 0}%` }}\n              />\n            </span>\n            <span className=\"text-right text-label text-data\">{row.valueLabel ?? format(row.value)}</span>\n          </li>\n        );\n      })}\n    </ul>\n  );\n});\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

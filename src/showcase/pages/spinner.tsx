@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
+import { Spinner, TypingDots } from "@/components/ui/spinner";
 import { Demo } from "../kit";
 import type { DocPage } from "../types";
 
@@ -51,6 +51,17 @@ function Body() {
           <Spinner label="Sending message" /> Sending
         </p>
         <CoverageCheck />
+      </Demo>
+      <Demo id="spinner-typing-dots" files={["ui/spinner"]} title="Typing dots" note='TypingDots shows that someone is writing a reply or that an answer is being prepared. Its accessible name is "Typing" unless you pass label. The dots take the text colour and stay still under reduced motion.' className="flex-col items-start gap-5">
+        <div className="flex items-center gap-3">
+          <span className="inline-flex h-control-md items-center rounded-full bg-surface-sunken px-4">
+            <TypingDots label="Dr. Ngozi Okafor is typing" />
+          </span>
+          <span className="text-body-sm text-muted-foreground">Dr. Ngozi Okafor</span>
+        </div>
+        <p className="flex items-center gap-2 text-body-sm text-muted-foreground">
+          <TypingDots label="" className="text-primary" /> Reading your lab results
+        </p>
       </Demo>
     </>
   );

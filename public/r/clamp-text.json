@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "clamp-text",
+  "title": "Clamp Text",
+  "dependencies": [],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/button",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/clamp-text.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { Button } from \"./button\";\n\nexport interface ClampTextProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** How many lines to show before the rest is cut off. */\n  lines?: number;\n  /** Start with the whole text shown. */\n  defaultExpanded?: boolean;\n  /** Called when the person shows or hides the rest of the text. */\n  onExpandedChange?: (expanded: boolean) => void;\n  /** The button's words while the text is cut off. */\n  moreLabel?: string;\n  /** The button's words while the whole text is shown. */\n  lessLabel?: string;\n}\n\n/**\n * Cuts long text to a few lines and offers \"Show more\". The button only\n * appears when the text really is cut off, and is re-checked when the width\n * changes. For notes, messages and descriptions inside cards and table rows.\n */\nexport const ClampText = React.forwardRef<HTMLDivElement, ClampTextProps>(function ClampText(\n  { lines = 3, defaultExpanded = false, onExpandedChange, moreLabel = \"Show more\", lessLabel = \"Show less\", className, children, ...props },\n  ref,\n) {\n  const id = React.useId();\n  const content = React.useRef<HTMLDivElement>(null);\n  const [expanded, setExpanded] = React.useState(defaultExpanded);\n  const [clamped, setClamped] = React.useState(false);\n\n  React.useLayoutEffect(() => {\n    const el = content.current;\n    if (!el || expanded) return;\n    // One pixel of slack: fractional line heights round differently for the two measures.\n    const measure = () => setClamped(el.scrollHeight > el.clientHeight + 1);\n    measure();\n    const observer = new ResizeObserver(measure);\n    observer.observe(el);\n    return () => observer.disconnect();\n  }, [children, lines, expanded]);\n\n  return (\n    <div ref={ref} className={cn(\"flex min-w-0 flex-col items-start gap-1\", className)} {...props}>\n      <div\n        ref={content}\n        id={id}\n        className=\"w-full min-w-0 [overflow-wrap:anywhere]\"\n        style={expanded ? undefined : { display: \"-webkit-box\", WebkitBoxOrient: \"vertical\", WebkitLineClamp: lines, overflow: \"hidden\" }}\n      >\n        {children}\n      </div>\n      {(expanded || clamped) && (\n        <Button\n          variant=\"ghost\"\n          size=\"sm\"\n          aria-expanded={expanded}\n          aria-controls={id}\n          // Lines the label up with the text above it.\n          className=\"-ml-3.5 text-accent-foreground\"\n          onClick={(event) => {\n            // Often sits in a row or card that is itself a click target.\n            event.stopPropagation();\n            setExpanded(!expanded);\n            onExpandedChange?.(!expanded);\n          }}\n        >\n          {expanded ? lessLabel : moreLabel}\n        </Button>\n      )}\n    </div>\n  );\n});\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

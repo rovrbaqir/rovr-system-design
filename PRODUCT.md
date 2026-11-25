@@ -36,7 +36,7 @@ Both apps are Vite + React 18 + Tailwind v3 + Radix + framer-motion today and mu
 - Brand blue `#546EFF`, navy `#152163`. Pulse (AI) identity uses violet.
 - On 2026-11-22 the user replaced the first direction (serif display, warm cream, large radii) with the look of the RoVR landing page, rovrstack.ai: DM Sans throughout, ink #161a1c on paper #fbfbfa, hairlines #dfe2e2, small radii, lucide icons at 1.5 stroke, dark palette #0a0e1f / #e9edfa. They asked for the system to look less AI-generated.
 - Later the same day the user said the result still felt like stock shadcn, that the colour combination and motion were not premium, and that badges looked generated. They like the mobile app (`health-patient-app`). The system now takes its colour, elevation, glass and springs from that app's theme and keeps DM Sans from the landing page.
-- The mobile app's typeface is Manrope; the web system uses DM Sans because the user asked for the landing page's font. Switching is one token (`--font-sans`).
+- The typeface is Manrope, the same as the mobile app and both web apps. On 2026-11-25 the user asked to drop DM Sans (taken from the landing page) for it. DM Mono stays for identifiers. The token is `--font-sans`.
 - References the user and their manager like: america.gov, ndstudio.gov, genesis.energy.gov, trumpaccounts.gov, retire.opm.gov.
 
 ## Evidence on Hand

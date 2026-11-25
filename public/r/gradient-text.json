@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gradient-text",
+  "title": "Gradient Text",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "@rovr/theme",
+    "@rovr/utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/gradient-text.tsx",
+      "content": "import * as React from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"@/lib/utils\";\n\nexport const gradientTextVariants = cva(\n  [\n    // The gradient is the element's background, cut to the glyphs. The text is\n    // real text: it selects, copies and is read as usual.\n    \"bg-clip-text text-transparent box-decoration-clone\",\n    \"bg-(image:--gradient-text) selection:text-foreground\",\n    // Forced colours: drop the gradient and let the system paint the text.\n    \"forced-colors:bg-none forced-colors:text-[CanvasText]\",\n  ],\n  {\n    variants: {\n      variant: {\n        /** Navy opening to brand blue. In dark mode both stops are lightened so the text stays readable on black. */\n        brand: [\n          \"[--gt-from:var(--navy)] [--gt-to:var(--brand)]\",\n          \"dark:[--gt-from:color-mix(in_oklab,var(--brand)_28%,white)] dark:[--gt-to:color-mix(in_oklab,var(--brand)_82%,white)]\",\n        ],\n        /** The Pulse gradient, blue to violet. For Pulse (AI) features only. */\n        pulse: [\n          \"[--gt-from:var(--pulse-from)] [--gt-to:var(--pulse-to)]\",\n          \"dark:[--gt-from:color-mix(in_oklab,var(--pulse-from)_70%,white)] dark:[--gt-to:color-mix(in_oklab,var(--pulse-to)_70%,white)]\",\n        ],\n      },\n      shimmer: {\n        false: \"[--gradient-text:linear-gradient(100deg,var(--gt-from)_0%,var(--gt-to)_65%)]\",\n        // The band starts and ends on the same colour and repeats, so the loop has no seam.\n        true: [\n          \"[--gradient-text:linear-gradient(100deg,var(--gt-from)_0%,var(--gt-to)_35%,color-mix(in_oklab,var(--gt-to)_45%,white)_50%,var(--gt-to)_65%,var(--gt-from)_100%)]\",\n          \"bg-[length:200%_100%] bg-repeat-x animate-shimmer [animation-duration:5s] [animation-timing-function:linear]\",\n          \"motion-reduce:animate-none motion-reduce:bg-[length:100%_100%]\",\n        ],\n      },\n    },\n    defaultVariants: { variant: \"brand\", shimmer: false },\n  },\n);\n\nconst elements = { h1: \"text-display-lg\", h2: \"text-display-md\", h3: \"text-display-sm\", h4: \"text-title-lg\", p: \"\", span: \"\" } as const;\n\nexport interface GradientTextProps extends React.HTMLAttributes<HTMLElement>, Omit<VariantProps<typeof gradientTextVariants>, \"shimmer\"> {\n  /** The element to render. Headings get the matching display size; `p` and `span` keep the size around them. */\n  as?: keyof typeof elements;\n  /** `brand` is navy opening to brand blue. `pulse` is the Pulse gradient, for Pulse features only. */\n  variant?: \"brand\" | \"pulse\";\n  /** A slow band of light crosses the text, for a line that is still being worked on. It stops under reduced motion. */\n  shimmer?: boolean;\n}\n\n/**\n * Text filled with the brand gradient. For one headline or a few words of\n * emphasis on a page, never for body text, labels or clinical values.\n */\nexport const GradientText = React.forwardRef<HTMLElement, GradientTextProps>(function GradientText(\n  { as = \"h2\", variant = \"brand\", shimmer = false, className, ...props },\n  ref,\n) {\n  const Tag = as as React.ElementType;\n  return <Tag ref={ref} className={cn(elements[as], gradientTextVariants({ variant, shimmer }), className)} {...props} />;\n});\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

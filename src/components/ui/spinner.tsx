@@ -22,3 +22,30 @@ export function Spinner({ className, label = "Loading", ...props }: SpinnerProps
     </svg>
   );
 }
+
+export interface TypingDotsProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /** Accessible name. Pass an empty string when visible text next to the dots already says who is typing. */
+  label?: string;
+}
+
+/** Three dots that rise one after the other, for "is typing" and "thinking". The dots stay still under reduced motion. */
+export function TypingDots({ className, label = "Typing", ...props }: TypingDotsProps) {
+  return (
+    <span
+      role={label ? "status" : undefined}
+      aria-label={label || undefined}
+      aria-hidden={label ? undefined : true}
+      className={cn("inline-flex h-4 items-center gap-1 text-muted-foreground", className)}
+      {...props}
+    >
+      {[0, 160, 320].map((delay) => (
+        <span
+          key={delay}
+          aria-hidden
+          style={{ animationDelay: `${delay}ms` }}
+          className="size-1.5 animate-typing rounded-full bg-current opacity-35 motion-reduce:animate-none motion-reduce:opacity-70 forced-colors:bg-[CanvasText]"
+        />
+      ))}
+    </span>
+  );
+}
