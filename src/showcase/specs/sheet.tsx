@@ -9,7 +9,7 @@ for (const m of Object.values(modules)) if (m.spec) specs.set(m.spec.slug, m.spe
 
 export const findSpec = (slug: string) => specs.get(slug);
 
-const DOCS = "https://rovr-system-design.vercel.app";
+const DOCS = "https://rovr-system-design-ro-vr.vercel.app";
 
 /**
  * One component on one sheet: every prop and state as a labelled grid, then the

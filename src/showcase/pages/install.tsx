@@ -19,7 +19,7 @@ function Body() {
         <p className="text-muted-foreground">
           Add the <Token>@rovr</Token> namespace to <Token>components.json</Token>, pointing at the RoVR registry.
         </p>
-        <Command>{`"registries": {\n  "@rovr": "https://rovr-system-design.vercel.app/r/{name}.json"\n}`}</Command>
+        <Command>{`"registries": {\n  "@rovr": "https://rovr-system-design-ro-vr.vercel.app/r/{name}.json"\n}`}</Command>
         <p className="text-body-sm text-muted-foreground">
           Copy it exactly, with <Token>{"{name}"}</Token> left as written. The shadcn command fills it in: <Token>@rovr/button</Token> is fetched
           from <Token>/r/button.json</Token>.

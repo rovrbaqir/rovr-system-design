@@ -7,7 +7,7 @@
 //   3. applies the RoVR text styles (the importer has already bound colours to the variables);
 //   4. moves the sheet to a page of its own, named after the component.
 // It only touches frames that carry a ROVRMETA line.
-const DOCS = "https://rovr-system-design.vercel.app/#/";
+const DOCS = "https://rovr-system-design-ro-vr.vercel.app/#/";
 const LIMIT = typeof MAX === "number" ? MAX : 99;
 const home = figma.root.children[0];
 const report = [];

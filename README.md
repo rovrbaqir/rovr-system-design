@@ -48,7 +48,7 @@ Each example is a `<Demo>` with an `id` that starts with the slug and `files={["
 The app needs Tailwind CSS v4. Add the registry to its `components.json`:
 
 ```json
-"registries": { "@rovr": "https://rovr-system-design.vercel.app/r/{name}.json" }
+"registries": { "@rovr": "https://rovr-system-design-ro-vr.vercel.app/r/{name}.json" }
 ```
 
 Then:
@@ -72,7 +72,7 @@ Import `rovr.css` once, load the fonts (`@fontsource-variable/manrope`, `@fontso
 pnpm registry:build   # regenerates registry.json and public/r/*.json
 ```
 
-The site and the registry are deployed together on Vercel at https://rovr-system-design.vercel.app. `vercel.json` sets the build to `pnpm registry:build && pnpm build`, so every push to `main` republishes both and the registry cannot go stale.
+The site and the registry are deployed together on Vercel at https://rovr-system-design-ro-vr.vercel.app. `vercel.json` sets the build to `pnpm registry:build && pnpm build`, so every push to `main` republishes both and the registry cannot go stale.
 
 ## Themes
 
